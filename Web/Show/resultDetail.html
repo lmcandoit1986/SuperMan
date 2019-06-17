@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/ichartjs/ichart.1.2.min.js"></script>
+    <script src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/ichartjs/ichart.1.2.src.js"></script>
+    <title>Tester Home</title>
+</head>
+<body>
+{% if person %}
+<script>
+    $(function(){
+            platform ='{{ person.result.sum.platform }}'
+            failed ='{{ person.result.sum.fail }}'/'{{ person.result.sum.all }}'*100
+			var data = [
+			        	{name : 'Pass',value : 100-failed,color:'#32CD32'},
+			        	{name : 'Failed',value : failed,color:'#FF0000'},
+		        	];
+
+			var chart = new iChart.Pie3D({
+				render : 'canvasDiv',
+				data: data,
+				title : {
+					text : '前端自动化执行结果展示',
+					height:40,
+					fontsize : 30,
+					color : '#282828'
+				},
+				footnote : {
+					text : 'tester Home',
+					color : '#486c8f',
+					fontsize : 12,
+					padding : '0 38'
+				},
+				sub_option : {
+					mini_label_threshold_angle : 40,//迷你label的阀值,单位:角度
+					mini_label:{//迷你label配置项
+						fontsize:20,
+						fontweight:600,
+						color : '#E0EEE0'
+					},
+					label : {
+						background_color:null,
+						sign:false,//设置禁用label的小图标
+						padding:'0 4',
+						border:{
+							enable:false,
+							color:'#666666'
+						},
+						fontsize:11,
+						fontweight:600,
+						color : '#4572a7'
+					},
+					border : {
+						width : 2,
+						color : '#ffffff'
+					},
+					listeners:{
+						parseText:function(d, t){
+							return d.get('value')+"%";//自定义label文本
+						}
+					}
+				},
+				legend:{
+					enable:true,
+					padding:0,
+					offsetx:120,
+					offsety:50,
+					color:'#3e576f',
+					fontsize:20,//文本大小
+					sign_size:20,//小图标大小
+					line_height:28,//设置行高
+					sign_space:10,//小图标与文本间距
+					border:false,
+					align:'left',
+					background_color : null//透明背景
+				},
+				shadow : true,
+				shadow_blur : 6,
+				shadow_color : '#aaaaaa',
+				shadow_offsetx : 0,
+				shadow_offsety : 0,
+				background_color:'#f1f1f1',
+				align:'right',//右对齐
+				offsetx:-100,//设置向x轴负方向偏移位置60px
+				offset_angle:-90,//逆时针偏移120度
+				width : 1000,
+				height : 400,
+				radius:150
+			});
+			//利用自定义组件构造右侧说明文本
+			chart.plugin(new iChart.Custom({
+					drawFn:function(){
+						//在右侧的位置，渲染说明文字
+						chart.target.textAlign('start')
+						.textBaseline('top')
+						.textFont('600 20px Verdana')
+						.fillText('平台:'+platform+'\n设备:{{ person.result.sum.model }}\n执行时间:{{ person.result.sum.runt }}\n执行时长:{{ person.result.sum.uset }}',120,80,false,'#be5985',false,24)
+						.textFont('600 12px Verdana')
+						.fillText('',120,160,false,'#999999');
+					}
+			}));
+
+			chart.draw();
+		});
+
+</script>
+<div class="container">
+	<div class="row clearfix" >
+		<div class="col-md-12 column" >
+			<ul class="breadcrumb" >
+				<li>
+					 <a href="http://localhost:8001/web/index">返回主页</a>
+				</li>
+				<li>
+					 <a href="#list">查看明细</a>
+				</li>
+				<li class="active" href="#statics">
+					统计
+				</li>
+			</ul>
+			<div class="row clearfix" style="background-color:#F7F7F7">
+				<div class="col-md-12 column">
+					<div style="padding: 1% 6%;" id='canvasDiv'></div>
+				</div>
+			</div>
+			<div class="page-header">
+				<h1>
+					失败用例 明细 <small>如有疑问，电询</small>
+				</h1>
+			</div>
+			<table class="table table-striped" id="list">
+				<thead>
+					<tr>
+						<th class="col-md-2 column">
+							用例名称
+						</th>
+						<th class="col-md-2 column">
+							模块/负责人
+						</th>
+						<th class="col-md-6 column">
+							日志信息
+						</th>
+						<th class="col-md-2 column">
+							截图/录屏信息
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+                {% if person.result.sum.fail > 0 %}
+                    {% for item in person.result.detail %}
+                        {% if item.result == -1 %}
+                            <tr class="">
+                            <td>
+                                <strong>{{ item.caseName }}</strong>
+                            </td>
+                            <td onclick="show()">
+                                默认模块/默认人员
+                            </td>
+                            <td >
+                                {{ item.comment |truncatechars:"100"}}<a onclick="test('{{item.comment|safe}}')">点击查看全部日志</a>
+                            </td>
+                            <td>
+                                {% if not item.pic == '' %}
+                                    <a href="{% static "img/test.jpeg" %}">
+                                        <img src="{% static "img/test.jpeg" %}" padding="10% 0%" width="150" height="300">
+                                    </a>
+                                    {% endif %}
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                {% else %}
+                    </tbody>
+                    </table>
+                    <h1><strong>全部通过了哦，继续努力！</strong></h1>
+                {% endif %}
+            <br>
+			 <span class="label label-success">Tester Home</span>
+		</div>
+	</div>
+</div>
+    <script>
+        function test(data) {
+            console.log(data);
+            alert(data);
+        };
+    </script>
+{% else %}
+    参数错误或没有找到对应的结果哦！
+{% endif %}
+</body>
+</html>

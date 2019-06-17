@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/ichartjs/ichart.1.2.min.js"></script>
+    <script src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/ichartjs/ichart.1.2.src.js"></script>
+    <title>Tester Home</title>
+</head>
+<body>
+{% if person %}
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="navbar-header">
+					 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"> <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button> <a class="navbar-brand" href="#">Brand</a>
+				</div>
+
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active">
+							 <a href="#">Link</a>
+						</li>
+						<li>
+							 <a href="#">Link</a>
+						</li>
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									 <a href="#">Action</a>
+								</li>
+								<li>
+									 <a href="#">Another action</a>
+								</li>
+								<li>
+									 <a href="#">Something else here</a>
+								</li>
+								<li class="divider">
+								</li>
+								<li>
+									 <a href="#">Separated link</a>
+								</li>
+								<li class="divider">
+								</li>
+								<li>
+									 <a href="#">One more separated link</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+					<form class="navbar-form navbar-left" role="search">
+						<div class="form-group">
+							<input type="text" class="form-control" />
+						</div> <button type="submit" class="btn btn-default">Submit</button>
+					</form>
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							 <a href="#">Link</a>
+						</li>
+						<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									 <a href="#">Action</a>
+								</li>
+								<li>
+									 <a href="#">Another action</a>
+								</li>
+								<li>
+									 <a href="#">Something else here</a>
+								</li>
+								<li class="divider">
+								</li>
+								<li>
+									 <a href="#">Separated link</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+
+			</nav>
+			<ul class="breadcrumb">
+				<li>
+					 <a href="#appinfo">版本信息</a>
+				</li>
+				<li>
+					 <a href="#st">启动时间</a>
+				</li>
+                <li>
+					 <a href="#pt">页面响应时间</a>
+				</li>
+				<li>
+					 <a href="#fps">FPS</a>
+				</li>
+                <li>
+					 <a href="#mem">内存泄漏检测</a>
+				</li>
+				<li>
+					 <a href="#cpu">Cpu</a>
+				</li>
+
+			</ul>
+            <h3 class="text-left text-warning">
+				一. 版本信息
+			</h3>
+			<div class="panel panel-warning" id="appinfo" style="width: 20%">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						平台 : {{ person.result.platform}}
+
+					</h3>
+				</div>
+				<div class="panel-heading">
+					<h3 class="panel-title">
+                        App : {{ person.result.app}}
+					</h3>
+				</div>
+                <div class="panel-heading">
+					<h3 class="panel-title">
+						Code Version : {{ person.result.codeversion}}
+					</h3>
+				</div>
+                <div class="panel-heading">
+					<h3 class="panel-title">
+						执行时间 : {{ person.result.rt}}
+					</h3>
+				</div>
+			</div>
+            <h3 class="text-left text-warning" id="st">
+				二. 启动时间
+			</h3>
+            <table class="table table-bordered table-hover table-condensed" style="width: 30%">
+				<thead >
+					<tr>
+						<th class="col-md-2">
+							编号
+						</th>
+						<th class="col-md-2">
+							启动时间
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+                {% for i in person.result.st.data %}
+					<tr>
+						<td>
+							{{ forloop.counter }}
+						</td>
+						<td>
+                            {{ i }}
+						</td>
+					</tr>
+                {% endfor %}
+                <tr class="success">
+						<td>
+							均值
+						</td>
+						<td>
+							{{ person.result.st.sumer }}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+            <h3 class="text-left text-warning" id="pt">
+				三. 页面响应时间
+			</h3>
+            <table class="table table-bordered table-hover table-condensed" style="width: 40%">
+				<thead >
+					<tr>
+						<th class="col-md-4">
+							页面标识
+						</th>
+						<th class="col-md-2">
+							响应时间
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+                {% for i in person.result.pt %}
+					<tr>
+						<td>
+							{{ i.activity }}
+						</td>
+						<td>
+                            {{ i.data }}
+						</td>
+					</tr>
+                {% endfor %}
+				</tbody>
+			</table>
+            <h3 class="text-left text-warning" id="fps">
+				四. FPS
+			</h3>
+
+            <script>
+                $(function(){
+                    var Dlev1 =new Array();
+                    var ActivityList= new Array();
+                    var data_pt_json = eval('(' + '{{ jss|safe }}' + ')');
+                    for(var i=0;i<data_pt_json.result.fps.length;i++){
+                        ActivityList[i]=data_pt_json.result.fps[i].activity;
+                        var Dlev2 = new Array();
+                        for (var j =0;j<data_pt_json.result.fps[i].data.length;j++){
+                            Dlev2.push(data_pt_json.result.fps[i].data[j].fpslist);
+                        }
+                        Dlev1.push(Dlev2);
+                    }
+                    var labels = [];
+                    var colorList = ['#FFDAB9','#00F5FF','#E6E6FA','#696969','#4EEE94','#1E90FF','#EEC900','#','#','#'];
+                    var IMGList = new Array();
+                    for(var i=0;i< ActivityList.length;i++){
+                        var data = new Array();
+                        for(var j=0;j < Dlev1[i].length;j++){
+                            data.push({
+                                    name : '',
+                                    value:Dlev1[i][j],
+                                    color:colorList[j],
+                                    line_width:2
+                                })
+                        }
+                        IMGList[i] = new iChart.LineBasic2D({
+							render : ActivityList[i],
+							data: data,
+							align:'center',
+							title : '',
+							subtitle : '',
+							footnote : '',
+							width : 500,
+							height : 250,
+							tip:{
+								enable:true,
+								shadow:true
+							},
+							legend : {
+								enable : true,
+								row:1,//设置在一行上显示，与column配合使用
+								column : 'max',
+								valign:'top',
+								sign:'bar',
+								background_color:null,//设置透明背景
+								offsetx:-0,//设置x轴偏移，满足位置需要
+								border : true
+							},
+							crosshair:{
+								enable:true,
+								line_color:'#62bce9'
+							},
+							sub_option : {
+								label:false,
+								point_hollow : false
+							},
+							coordinate:{
+								width:450,
+								height:200,
+								axis:{
+									color:'#9f9f9f',
+									width:[0,0,2,2]
+								},
+								grids:{
+									vertical:{
+										way:'share_alike',
+								 		value:5
+									}
+								},
+								scale:[{
+									 position:'left',
+									 start_scale:0,
+									 end_scale:100,
+									 scale_space:10,
+									 scale_size:2,
+									 scale_color:'#9f9f9f'
+								},{
+									 position:'bottom',
+									 labels:labels
+								}]
+							}
+                        });
+
+
+					//开始画图
+					IMGList[i].draw();
+                    }
+                });
+            </script>
+			<div class="row ">
+                {% for i in person.result.fps %}
+				<div class="col-md-6">
+					<div class="thumbnail">
+                        <div alt="300x200" id='{{ i.activity }}'></div>
+{#						<img alt="300x200" src="{% static "img/test.jpeg" %}" width="150" height="300"/>#}
+						<div class="caption">
+							<h3>
+								{{ i.activity }}
+							</h3>
+							<p>
+								{{ i.info }}
+							</p>
+
+						</div>
+					</div>
+				</div>
+                {% endfor %}
+			</div>
+
+
+			<h3 class="text-left text-warning" id="mem">
+				五. 内存泄漏监控
+			</h3>
+            <script>
+                $(function(){
+                    var Dlev1 =new Array();
+                    var ActivityList= new Array();
+                    var data_pt_json = eval('(' + '{{ jss|safe }}' + ')');
+                    for(var i=0;i<data_pt_json.result.mem.length;i++){
+                        ActivityList[i]=data_pt_json.result.mem[i].activity;
+                        Dlev1[i]=data_pt_json.result.mem[i].data;
+                    }
+                    var list =[0.6,0.7,0.6,0.8,0.5,0.8,0.6];
+                    for(var j=0;j<ActivityList.length;j++){
+                        console.log(Dlev1[j]);
+                        var data = [
+                        {
+                            name :'',
+                            value:Dlev1[j],
+                            color:'#292421',
+                            line_width:1
+                        }
+                        ];
+                        var label=new Array();
+                        for (var i=0;i <10;i++){
+                            label[i]=i+1;
+
+                        }
+                        var chart = new iChart.LineBasic2D({
+                            render : 'mem'+ActivityList[j],
+                            data: data,
+                            title : 'android 平台自动化执行结果最近7次成功率统计',
+                            width : 500,
+                            height : 250,
+                            coordinate:{height:'90%',background_color:'#F5F5F5'},
+                            sub_option:{
+                                hollow_inside:false,//设置一个点的亮色在外环的效果
+                                point_size:1
+                            },
+                            labels:label
+                        });
+                        chart.draw();
+                    }
+
+                });
+            </script>
+            <div class="row ">
+                    {% for i in person.result.mem %}
+                    <div class="col-md-6">
+                        <div class="thumbnail">
+                            <div alt="300x200" id='mem{{ i.activity }}'></div>
+    {#						<img alt="300x200" src="{% static "img/test.jpeg" %}" width="150" height="300"/>#}
+                            <div class="caption">
+                                <h3>
+                                    {{ i.activity }}
+                                </h3>
+                                <p>
+                                    {{ i.info }}
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            <h3 class="text-left text-warning" id="cpu">
+				六. CPU监控
+			</h3>
+            <script>
+                    $(function(){
+                        var Dlev1 =new Array();
+                        var ActivityList= new Array();
+                        var data_pt_json = eval('(' + '{{ jss|safe }}' + ')');
+                        for(var i=0;i<data_pt_json.result.cpu.length;i++){
+                            ActivityList[i]=data_pt_json.result.cpu[i].activity;
+                            Dlev1[i]=data_pt_json.result.cpu[i].data;
+                        }
+                        console.log(ActivityList);
+                        var list =[0.6,0.7,0.6,0.8,0.5,0.8,0.6];
+                        for(var j=0;j<ActivityList.length;j++){
+                            console.log(Dlev1[j]);
+                            var data = [
+                            {
+                                name :'',
+                                value:Dlev1[j],
+                                color:'#292421',
+                                line_width:1
+                            }
+                            ];
+                            var label=new Array();
+                            for (var i=0;i <10;i++){
+                                label[i]=i+1;
+
+                            }
+                            var chart = new iChart.LineBasic2D({
+                                render : 'cpu'+ActivityList[j],
+                                data: data,
+                                title : 'android 平台自动化执行结果最近7次成功率统计',
+                                width : 500,
+                                height : 250,
+                                coordinate:{height:'90%',background_color:'#F5F5F5'},
+                                sub_option:{
+                                    hollow_inside:false,//设置一个点的亮色在外环的效果
+                                    point_size:1
+                                },
+                                labels:label
+                            });
+                            chart.draw();
+                        }
+
+                    });
+                </script>
+            <div class="row ">
+                    {% for i in person.result.cpu %}
+                    <div class="col-md-6">
+                        <div class="thumbnail">
+                            <div alt="300x200" id='cpu{{ i.activity }}'></div>
+    {#						<img alt="300x200" src="{% static "img/test.jpeg" %}" width="150" height="300"/>#}
+                            <div class="caption">
+                                <h3>
+                                    {{ i.activity }}
+                                </h3>
+                                <p>
+                                    {{ i.info }}
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+
+		</div>
+	</div>
+
+</div>
+{% endif %}
+</body>
+</html>

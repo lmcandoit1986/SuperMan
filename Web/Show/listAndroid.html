@@ -1,0 +1,114 @@
+<br>
+<script>
+    'android 平台自动化执行结果最近7次成功率统计'
+    $(function(){
+        $.getJSON("http://localhost:8001/server/result/rate?platform=android",function(getdata){
+            var list =getdata.result;
+            var data = [
+                {
+                    name :'',
+                    value:list,
+                    color:'#292421',
+                    line_width:1
+                }
+            ];
+            var chart = new iChart.LineBasic2D({
+                render : 'androidautorate',
+                data: data,
+                title : 'android 平台自动化执行结果最近7次成功率统计',
+                width : 825,
+                height : 250,
+                coordinate:{height:'90%',background_color:'#F5F5F5'},
+                sub_option:{
+                    hollow_inside:false,//设置一个点的亮色在外环的效果
+                    point_size:1
+                },
+                labels:["1","2","3","4","5","6","7"]
+            });
+            chart.draw();
+        });
+    });
+</script>
+
+
+<div style="padding: 2% 5%;" class="col-md-12 column" id='androidautorate'></div>
+<br>
+
+<div class="row clearfix" style="padding: 0% 5%;">
+		<div class="col-md-12 column">
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>
+							执行时间
+						</th>
+						<th>
+							产品
+						</th>
+						<th>
+							设备
+						</th>
+                        <th>
+							用时
+						</th>
+						<th>
+							详情
+						</th>
+					</tr>
+				</thead>
+				<tbody id="list">
+				</tbody>
+			</table>
+            <ul class="pagination">
+				<li>
+					 <a href="#">Prev</a>
+				</li>
+				<li>
+					 <a href="#">1</a>
+				</li>
+				<li>
+					 <a href="#">2</a>
+				</li>
+				<li>
+					 <a href="#">3</a>
+				</li>
+				<li>
+					 <a href="#">4</a>
+				</li>
+				<li>
+					 <a href="#">5</a>
+				</li>
+				<li>
+					 <a href="#">Next</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+
+
+
+<script>
+    $(document).ready(function(){
+        $.getJSON("http://localhost:8001/server/result/list?platform=android",function(getdata){
+
+           for (var i=0;i< getdata.result.length;i++){
+               $("#list").append(
+                   '<tr class="success">'+
+                   '<td>'+getdata.result[i].sum.runt+
+                   '</td>'+
+                   '<td>'+getdata.result[i].sum.app+
+                   '</td>'+
+                       '</td>'+
+                   '<td>'+getdata.result[i].sum.model+
+                   '</td>'+
+                       '</td>'+
+                   '<td>'+getdata.result[i].sum.uset+
+                   '</td>'+
+                   '<td><a href="http://localhost:8001/web/result/detail?jenkinsId='+getdata.result[i].sum.Jenkinsid+'&platform='+getdata.result[i].sum.platform+'">查看结果</a>'+
+                   '</td>'+
+                   '</tr>');
+           }
+        });
+    });
+</script>

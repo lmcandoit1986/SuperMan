@@ -1,0 +1,76 @@
+<br>
+<script>
+    'android 平台自动化执行结果最近7次成功率统计'
+    $(function(){
+        $.getJSON("http://localhost:8001/server/result/rate?platform=android",function(getdata){
+            var list =getdata.result;
+            var data = [
+                {
+                    name :'',
+                    value:list,
+                    color:'#292421',
+                    line_width:1
+                }
+            ];
+            var label=new Array();
+            for (var i=0;i <list.length;i++){
+                label[i]=i+1;
+
+            }
+            var chart = new iChart.LineBasic2D({
+                render : 'androidautorate',
+                data: data,
+                title : 'android 平台自动化执行结果最近7次成功率统计',
+                width : 825,
+                height : 250,
+                coordinate:{height:'90%',background_color:'#F5F5F5'},
+                sub_option:{
+                    hollow_inside:false,//设置一个点的亮色在外环的效果
+                    point_size:1
+                },
+                labels:label
+            });
+            chart.draw();
+        });
+    });
+</script>
+<script>
+    'android 平台自动化执行结果最近7次成功率统计'
+    $(function(){
+        $.getJSON("http://localhost:8001/server/result/rate?platform=iOS",function(getdata){
+            var list =getdata.result;
+            var data = [
+                {
+                    name :'',
+                    value:list,
+                    color:'#292421',
+                    line_width:1
+                }
+            ];
+            var label=new Array();
+            for (var i=0;i <list.length;i++){
+                label[i]=i+1;
+
+            }
+            var chart = new iChart.LineBasic2D({
+                render : 'androidautorate1',
+                data: data,
+                title : 'iOS 平台自动化执行结果最近7次成功率统计',
+                width : 825,
+                height : 250,
+                coordinate:{height:'90%',background_color:'#F5F5F5'},
+                sub_option:{
+                    hollow_inside:false,//设置一个点的亮色在外环的效果
+                    point_size:1
+                },
+                labels:label
+            });
+            chart.draw();
+        });
+    });
+</script>
+
+
+<div style="padding: 2% 5%;" class="col-md-12 column" id='androidautorate'></div>
+<br>
+<div style="padding: 2% 5%;" class="col-md-12 column" id='androidautorate1'></div>
