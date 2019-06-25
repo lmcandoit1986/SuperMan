@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'server/result/del',Server.delResults),
     url(r'server/result/get',Server.getResults),
     url(r'server/result/list',Server.getResultslist),
+    url(r'server/result/listJson',Server.getResultslistJson),
     url(r'server/pt/push',Server.pushPerformanceData),
     url(r'server/pt/get',Server.getPtResultsJson),
     url(r'server/result/rate',Server.getRate),

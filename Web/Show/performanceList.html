@@ -25,6 +25,28 @@
 					</tr>
 				</thead>
 				<tbody id="list">
+                {% for item in person.result %}
+                    <tr>
+						<th class="success">
+							{{ item.rt|default:"未知" }}
+						</th>
+						<th>
+							{{ item.platform|default:"未知" }}
+						</th>
+                        <th>
+							{{ item.model|default:"未知" }}
+						</th>
+						<th>
+							{{ item.app|default:"未知" }}
+						</th>
+                        <th>
+							{{ item.codeversion|default:"未知" }}
+						</th>
+						<th>
+							<a href="http://localhost:9092/web/performance/detail?jenkinsId={{ item.Jenkinsid }}&platform=android">查看结果</a>
+						</th>
+					</tr>
+                {% endfor %}
 				</tbody>
 			</table>
             <ul class="pagination">
@@ -52,31 +74,3 @@
 			</ul>
 		</div>
 	</div>
-
-
-
-
-<script>
-    $(document).ready(function(){
-        $.getJSON("http://localhost:8001/server/pt/list?platform=android",function(getdata){
-
-           for (var i=0;i< getdata.result.length;i++){
-               $("#list").append(
-                   '<tr class="success">'+
-                   '<td>'+getdata.result[i].rt+
-                   '</td>'+
-                   '<td>'+getdata.result[i].platform+
-                   '</td>'+
-                       '<td>'+getdata.result[i].model+
-                   '</td>'+
-                   '<td>'+getdata.result[i].app+
-                   '</td>'+
-                   '<td>'+getdata.result[i].codeversion+
-                   '</td>'+
-                   '<td><a href="http://localhost:8001/web/performance/detail?jenkinsId='+getdata.result[i].Jenkinsid+'&platform='+getdata.result[i].platform+'">查看结果</a>'+
-                   '</td>'+
-                   '</tr>');
-           }
-        });
-    });
-</script>

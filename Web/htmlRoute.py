@@ -18,50 +18,99 @@ def index(request):
     return HttpResponse(html)
 
 def getAndroidList(request):
-    t = get_template('listAndroid.html')
-    html = t.render()
-    return HttpResponse(html)
+    res = Server.getResultslistJson(request)
+    res_dict = eval(res)
+    res2 =Server.getRate(request)
+    if res_dict['code'] == -1:
+        # print("fail")
+        context = {'person': None}
+    else:
+        # print('Pass')
+        context = {'person': res_dict,'rate':res2}
+    # print(context)
+    return render(request, 'listAndroid.html', context)
+    # t = get_template('listAndroid.html')
+    # html = t.render()
+    # return HttpResponse(html)
 
 def getiOSList(request):
-    t = get_template('listiOS.html')
-    html = t.render()
-    return HttpResponse(html)
+    res = Server.getResultslistJson(request)
+    res_dict = eval(res)
+    res2 = Server.getRate(request)
+    if res_dict['code'] == -1:
+        # print("fail")
+        context = {'person': None}
+    else:
+        # print('Pass')
+        context = {'person': res_dict, 'rate': res2}
+    print(context)
+    return render(request, 'listiOS.html', context)
+    # t = get_template('listiOS.html')
+    # html = t.render()
+    # return HttpResponse(html)
 
 def Deatail(request):
     res = Server.getResults(request)
     res_dict = eval(res)
     if res_dict['code'] == -1:
-        print("fail")
+        #print("fail")
         context = {'person': None}
     else:
-        print('Pass')
+        #print('Pass')
         context = {'person': res_dict}
     print(context)
     return render(request, 'resultDetail.html', context)
 
 def statistics(request):
-    t = get_template('statistics.html')
-    html = t.render()
-    return HttpResponse(html)
+    res = Server.getRate(request)
+    res_dict = eval(res)
+    if res_dict['code'] == -1:
+        # print("fail")
+        context = {'personjson': None}
+    else:
+        # print('Pass')
+        context = {'personjson':res}
+    # print(context)
+    return render(request, 'statistics.html', context)
+    # t = get_template('statistics.html')
+    # html = t.render()
+    # return HttpResponse(html)
 
 def performanceListAndroid(request):
-    t = get_template('performanceList.html')
-    html = t.render()
-    return HttpResponse(html)
+    res = Server.getPTResultslistJson(request)
+    res_dict =eval(res)
+    if res_dict['code'] == -1:
+        # print("fail")
+        context = {'person': None}
+    else:
+        # print('Pass')
+        context = {'person':res_dict}
+    # print(context)
+    return render(request, 'performanceList.html', context)
+    # t = get_template('performanceList.html')
+    # html = t.render()
+    # return HttpResponse(html)
 
 def performanceListiOS(request):
-    t = get_template('performanceListiOS.html')
-    html = t.render()
-    return HttpResponse(html)
+    res = Server.getPTResultslistJson(request)
+    res_dict = eval(res)
+    if res_dict['code'] == -1:
+        # print("fail")
+        context = {'person': None}
+    else:
+        # print('Pass')
+        context = {'person': res_dict}
+    print(context)
+    return render(request, 'performanceListiOS.html', context)
 
 def performance(request):
     res = Server.getPtResultsJson(request)
     res_dict = eval(res)
     if res_dict['code'] == -1:
-        print("fail")
+        #print("fail")
         context = {'person': None}
     else:
-        print('Pass')
+        #print('Pass')
         context = {'person': res_dict,'jss':res}
-    print(context)
+    #print(context)
     return render(request, 'performance.html', context)

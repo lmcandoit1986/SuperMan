@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '&@)h=2%x5_$)k@&0sn$=9@n_79ma_w77%y(6tbm0emw-2c*%ar'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -56,7 +56,7 @@ ROOT_URLCONF = 'SuperMan.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR+"/Web/Show",],
+        'DIRS': [BASE_DIR+"/Web/Show"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
