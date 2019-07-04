@@ -2,16 +2,18 @@
 
 ## 主体内容
 
-1. 展示各个平台最近自动化执行结果走势，以及列表展示
-2. 结果页面展示，目前主要是分功能自动化 和 性能自动化（App）结果
++ 展示各个平台最近自动化执行情况,以及列表展示
++ 结果页面展示   
+1）功能自动化结果页面   
+2）性能自动化（App）结果页面
 
 ### 实例
 
-[主页面](http://152.136.202.79:9092/web/index)
++ [主页面](http://152.136.202.79:9092/web/index)
 
-[自动化测试结果页面](http://152.136.202.79:9092/web/result/detail?jenkinsId=25&platform=android&test)
++ [自动化测试结果页面](http://152.136.202.79:9092/web/result/detail?jenkinsId=25&platform=android&test)
 
-[性能测试结果页面](http://152.136.202.79:9092/web/performance/detail?jenkinsId=32&platform=iOS)
++ [性能测试结果页面](http://152.136.202.79:9092/web/performance/detail?jenkinsId=32&platform=iOS)
 
 ## 使用相关
 
