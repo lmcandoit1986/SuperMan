@@ -151,9 +151,10 @@ JSON:
 >GET
 
 参数：
->?jenkinsId=32 #结果上传时JenkinsID值，此值尽量保持唯一
+>jenkinsId=32 #结果上传时JenkinsID值，此值尽量保持唯一
 
 >platform=android #结果上传时platform值
 
 举例：
 >http://152.136.202.79:9092/web/performance/detail?jenkinsId=32&platform=iOS
+
