@@ -8,9 +8,10 @@
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/ichartjs/ichart.1.2.min.js"></script>
     <script src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/ichartjs/ichart.1.2.src.js"></script>
+    <script src="https://cdn.bootcss.com/html2canvas/0.4.1/html2canvas.js"></script>
     <title>Tester Home</title>
 </head>
-<body>
+<body id="contbox">
 {% if person %}
 <script>
     $(function(){
@@ -122,6 +123,9 @@
 				<li class="active" href="#statics">
 					统计
 				</li>
+                <li>
+					 <a id="down1" class="down" href="" download="downImg">保存为图片</a>
+				</li>
 			</ul>
 			<div class="row clearfix" style="background-color:#F7F7F7">
 				<div class="col-md-12 column">
@@ -195,5 +199,24 @@
 {% else %}
     参数错误或没有找到对应的结果哦！
 {% endif %}
+<script>
+    //以下是截图代码
+    $(document).ready(function () {
+        html2canvas($("#contbox"), {
+            height: $("#contbox").outerHeight() + 20,
+                width: $("#contbox").outerWidth() + 20  ,
+                onrendered: function(canvas) {
+                    //将canvas画布放大若干倍，然后盛放在较小的容器内，就显得不模糊了
+                    var timestamp = Date.parse(new Date());
+                    //把截取到的图片替换到a标签的路径下载
+                    $("#down1").attr('href',canvas.toDataURL('image/jpeg', 1.0));
+                    //下载下来的图片名字
+                    $("#down1").attr('download',timestamp + '.png') ;
+                    //document.body.appendChild(canvas);
+            }
+            //可以带上宽高截取你所需要的部分内容
+        });
+    });
+</script>
 </body>
 </html>
