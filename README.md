@@ -206,3 +206,19 @@ JSON:
 举例：
 >http://152.136.202.79:9092/web/performance/detail?jenkinsId=32&platform=iOS
 
+#### 接口监控部分
+
+接口：
+>http://152.136.202.79:9092/web/watcher
+
+请求方式：
+>GET
+
+参数：
+>only=1 #结果上传时only值，此值需要保持唯一
+
+举例：
+>http://152.136.202.79:9092/web/watcher?only=1
+
+
+
