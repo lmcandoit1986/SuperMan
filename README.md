@@ -126,6 +126,51 @@ JSON:
             }
     }
     
+    
+#### 接口自动化部分
+##### 接口监控结果上传
+
+接口：
+
+>http://152.136.202.79:9092/server/monitor/push
+
+请求方式:
+>POST
+
+参数：
+>body 按照以下JSON 格式组织自动化测试结果
+
+JSON:
+
+    {
+        'data':{
+            'rt':'2019-7-4 12:00:00', # 触发时间
+            'result':
+                [
+                    {
+                        'model':'医疗', # 所属模块
+                        'api':'preAuthorizationApply.json',# 接口名称
+                        'charger':'负责人',
+                        'caseName':'用例名称',
+                        'res':0 or -1,# -1 为失败，0 pass，有其他状态可以再定义
+                        'useTime':1000,#耗时
+                        'comment':'日志信息',
+                    },
+                    {
+                        'model':'医疗',
+                        'api':'',
+                        'charger':'',
+                        'caseName':'',
+                        'res':'',
+                        'useTime':1000,
+                        'comment':'',
+                    }
+                ]
+        }
+    }
+
+
+
 ### 结果展示
 
 #### 功能自动化部分
