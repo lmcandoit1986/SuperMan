@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/ichartjs/ichart.1.2.min.js"></script>
+    <script src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/ichartjs/ichart.1.2.src.js"></script>
+    <script src="https://cdn.bootcss.com/html2canvas/0.4.1/html2canvas.js"></script>
+    <title>Tester Home</title>
+</head>
+
+<body id="contbox">
+{% if person %}
+
+<script>
+    $(function(){
+            var all = eval('(' + '{{ person|safe }}' + ')');
+			var data = [
+			        	{name : 'Pass',value :100-all.rate ,color:'#4572a7'},
+			        	{name : 'Failed',value : all.rate,color:'#aa4643'},
+
+		        	];
+
+
+			var chart = new iChart.Pie2D({
+				render : 'canvasDiv1',
+				data: data,
+				title : {
+					text : '平安健康险接口监控',
+					height:40,
+					fontsize : 30,
+					color : '#282828'
+				},
+				footnote : {
+					text : '超人监控',
+					color : '#486c8f',
+					fontsize : 12,
+					padding : '0 38'
+				},
+				sub_option : {
+					mini_label_threshold_angle : 40,//迷你label的阀值,单位:角度
+					mini_label:{//迷你label配置项
+						fontsize:20,
+						fontweight:600,
+						color : '#ffffff'
+					},
+					label : {
+						background_color:null,
+						sign:false,//设置禁用label的小图标
+						padding:'0 4',
+						border:{
+							enable:false,
+							color:'#666666'
+						},
+						fontsize:11,
+						fontweight:600,
+						color : '#4572a7'
+					},
+					border : {
+						width : 2,
+						color : '#ffffff'
+					},
+					listeners:{
+						parseText:function(d, t){
+							return d.get('value')+"%";//自定义label文本
+						}
+					}
+				},
+				legend:{
+					enable:true,
+					padding:0,
+					offsetx:120,
+					offsety:50,
+					color:'#3e576f',
+					fontsize:20,//文本大小
+					sign_size:20,//小图标大小
+					line_height:28,//设置行高
+					sign_space:10,//小图标与文本间距
+					border:false,
+					align:'left',
+					background_color : null//透明背景
+				},
+				shadow : true,
+				shadow_blur : 6,
+				shadow_color : '#aaaaaa',
+				shadow_offsetx : 0,
+				shadow_offsety : 0,
+				background_color:'#f1f1f1',
+				align:'right',//右对齐
+				offsetx:-100,//设置向x轴负方向偏移位置60px
+				offset_angle:-90,//逆时针偏移120度
+				width : 1100,
+				height : 500,
+				radius:150
+			});
+			//利用自定义组件构造右侧说明文本
+			chart.plugin(new iChart.Custom({
+					drawFn:function(){
+						//在右侧的位置，渲染说明文字
+						chart.target.textAlign('start')
+						.textBaseline('top')
+						.textFont('600 20px Verdana')
+						.fillText('触发时间:\n'+all.rt+'\n',120,80,false,'#be5985',false,24)
+						.textFont('600 12px Verdana')
+						.fillText('Source:线上环境',120,160,false,'#999999');
+					}
+			}));
+
+			chart.draw();
+		});
+
+
+</script>
+<script>
+    $(function(){
+        var all = eval('(' + '{{ person|safe }}' + ')');
+        var data = new Array();
+        for(var i=0;i<all.passlist.length;i++){
+            item ={name:all.passlist[i].api,value:all.passlist[i].useTime,color:'#b5bcc5'};
+            data.push(item);
+        }
+        var hight_end = data.length *50;
+        var hight_end2 = data.length *45;
+				{#var data = [#}
+				{#        	{name : 'preAuthorizationApply.json',value : 2000,color:'#b5bcc5'},#}
+				{#        	{name : 'preAuthorizationApply.json',value : 1800,color:'#b5bcc5'},#}
+				{#        	{name : 'preAuthorizationApply.json',value : 1500,color:'#b5bcc5'},#}
+				{#        	{name : 'preAuthorizationApply.json',value : 1000,color:'#b5bcc5'},#}
+				{#        	{name : 'preAuthorizationApply.json',value : 900,color:'#b5bcc5'},#}
+				{#        	{name : 'preAuthorizationApply.json',value : 900,color:'#b5bcc5'},#}
+				{#        	{name : 'preAuthorizationApply.json',value : 800,color:'#b5bcc5'},#}
+				{#        	{name : 'preAuthorizationApply.json',value : 780,color:'#b5bcc5'},#}
+				{#        	{name : 'preAuthorizationApply.json',value : 760,color:'#b5bcc5'},#}
+				{#        	{name : 'preAuthorizationApply.json',value : 700,color:'#b5bcc5'},#}
+                {##}
+			    {#    	];#}
+
+				new iChart.Bar2D({
+					render : 'canvasDiv',
+					data: data,
+					title : {
+						text:'请求耗时前10的接口列表',
+						color:'#b5bcc5'
+					},
+					subtitle : {
+						text:'',
+						color:'#afb6c0'
+					},
+					footnote : '',
+					width : 1100,
+					height : hight_end,
+					offsetx:20,
+					coordinate:{
+						width:700,
+						height:hight_end2,
+						grid_color:'#4e5464',
+						axis:{
+							color:'#4e5464',
+							width:[0,0,8,1]
+						},
+						scale:[{
+							 position:'bottom',
+							 start_scale:0,
+							 end_scale:5,
+							 scale_space:200,
+							 label:{color:'#ffffff'},
+							 listeners:{
+								parseText:function(t,x,y){
+									return {text:t}
+								}
+							 }
+						}]
+					},
+					label:{color:'#dcdcdc'},
+					background_color : '#3c4251',
+					sub_option:{
+						listeners:{
+							parseText:function(r,t){
+								return t+'ms';
+							}
+						}
+					},
+					legend:{enable:false}
+				}).draw();
+			});
+
+</script>
+
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+            <ul class="breadcrumb" >
+				<li>
+					 <a href="http://152.136.202.79:9092/web/index">返回主页</a>
+				</li>
+				<li>
+					 <a href="#detail">查看明细</a>
+				</li>
+                <li>
+					 <a href="#usetime">耗时最长接口</a>
+				</li>
+				<li class="active" href="#statics">
+					结果统计
+				</li>
+                <li>
+					 <a id="down1" class="down" href="" download="downImg">保存为图片</a>
+				</li>
+			</ul>
+            <div class="row clearfix" style="background-color:#F7F7F7">
+{#				<div class="col-md-12 column">#}
+					<div style="padding: 1% 2%;" id='canvasDiv1'></div>
+{#				</div>#}
+			</div>
+            <div class="page-header" id="usetime">
+				<h1>
+                    前 10 请求耗时最长的接口
+				</h1>
+			</div>
+            <div class="row clearfix" style="background-color:#F7F7F7">
+{#				<div class="col-md-12 column">#}
+					<div style="padding: 1% 2%;" id='canvasDiv'></div>
+{#				</div>#}
+			</div>
+            <div class="page-header">
+				<h1>
+                    明细 <small>如有疑问，电询</small>
+				</h1>
+			</div>
+			<table class="table table-bordered table-hover" id="detail">
+				<thead>
+					<tr>
+                        <th>
+							业务线
+						</th>
+						<th>
+							接口
+						</th>
+                        <th>
+							负责人
+						</th>
+						<th>
+							用例名称
+						</th>
+						<th>
+							执行结果
+						</th>
+                        <th>
+							响应时间(单位ms）
+						</th>
+						<th>
+							备注
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+                {% for item in dict_data.faillist %}
+                    <tr class="warning">
+                        <th>
+							{{ item.model }}
+						</th>
+						<td>
+							{{ item.api }}
+						</td>
+                        <th>
+							{{ item.charger }}
+						</th>
+						<td>
+							{{ item.caseName }}
+						</td>
+						<td>
+							Failed
+						</td>
+                        <td>
+
+						</td>
+						<td>
+                            {{ item.comment }}
+						</td>
+					</tr>
+                {% endfor %}
+
+                {% for item2 in dict_data.passlist %}
+                    <tr class="success">
+                        <th>
+							{{ item2.model }}
+						</th>
+						<td>
+							{{ item2.api }}
+						</td>
+                        <th>
+							{{ item2.charger }}
+						</th>
+						<td>
+							{{ item2.caseName }}
+						</td>
+						<td>
+							Pass
+						</td>
+                        <td>
+							{{ item2.useTime }}
+						</td>
+						<td>
+                            /
+						</td>
+					</tr>
+                {% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>
+<script>
+    //以下是截图代码
+    $(document).ready(function () {
+        html2canvas($("#contbox"), {
+            height: $("#contbox").outerHeight() + 20,
+                width: $("#contbox").outerWidth() + 20  ,
+                onrendered: function(canvas) {
+                    //将canvas画布放大若干倍，然后盛放在较小的容器内，就显得不模糊了
+                    var timestamp = Date.parse(new Date());
+                    //把截取到的图片替换到a标签的路径下载
+                    $("#down1").attr('href',canvas.toDataURL('image/jpeg', 1.0));
+                    //下载下来的图片名字
+                    $("#down1").attr('download',timestamp + '.png') ;
+                    //document.body.appendChild(canvas);
+            }
+            //可以带上宽高截取你所要的部分内容
+        });
+    });
+</script>
+{% endif %}
+</body>
+</html>

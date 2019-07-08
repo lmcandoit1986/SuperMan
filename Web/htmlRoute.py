@@ -17,6 +17,18 @@ def index(request):
     html = t.render()
     return HttpResponse(html)
 
+def APIWatcher(request):
+    res = Server.getAPIMonitorDataJson(request)
+    res_dict = eval(res)
+    if res_dict['code'] == -1:
+        # print("fail")
+        context = {'person': None}
+    else:
+        # print('Pass')
+        context = {'person': res,'dict_data':res_dict}
+    print(context)
+    return render(request,'CheckAPI.html',context)
+
 def getAndroidList(request):
     res = Server.getResultslistJson(request)
     res_dict = eval(res)
@@ -27,7 +39,7 @@ def getAndroidList(request):
     else:
         # print('Pass')
         context = {'person': res_dict,'rate':res2}
-    # print(context)
+    print(context)
     return render(request, 'listAndroid.html', context)
     # t = get_template('listAndroid.html')
     # html = t.render()
@@ -43,7 +55,7 @@ def getiOSList(request):
     else:
         # print('Pass')
         context = {'person': res_dict, 'rate': res2}
-    print(context)
+    # print(context)
     return render(request, 'listiOS.html', context)
     # t = get_template('listiOS.html')
     # html = t.render()
@@ -58,7 +70,7 @@ def Deatail(request):
     else:
         #print('Pass')
         context = {'person': res_dict}
-    print(context)
+    # print(context)
     return render(request, 'resultDetail.html', context)
 
 def statistics(request):
@@ -110,7 +122,7 @@ def performance(request):
         #print("fail")
         context = {'person': None}
     else:
-        #print('Pass')
+        print('Pass')
         context = {'person': res_dict,'jss':res}
     #print(context)
     return render(request, 'performance.html', context)

@@ -26,3 +26,24 @@ class performanceData(models.Model):
     CodeVersion = models.CharField(max_length=40)
     class Meta:
         db_table = 'performanceData'
+
+class CaseDetail(models.Model):
+    model = models.CharField(max_length=100)
+    api = models.CharField(max_length=100)
+    charger = models.CharField(max_length=100)
+    caseName = models.CharField(max_length=200)
+    result = models.IntegerField()
+    useTime =models.CharField(max_length=100)
+    comment =models.CharField(max_length=1000)
+    all = models.CharField(max_length=128000)
+    only = models.IntegerField()
+    class Meta:
+        db_table = 'CaseDetail'
+
+class listAPIMointor(models.Model):
+    rt = models.CharField(max_length=100)
+    all = models.IntegerField()
+    fail = models.IntegerField()
+    only = models.IntegerField()
+    class Meta:
+        db_table = 'listAPIMointor'

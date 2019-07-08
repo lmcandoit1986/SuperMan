@@ -7,7 +7,7 @@ import simplejson
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from Server.models import resultAll, performanceData
+from Server.models import resultAll, performanceData, listAPIMointor,CaseDetail
 
 
 @csrf_exempt
@@ -45,6 +45,46 @@ def pushResults(request):
     body_json = eval(urllib.parse.unquote(body))
     #print(body_json['data']['sum'])
     resultAll(Jenkinsid=body_json['data']['sum']['Jenkinsid'],sumery=body_json['data']['sum'],detail=body_json['data']['detail'],platform=body_json['data']['sum']['platform']).save()
+    return HttpResponse(simplejson.dumps(200))
+
+@csrf_exempt
+def pushMonitorResults(request):
+    # 接口：server/result/push
+    # 方式：POST
+    # 参数：{ 'data':{
+    #           'sum':{
+    #                 'platform':'android or iOS',
+    #                 'runt':'2019-07-01 12:10:01', 脚本触发的时间标示
+    #                 'model':'HuaweiP9',设备型号
+    #                 'uset':'',脚本执行耗时总长
+    #                 'Jenkinsid':1, 唯一标示，用于获取测试结果
+    #                 'app':'百度',测试App名称，统一即可，也可以写app Package 或 Boundid
+    #                 'all':2,总用例数
+    #                 'fail':1 失败用例数
+    #                   },
+    #             'detail':[
+    #             {
+    #               'caseName':'用例名称',
+    #               'result':0 或者 -1，-1 为失败,
+    #               'comment':'日志信息',
+    #               'pic':'截图信息'
+    #               },
+    #             {
+    #               'caseName':'用例名称',
+    #               'result':0 或者 -1，-1 为失败,
+    #               'comment':'日志信息',
+    #               'pic':'截图信息'
+    #               }
+    #             ]
+    #               }
+    #       }
+    body = (request.body).decode()
+    body_json = eval(urllib.parse.unquote(body))
+    listAPIMointor(rt=body_json['data']['rt'],only=body_json['data']['only'],all=body_json['data']['allCaseNum'],fail=body_json['data']['FailCaseName']).save()
+    for item in body_json['data']['result']:
+        CaseDetail(model=item['model'],api=item['api'],charger=item['charger'],caseName=item['caseName'],result=item['res'],useTime=item['useTime'],comment=item['comment'],all=item,only=body_json['data']['only']).save()
+    #print(body_json['data']['sum'])
+    # resultAll(Jenkinsid=body_json['data']['sum']['Jenkinsid'],sumery=body_json['data']['sum'],detail=body_json['data']['detail'],platform=body_json['data']['sum']['platform']).save()
     return HttpResponse(simplejson.dumps(200))
 
 @csrf_exempt
@@ -294,3 +334,44 @@ def getPTResultslistJson(request):
         result['result']=list
         result['code']=0
         return (simplejson.dumps(result))
+
+def getAPIMonitorDataJson(request):
+    id = request.GET.get('only')
+    #print(id)
+    result ={}
+    object = listAPIMointor.objects.get(only=id)
+    if not object:
+        result['code']=-1
+        result['result']=[]
+        return simplejson.dumps(result)
+    else:
+        Back ={}
+        Back['rt']=object.rt
+        Back['code'] = 0
+        Back['all']=object.all
+        Back['rate']=object.fail/object.all*100
+        failedlistCase = CaseDetail.objects.filter(only=id,result=-1)
+        fail =[]
+        for failitem in failedlistCase:
+            item ={}
+            item['model']=failitem.model
+            item['api'] = failitem.api
+            item['charger'] = failitem.charger
+            item['caseName'] = failitem.caseName
+            item['useTime'] = failitem.useTime
+            item['comment'] = failitem.comment
+            fail.append(item)
+        passlistCase = CaseDetail.objects.filter(only=id, result=0).order_by('-useTime')
+        passlist = []
+        for passitem in passlistCase:
+            item = {}
+            item['model'] = passitem.model
+            item['api'] = passitem.api
+            item['charger'] = passitem.charger
+            item['caseName'] = passitem.caseName
+            item['useTime'] = passitem.useTime
+            item['comment'] = passitem.comment
+            passlist.append(item)
+        Back['faillist']=fail
+        Back['passlist']=passlist
+        return simplejson.dumps(Back)

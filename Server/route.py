@@ -32,7 +32,10 @@ urlpatterns = [
     url(r'server/pt/get',Server.getPtResultsJson),
     url(r'server/result/rate',Server.getRate),
     url(r'server/pt/list',Server.getPTResultslist),
+    url(r'server/monitor/push',Server.pushMonitorResults),
+    url(r'server/monitor/get',Server.getAPIMonitorDataJson),
 
+    url(r'web/watcher',htmlRoute.APIWatcher),
     url(r'web/index',htmlRoute.index),
     url(r'web/list/android',htmlRoute.getAndroidList),
     url(r'web/list/iOS',htmlRoute.getiOSList),
