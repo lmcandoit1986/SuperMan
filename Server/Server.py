@@ -43,7 +43,7 @@ def pushResults(request):
     #       }
     body = (request.body).decode()
     body_json = eval(urllib.parse.unquote(body))
-    #print(body_json['data']['sum'])
+    ##print(body_json['data']['sum'])
     resultAll(Jenkinsid=body_json['data']['sum']['Jenkinsid'],sumery=body_json['data']['sum'],detail=body_json['data']['detail'],platform=body_json['data']['sum']['platform']).save()
     return HttpResponse(simplejson.dumps(200))
 
@@ -83,7 +83,7 @@ def pushMonitorResults(request):
     listAPIMointor(rt=body_json['data']['rt'],only=body_json['data']['only'],all=body_json['data']['allCaseNum'],fail=body_json['data']['FailCaseName']).save()
     for item in body_json['data']['result']:
         CaseDetail(model=item['model'],api=item['api'],charger=item['charger'],caseName=item['caseName'],result=item['res'],useTime=item['useTime'],comment=item['comment'],all=item,only=body_json['data']['only']).save()
-    #print(body_json['data']['sum'])
+    ##print(body_json['data']['sum'])
     # resultAll(Jenkinsid=body_json['data']['sum']['Jenkinsid'],sumery=body_json['data']['sum'],detail=body_json['data']['detail'],platform=body_json['data']['sum']['platform']).save()
     return HttpResponse(simplejson.dumps(200))
 
@@ -137,7 +137,7 @@ def pushPerformanceData(request):
     #       }
     body = (request.body).decode()
     body_json = eval(urllib.parse.unquote(body))
-    #print(body_json['data']['sum'])
+    ##print(body_json['data']['sum'])
     performanceData(fps=body_json['data']['data']['fps'],cpu=body_json['data']['data']['cpu'],mem=body_json['data']['data']['mem'],pageTime=body_json['data']['data']['pt'],startTime=body_json['data']['data']['st'],Jenkinsid=body_json['data']['sum']['Jenkinsid'],Appname=body_json['data']['sum']['app'],model=body_json['data']['sum']['model'],runt=body_json['data']['sum']['runt'],CodeVersion=body_json['data']['sum']['codev'],platform=body_json['data']['sum']['platform']).save()
     return HttpResponse(simplejson.dumps(200))
 
@@ -157,7 +157,7 @@ def getRate(request):
             list = []
             for line in object[:7]:
                 detail =eval(line.sumery)
-                #print(detail)
+                ##print(detail)
                 list.append(100-detail['fail']/detail['all']*100)
             result['result'] = list
             result['code'] = 0
@@ -168,7 +168,7 @@ def getRate(request):
         list = []
         for line in object[:7]:
             detail = eval(line.sumery)
-            # print(detail)
+            # #print(detail)
             list.append(100 - detail['fail'] / detail['all'] * 100)
         result['android'] = list
         result['code'] = 0
@@ -176,19 +176,17 @@ def getRate(request):
         list1 = []
         for line in object[:7]:
             detail = eval(line.sumery)
-            # print(detail)
+            # #print(detail)
             list1.append(100 - detail['fail'] / detail['all'] * 100)
         result['ios'] = list1
         return (simplejson.dumps(result))
 
-
 def delResults(request):
     id = (request.GET.get('id'))
-    #print(id)
+    ##print(id)
     object = resultAll.objects.filter(id=id)
     object.delete()
     return HttpResponse(simplejson.dumps(200))
-
 
 def getResults(request):
     # 接口：server/result/get
@@ -196,7 +194,7 @@ def getResults(request):
     # 参数：platform = android or iOS,jenkinsId=01
     id = (request.GET.get('jenkinsId'))
     platform = request.GET.get('platform')
-    #print(id)
+    ##print(id)
     isHave = resultAll.objects.filter(Jenkinsid=id,platform=platform)
     result = {}
     if isHave:
@@ -214,7 +212,7 @@ def getResults(request):
 
 def getPtResultsJson(request):
     id = (request.GET.get('jenkinsId'))
-    #print(id)
+    ##print(id)
     isHave = performanceData.objects.filter(Jenkinsid=id)
     result = {}
     if isHave:
@@ -238,10 +236,9 @@ def getPtResultsJson(request):
         result['result'] = {}
         return simplejson.dumps(result)
 
-
 def getResultslist(request):
     id = request.GET.get('platform')
-    #print(id)
+    ##print(id)
     result ={}
     object = resultAll.objects.filter(platform=id).order_by('-id')
     if not object:
@@ -262,7 +259,7 @@ def getResultslist(request):
 
 def getResultslistJson(request):
     id = request.GET.get('platform')
-    #print(id)
+    ##print(id)
     result ={}
     object = resultAll.objects.filter(platform=id).order_by('-id')
     if not object:
@@ -283,7 +280,7 @@ def getResultslistJson(request):
 
 def getPTResultslist(request):
     id = request.GET.get('platform')
-    #print(id)
+    ##print(id)
     result ={}
     object = performanceData.objects.filter(platform=id).order_by('-id')
     if not object:
@@ -310,7 +307,7 @@ def getPTResultslist(request):
 
 def getPTResultslistJson(request):
     id = request.GET.get('platform')
-    #print(id)
+    ##print(id)
     result ={}
     object = performanceData.objects.filter(platform=id).order_by('-id')
     if not object:
@@ -337,7 +334,7 @@ def getPTResultslistJson(request):
 
 def getAPIMonitorDataJson(request):
     id = request.GET.get('only')
-    #print(id)
+    ##print(id)
     result ={}
     object = listAPIMointor.objects.get(only=id)
     if not object:
@@ -369,9 +366,31 @@ def getAPIMonitorDataJson(request):
             item['api'] = passitem.api
             item['charger'] = passitem.charger
             item['caseName'] = passitem.caseName
-            item['useTime'] = passitem.useTime
+            item['useTime'] = passitem.useTimer
             item['comment'] = passitem.comment
             passlist.append(item)
         Back['faillist']=fail
         Back['passlist']=passlist
         return simplejson.dumps(Back)
+
+def getAPIMonitorRateJson(request):
+    object = listAPIMointor.objects.filter().order_by('-id')
+    result = {}
+    listrate=[]
+    listall=[]
+    if not object:
+        result['code']=-1
+        result['result']=[]
+        return simplejson.dumps(result)
+    else:
+        for item in object:
+            back ={}
+            back['rate']=100-item.fail/item.all*100
+            back['only']=item.only
+            back['rt']=item.rt
+            listrate.append(100-item.fail/item.all*100)
+            listall.append(back)
+        result['code']=0
+        result['result']=listall
+        result['rate']=listrate
+        return simplejson.dumps(result)

@@ -26,7 +26,7 @@ def APIWatcher(request):
     else:
         # print('Pass')
         context = {'person': res,'dict_data':res_dict}
-    print(context)
+    # print(context)
     return render(request,'CheckAPI.html',context)
 
 def getAndroidList(request):
@@ -39,11 +39,20 @@ def getAndroidList(request):
     else:
         # print('Pass')
         context = {'person': res_dict,'rate':res2}
-    print(context)
+    # print(context)
     return render(request, 'listAndroid.html', context)
-    # t = get_template('listAndroid.html')
-    # html = t.render()
-    # return HttpResponse(html)
+
+def getAPIMonitorList(request):
+    res = Server.getAPIMonitorRateJson(request)
+    res_dict = eval(res)
+    if res_dict['code'] == -1:
+        # print("fail")
+        context = {'person': None}
+    else:
+        # print('Pass')
+        context = {'person': res,'JS':res_dict}
+    # print(context)
+    return render(request, 'listAPIMonitor.html', context)
 
 def getiOSList(request):
     res = Server.getResultslistJson(request)
@@ -112,7 +121,7 @@ def performanceListiOS(request):
     else:
         # print('Pass')
         context = {'person': res_dict}
-    print(context)
+    # print(context)
     return render(request, 'performanceListiOS.html', context)
 
 def performance(request):
@@ -122,7 +131,7 @@ def performance(request):
         #print("fail")
         context = {'person': None}
     else:
-        print('Pass')
+        # print('Pass')
         context = {'person': res_dict,'jss':res}
     #print(context)
     return render(request, 'performance.html', context)

@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'server/pt/list',Server.getPTResultslist),
     url(r'server/monitor/push',Server.pushMonitorResults),
     url(r'server/monitor/get',Server.getAPIMonitorDataJson),
+    url(r'server/monitor/list',Server.getAPIMonitorRateJson),
 
     url(r'web/watcher',htmlRoute.APIWatcher),
     url(r'web/index',htmlRoute.index),
@@ -44,6 +45,7 @@ urlpatterns = [
     url(r'web/performance/detail',htmlRoute.performance),
     url(r'web/performance/list/android',htmlRoute.performanceListAndroid),
     url(r'web/performance/list/ios',htmlRoute.performanceListiOS),
+    url(r'web/api/monitor/list',htmlRoute.getAPIMonitorList),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

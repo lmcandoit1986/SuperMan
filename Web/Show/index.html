@@ -65,27 +65,17 @@
 						</div>
                         <div class="panel panel-default">
 							<div class="panel-heading">
-								 <a class="panel-title" data-toggle="collapse" data-parent="#panel-899165" href="#panel-element-788457">Web</a>
+								 <a class="panel-title" data-toggle="collapse" data-parent="#panel-899165" href="#panel-element-788457">Server</a>
 							</div>
 							<div id="panel-element-788457" class="panel-collapse collapse">
+                                <div class="panel-body" id="api-monitor">
+									监控
+								</div>
 								<div class="panel-body">
 									自动化
 								</div>
                                 <div class="panel-body">
 									性能
-								</div>
-							</div>
-						</div>
-                        <div class="panel panel-default">
-							<div class="panel-heading">
-								 <a class="panel-title" data-toggle="collapse" data-parent="#panel-899165" href="#panel-element-788458">Server</a>
-							</div>
-							<div id="panel-element-788458" class="panel-collapse collapse">
-								<div class="panel-body">
-									自动化
-								</div>
-                                <div class="panel-body">
-									性能/监控
 								</div>
 							</div>
 						</div>
@@ -154,6 +144,14 @@
             $(".panel-body.active_tab_self").removeClass("active_tab_self");
             $(this).addClass("active_tab_self");
             $.get("web/performance/list/ios?platform=iOS",function (data) {
+                $("#context").empty();
+                $("#context").html(data);
+            });
+        });
+        $("#api-monitor").click(function () {
+            $(".panel-body.active_tab_self").removeClass("active_tab_self");
+            $(this).addClass("active_tab_self");
+            $.get("web/api/monitor/list",function (data) {
                 $("#context").empty();
                 $("#context").html(data);
             });
