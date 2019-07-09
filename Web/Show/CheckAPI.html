@@ -277,10 +277,16 @@
 
 						</td>
 						<td>
-                            {{ item.comment }}
+                            {{ item.comment |truncatechars:"100"}}<a onclick="test('{{item.comment|safe}}')">点击查看全部日志</a>
 						</td>
 					</tr>
                 {% endfor %}
+                <script>
+                    function test(data) {
+                        console.log(data);
+                        alert(data);
+                    };
+                </script>
 
                 {% for item2 in dict_data.passlist %}
                     <tr class="success">
