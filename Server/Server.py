@@ -366,7 +366,7 @@ def getAPIMonitorDataJson(request):
             item['api'] = passitem.api
             item['charger'] = passitem.charger
             item['caseName'] = passitem.caseName
-            item['useTime'] = passitem.useTimer
+            item['useTime'] = passitem.useTime
             item['comment'] = passitem.comment
             passlist.append(item)
         Back['faillist']=fail
