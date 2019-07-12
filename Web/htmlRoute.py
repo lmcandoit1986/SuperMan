@@ -22,8 +22,8 @@ def APIWatcher(request):
     else:
         # #print('Pass')
         context = {'person': res,'dict_data':res_dict}
-    # #print(context)
-    
+    # print(context)
+
     return render(request,'CheckAPI.html',context)
 
 def getAndroidList(request):
