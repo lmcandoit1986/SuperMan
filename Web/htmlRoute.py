@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
 # coding=UTF-8
 
-# def testnew(request):
-#     rrrr = Jobs.objects.all()
-#     context = {'person': rrrr}
-#     return render(request, 'TestNew.html', context)
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import get_template
@@ -27,6 +23,7 @@ def APIWatcher(request):
         # #print('Pass')
         context = {'person': res,'dict_data':res_dict}
     # #print(context)
+    
     return render(request,'CheckAPI.html',context)
 
 def getAndroidList(request):
@@ -39,7 +36,7 @@ def getAndroidList(request):
     else:
         # #print('Pass')
         context = {'person': res_dict,'rate':res2}
-    # #print(context)
+    # print(context)
     return render(request, 'listAndroid.html', context)
 
 def getAPIMonitorList(request):
