@@ -383,7 +383,7 @@ def getAPIMonitorRateJson(request):
         result['result']=[]
         return simplejson.dumps(result)
     else:
-        for item in object:
+        for item in object[:7]:
             back ={}
             back['rate']=100-item.fail/item.all*100
             back['only']=item.only
