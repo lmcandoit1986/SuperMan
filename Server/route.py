@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
-from Server import Server
+from Server import Server, views
 from SuperMan import settings
 from Web import htmlRoute
 
@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'server/monitor/push',Server.pushMonitorResults),
     url(r'server/monitor/get',Server.getAPIMonitorDataJson),
     url(r'server/monitor/list',Server.getAPIMonitorRateJson),
+    url(r'server/monitor/del',views.del_listAPIMointor),
 
     url(r'web/watcher',htmlRoute.APIWatcher),
     url(r'web/index',htmlRoute.index),
