@@ -10,10 +10,11 @@ https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/
 import os
 import sys
 
-sys.path.append('/usr/lib/python3.5/site-packages')
-sys.path.append('/usr/lib64/python3.5/site-packages')
-from django.core.wsgi import get_wsgi_application
+from os.path import dirname, abspath
 
+PROJECT_DIR = dirname(dirname(abspath(__file__)))
+sys.path.insert(0, PROJECT_DIR)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "SuperMan.settings")
 
+from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
