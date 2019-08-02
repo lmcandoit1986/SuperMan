@@ -16,7 +16,7 @@ def APIWatcher(request):
     res = Server.getAPIMonitorDataJson(request)
     res_dict = eval(res)
     if res_dict['code'] == -1:
-        # print("fail")
+        print("fail")
         context = {'person': None}
     else:
         # print('Pass')

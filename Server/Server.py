@@ -157,7 +157,6 @@ def getRate(request):
             list = []
             for line in object[:7]:
                 detail =eval(line.sumery)
-                ##print(detail)
                 list.append(100-detail['fail']/detail['all']*100)
             result['result'] = list
             result['code'] = 0
@@ -168,7 +167,6 @@ def getRate(request):
         list = []
         for line in object[:7]:
             detail = eval(line.sumery)
-            # #print(detail)
             list.append(100 - detail['fail'] / detail['all'] * 100)
         result['android'] = list
         result['code'] = 0
@@ -176,7 +174,6 @@ def getRate(request):
         list1 = []
         for line in object[:7]:
             detail = eval(line.sumery)
-            # #print(detail)
             list1.append(100 - detail['fail'] / detail['all'] * 100)
         result['ios'] = list1
         return (simplejson.dumps(result))
