@@ -436,7 +436,10 @@ def getAPIMonitorRateJson(request):
         return simplejson.dumps(result)
 
 def print_Log(api,context):
-    print('{0}--{1}-{2}'.format(currentTime(), api, context))
+    # print('{0}--{1}-{2}'.format(currentTime(), api, context))
+    fp = open('/work/log','a')
+    fp.write('{0}--{1}-{2}'.format(currentTime(), api, context))
+    fp.close()
 
 def currentTime():
     return time.strftime("%Y%m%d%H%M%S", time.localtime())
