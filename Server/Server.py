@@ -338,6 +338,8 @@ def getAPIMonitorDataJson(request):
         result['result'] = []
         return simplejson.dumps(result)
     else:
+        print('have')
+        object = listAPIMointor.objects.get(only=id)
         Back = {}
         Back['rt'] = object.rt
         Back['code'] = 0
