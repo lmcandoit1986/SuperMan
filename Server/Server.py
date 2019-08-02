@@ -43,7 +43,6 @@ def pushResults(request):
     #       }
     body = (request.body).decode()
     body_json = eval(urllib.parse.unquote(body))
-    ##print(body_json['data']['sum'])
     resultAll(Jenkinsid=body_json['data']['sum']['Jenkinsid'],sumery=body_json['data']['sum'],detail=body_json['data']['detail'],platform=body_json['data']['sum']['platform']).save()
     return HttpResponse(simplejson.dumps(200))
 
@@ -331,24 +330,24 @@ def getPTResultslistJson(request):
 
 def getAPIMonitorDataJson(request):
     id = request.GET.get('only')
-    ##print(id)
-    result ={}
-    object = listAPIMointor.objects.get(only=id)
-    if not object:
-        result['code']=-1
-        result['result']=[]
+    result = {}
+    isHave = listAPIMointor.objects.filter(only=id)
+    if not isHave:
+        print('none')
+        result['code'] = -1
+        result['result'] = []
         return simplejson.dumps(result)
     else:
-        Back ={}
-        Back['rt']=object.rt
+        Back = {}
+        Back['rt'] = object.rt
         Back['code'] = 0
-        Back['all']=object.all
-        Back['rate']=object.fail/object.all*100
-        failedlistCase = CaseDetail.objects.filter(only=id,result=-1)
+        Back['all'] = object.all
+        Back['rate'] = object.fail/object.all*100
+        failedlistCase = CaseDetail.objects.filter(only=id, result=-1)
         fail =[]
         for failitem in failedlistCase:
-            item ={}
-            item['model']=failitem.model
+            item = {}
+            item['model'] = failitem.model
             item['api'] = failitem.api
             item['charger'] = failitem.charger
             item['caseName'] = failitem.caseName
@@ -382,9 +381,9 @@ def getAPIMonitorRateJson(request):
     else:
         for item in object[:7]:
             back ={}
-            back['rate']=100-item.fail/item.all*100
-            back['only']=item.only
-            back['rt']=item.rt
+            back['rate'] = 100-item.fail/item.all*100
+            back['only'] = item.only
+            back['rt'] = item.rt
             listrate.append(100-item.fail/item.all*100)
             listall.append(back)
         result['code']=0
