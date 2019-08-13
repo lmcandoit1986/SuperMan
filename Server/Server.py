@@ -218,6 +218,7 @@ def getResults(request):
     if isHave:
         object = resultAll.objects.get(Jenkinsid=id,platform=platform)
         result['code'] = 0
+        result['id'] = object.id
         back = {}
         back['sum']=eval(object.sumery)
         back['detail'] = eval(object.detail)
@@ -238,6 +239,7 @@ def getPtResultsJson(request):
     if isHave:
         object = performanceData.objects.get(Jenkinsid=id)
         result['code'] = 0
+        result['id'] = object.id
         back = {}
         back['platform']=object.platform
         back['jenkinsId'] = id
@@ -380,6 +382,7 @@ def getAPIMonitorDataJson(request):
         object = listAPIMointor.objects.get(only=id)
         Back = {}
         Back['rt'] = object.rt
+        Back['id'] = object.id
         Back['code'] = 0
         Back['all'] = object.all
         Back['rate'] = object.fail/object.all*100
