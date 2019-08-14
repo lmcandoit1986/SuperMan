@@ -59,7 +59,10 @@ def pushResults(request):
         object = resultAll.objects.get(Jenkinsid=body_json['data']['sum']['Jenkinsid'],platform=body_json['data']['sum']['platform'])
 
         print_Log(api, '保存成功')
-        return HttpResponse(simplejson.dumps(object.id))
+        result ={}
+        result['code'] = 0
+        result['msg'] = 'id={0}'.format(object.id)
+        return HttpResponse(simplejson.dumps(result))
 
 @csrf_exempt
 def pushMonitorResults(request):
