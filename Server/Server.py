@@ -53,16 +53,22 @@ def pushResults(request):
         result['msg'] = '数据库已存在该jenkinsid'
         return HttpResponse(simplejson.dumps(result))
     else:
-        resultAll(Jenkinsid=body_json['data']['sum']['Jenkinsid'],sumery=body_json['data']['sum'],
-                  detail=body_json['data']['detail'],
-                  platform=body_json['data']['sum']['platform']).save()
-        object = resultAll.objects.get(Jenkinsid=body_json['data']['sum']['Jenkinsid'],platform=body_json['data']['sum']['platform'])
+        if body_json['data']['detail']:
+            resultAll(Jenkinsid=body_json['data']['sum']['Jenkinsid'],sumery=body_json['data']['sum'],
+                      detail=body_json['data']['detail'],
+                      platform=body_json['data']['sum']['platform']).save()
+            object = resultAll.objects.get(Jenkinsid=body_json['data']['sum']['Jenkinsid'],platform=body_json['data']['sum']['platform'])
 
-        print_Log(api, '保存成功')
-        result ={}
-        result['code'] = 0
-        result['msg'] = 'id={0}'.format(object.id)
-        return HttpResponse(simplejson.dumps(result))
+            print_Log(api, '保存成功')
+            result ={}
+            result['code'] = 0
+            result['msg'] = 'id={0}'.format(object.id)
+            return HttpResponse(simplejson.dumps(result))
+        else:
+            result = {}
+            result['code'] = 101
+            result['msg'] = '用例为空'
+            return HttpResponse(simplejson.dumps(result))
 
 @csrf_exempt
 def pushMonitorResults(request):
