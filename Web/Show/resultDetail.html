@@ -221,7 +221,7 @@
 					</tr>
 				</thead>
 				<tbody>
-                {% if person.result.sum.fail > 0 %}
+
                     {% for item in person.result.detail %}
                         {% if item.result == 0 %}
                             <tr class="">
@@ -242,11 +242,7 @@
                     {% endfor %}
                     </tbody>
                     </table>
-                {% else %}
-                    </tbody>
-                    </table>
-                    <h1><strong>全部通过了哦，继续努力！</strong></h1>
-                {% endif %}
+
             <br>
 
 			 <span class="label label-success">Tester Home</span>

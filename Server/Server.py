@@ -50,7 +50,7 @@ def pushResults(request):
     if objects:
         result = {}
         result['code'] = 100
-        result['msg'] = '数据库已存在该jenkinsid'
+        result['msg'] = '数据库已存在该jenkinsid,请检查后重试'
         return HttpResponse(simplejson.dumps(result))
     else:
         if body_json['data']['detail']:
