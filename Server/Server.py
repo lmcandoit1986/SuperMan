@@ -46,11 +46,20 @@ def pushResults(request):
     body = (request.body).decode()
     body_json = eval(urllib.parse.unquote(body))
     print_Log(api, body_json)
-    resultAll(Jenkinsid=body_json['data']['sum']['Jenkinsid'],sumery=body_json['data']['sum'],
-              detail=body_json['data']['detail'],
-              platform=body_json['data']['sum']['platform']).save()
-    print_Log(api, '保存成功')
-    return HttpResponse(simplejson.dumps(200))
+    objects = resultAll.objects.filter(Jenkinsid=body_json['data']['sum']['Jenkinsid'],platform=body_json['data']['sum']['platform'])
+    if objects:
+        result = {}
+        result['code'] = 100
+        result['msg'] = '数据库已存在该jenkinsid'
+        return HttpResponse(simplejson.dumps(result))
+    else:
+        resultAll(Jenkinsid=body_json['data']['sum']['Jenkinsid'],sumery=body_json['data']['sum'],
+                  detail=body_json['data']['detail'],
+                  platform=body_json['data']['sum']['platform']).save()
+        object = resultAll.objects.get(Jenkinsid=body_json['data']['sum']['Jenkinsid'],platform=body_json['data']['sum']['platform'])
+
+        print_Log(api, '保存成功')
+        return HttpResponse(simplejson.dumps(object.id))
 
 @csrf_exempt
 def pushMonitorResults(request):
@@ -300,11 +309,13 @@ def getResultslistJson(request):
         list =[]
         for line in object[:7]:
             item ={}
+            item['id'] = line.id
             item['sum']=eval(line.sumery)
             list.append(item)
         Back['all']=list
         result['result']=list
         result['code']=0
+
         print_Log(api, result)
         return simplejson.dumps(result)
 

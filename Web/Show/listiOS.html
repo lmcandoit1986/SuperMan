@@ -63,6 +63,9 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
+                        <th class="col-md-1 column">
+							index
+						</th>
 						<th class="col-md-3 column">
 							执行时间
 						</th>
@@ -83,6 +86,9 @@
 				<tbody id="list">
                 {% for item in person.result %}
                     <tr class="success">
+                        <th>
+							{{ item.id|default:"未知" }}
+						</th>
 						<th>
 							{{ item.sum.runt|default:"未知" }}
 						</th>
