@@ -106,7 +106,7 @@ def pushMonitorResults(request):
         CaseDetail(model=item['model'],api=item['api'],charger=item['charger'],caseName=item['caseName'],
                    result=item['res'],useTime=item['useTime'],comment=item['comment'],
                    all=item,only=body_json['data']['only']).save()
-    print_Log(api, '保存成功')
+    # print_Log(api, '保存成功')
     return HttpResponse(simplejson.dumps(200))
 
 @csrf_exempt
