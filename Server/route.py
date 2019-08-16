@@ -24,6 +24,7 @@ from Web import htmlRoute
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'server/result/push',Server.pushResults),
+    url(r'server/result/v2/push',Server.pushResultsV2),
     url(r'server/result/del',Server.delResults),
     url(r'server/result/get',Server.getResults),
     url(r'server/result/list',Server.getResultslist),
@@ -42,6 +43,7 @@ urlpatterns = [
     url(r'web/list/android',htmlRoute.getAndroidList),
     url(r'web/list/iOS',htmlRoute.getiOSList),
     url(r'web/result/detail',htmlRoute.Deatail),
+    url(r'web/result/v2/detail',htmlRoute.Deatailv2),
     url(r'web/result/default',htmlRoute.statistics),
     url(r'web/performance/detail',htmlRoute.performance),
     url(r'web/performance/list/android',htmlRoute.performanceListAndroid),

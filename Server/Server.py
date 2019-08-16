@@ -8,7 +8,7 @@ import simplejson
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
-from Server.models import resultAll, performanceData, listAPIMointor,CaseDetail
+from Server.models import resultAll, performanceData, listAPIMointor, CaseDetail, UICaseDetail
 
 
 @csrf_exempt
@@ -58,7 +58,6 @@ def pushResults(request):
                       detail=body_json['data']['detail'],
                       platform=body_json['data']['sum']['platform']).save()
             object = resultAll.objects.get(Jenkinsid=body_json['data']['sum']['Jenkinsid'],platform=body_json['data']['sum']['platform'])
-
             print_Log(api, '保存成功')
             result ={}
             result['code'] = 0
@@ -69,6 +68,68 @@ def pushResults(request):
             result['code'] = 101
             result['msg'] = '用例为空'
             return HttpResponse(simplejson.dumps(result))
+
+@csrf_exempt
+def pushResultsV2(request):
+    api = 'server/result/push'
+    # 接口：server/result/push
+    # 方式：POST
+    # 参数：{ 'data':{
+    #           'sum':{
+    #                 'platform':'android or iOS',
+    #                 'runt':'2019-07-01 12:10:01', 脚本触发的时间标示
+    #                 'model':'HuaweiP9',设备型号
+    #                 'uset':'',脚本执行耗时总长
+    #                 'Jenkinsid':1, 唯一标示，用于获取测试结果
+    #                 'app':'百度',测试App名称，统一即可，也可以写app Package 或 Boundid
+    #                 'all':2,总用例数
+    #                 'fail':1 失败用例数
+    #                   },
+    #             'detail':[
+    #             {
+    #               'caseName':'用例名称',
+    #               'result':0 或者 -1，-1 为失败,
+    #               'comment':'日志信息',
+    #               'pic':'截图信息'
+    #               },
+    #             {
+    #               'caseName':'用例名称',
+    #               'result':0 或者 -1，-1 为失败,
+    #               'comment':'日志信息',
+    #               'pic':'截图信息'
+    #               }
+    #             ]
+    #               }
+    #       }
+    body = (request.body).decode()
+    body_json = eval(urllib.parse.unquote(body))
+    print_Log(api, body_json)
+    objects = resultAll.objects.filter(Jenkinsid=body_json['data']['sum']['Jenkinsid'],platform=body_json['data']['sum']['platform'])
+    if objects:
+        result = {}
+        result['code'] = 100
+        result['msg'] = '数据库已存在该jenkinsid,请检查后重试'
+        return HttpResponse(simplejson.dumps(result))
+    else:
+        if body_json['data']['detail']:
+            resultAll(Jenkinsid=body_json['data']['sum']['Jenkinsid'],sumery=body_json['data']['sum'],
+                      detail=body_json['data']['detail'],
+                      platform=body_json['data']['sum']['platform']).save()
+            object = resultAll.objects.get(Jenkinsid=body_json['data']['sum']['Jenkinsid'],platform=body_json['data']['sum']['platform'])
+            for item in body_json['data']['detail']:
+                UICaseDetail(model=item['model'],case=item['case'],caseName=item['caseName'],result=item['result'],useTime=item['useTime'],
+                             comment=item['comment'],pic=item['pic'],listid=object.id,all=item).save()
+            print_Log(api, '保存成功')
+            result ={}
+            result['code'] = 0
+            result['msg'] = 'id={0}'.format(object.id)
+            return HttpResponse(simplejson.dumps(result))
+        else:
+            result = {}
+            result['code'] = 101
+            result['msg'] = '用例为空'
+            return HttpResponse(simplejson.dumps(result))
+
 
 @csrf_exempt
 def pushMonitorResults(request):
@@ -240,6 +301,62 @@ def getResults(request):
         back = {}
         back['sum']=eval(object.sumery)
         back['detail'] = eval(object.detail)
+        result['result']=back
+        print_Log(api, result)
+        return simplejson.dumps(result)
+    else:
+        result['code'] = -1
+        result['result'] = {}
+        print_Log(api, result)
+        return simplejson.dumps(result)
+
+def getResultsv2(request):
+    # 接口：server/result/get
+    # 方式：GET
+    # 参数：platform = android or iOS,jenkinsId=01
+    api = 'server/result/get'
+    id = (request.GET.get('jenkinsId'))
+    platform = request.GET.get('platform')
+    isHave = resultAll.objects.filter(Jenkinsid=id,platform=platform)
+    result = {}
+    if isHave:
+        object = resultAll.objects.get(Jenkinsid=id,platform=platform)
+        result['code'] = 0
+        result['id'] = object.id
+        back = {}
+        back['sum'] = eval(object.sumery)
+        detail = []
+        print('id:{}'.format(object.id))
+        for model in back['sum']['module']:
+            item ={}
+            item['model'] = model
+            failedlist = UICaseDetail.objects.filter(listid=object.id,model=model,result=-1)
+            listf = []
+            for line in failedlist:
+                item1 ={}
+                item1['case'] =line.case
+                item1['caseName'] = line.caseName
+                item1['useTime'] = line.useTime
+                item1['comment'] = line.comment
+                item1['pic'] = line.pic
+                listf.append(item1)
+
+            item['failed']=listf
+            passlist = UICaseDetail.objects.filter(listid=object.id, model=model, result=0)
+            listp = []
+            for linep in passlist:
+                item1 = {}
+                item1['case'] = linep.case
+                item1['caseName'] = linep.caseName
+                item1['useTime'] = linep.useTime
+                item1['comment'] = linep.comment
+                item1['pic'] = linep.pic
+                print(item1)
+                listp.append(item1)
+            item['pass'] = listp
+            detail.append(item)
+
+        back['detail'] = detail
         result['result']=back
         print_Log(api, result)
         return simplejson.dumps(result)

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/ichartjs/ichart.1.2.min.js"></script>
+    <script src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/ichartjs/ichart.1.2.src.js"></script>
+    <script src="https://cdn.bootcss.com/html2canvas/0.4.1/html2canvas.js"></script>
+    <title>Tester Home</title>
+</head>
+<body id="contbox">
+{% if person %}
+<script>
+    $(function(){
+            platform ='{{ person.result.sum.platform }}'
+            failed =('{{ person.result.sum.fail }}'/'{{ person.result.sum.all }}').toFixed(2)*100
+			var data = [
+			        	{name : 'Pass',value : 100-failed,color:'#32CD32'},
+			        	{name : 'Failed',value : failed,color:'#FF0000'},
+		        	];
+
+			var chart = new iChart.Pie3D({
+				render : 'canvasDiv',
+				data: data,
+				title : {
+					text : '前端自动化执行结果展示',
+					height:40,
+					fontsize : 30,
+					color : '#282828'
+				},
+				footnote : {
+					text : 'tester Home',
+					color : '#486c8f',
+					fontsize : 12,
+					padding : '0 38'
+				},
+				sub_option : {
+					mini_label_threshold_angle : 40,//迷你label的阀值,单位:角度
+					mini_label:{//迷你label配置项
+						fontsize:20,
+						fontweight:600,
+						color : '#E0EEE0'
+					},
+					label : {
+						background_color:null,
+						sign:false,//设置禁用label的小图标
+						padding:'0 4',
+						border:{
+							enable:false,
+							color:'#666666'
+						},
+						fontsize:11,
+						fontweight:600,
+						color : '#4572a7'
+					},
+					border : {
+						width : 2,
+						color : '#ffffff'
+					},
+					listeners:{
+						parseText:function(d, t){
+							return d.get('value')+"%";//自定义label文本
+						}
+					}
+				},
+				legend:{
+					enable:true,
+					padding:0,
+					offsetx:120,
+					offsety:50,
+					color:'#3e576f',
+					fontsize:20,//文本大小
+					sign_size:20,//小图标大小
+					line_height:28,//设置行高
+					sign_space:10,//小图标与文本间距
+					border:false,
+					align:'left',
+					background_color : null//透明背景
+				},
+				shadow : true,
+				shadow_blur : 6,
+				shadow_color : '#aaaaaa',
+				shadow_offsetx : 0,
+				shadow_offsety : 0,
+				background_color:'#f1f1f1',
+				align:'right',//右对齐
+				offsetx:-100,//设置向x轴负方向偏移位置60px
+				offset_angle:-90,//逆时针偏移120度
+				width : 1100,
+				height : 400,
+				radius:150
+			});
+			//利用自定义组件构造右侧说明文本
+			chart.plugin(new iChart.Custom({
+					drawFn:function(){
+						//在右侧的位置，渲染说明文字
+						chart.target.textAlign('start')
+						.textBaseline('top')
+						.textFont('600 20px Verdana')
+						.fillText('平台:'+platform+'\n设备:{{ person.result.sum.model }}\n执行用例数:{{ person.result.sum.all }}\n执行时长:{{ person.result.sum.uset }}',120,80,false,'#be5985',false,24)
+						.textFont('600 12px Verdana')
+						.fillText('',120,160,false,'#999999');
+					}
+			}));
+
+			chart.draw();
+		});
+
+</script>
+<div class="container">
+	<div class="row clearfix" >
+		<div class="col-md-12 column" >
+        <div class="row" style="background-color: #00a2ca;">
+				<div class="col-md-2 column">
+					<img src="https://pa18-pweb.pingan.com/upload/chnapp/pc/uploads/img/category/2018/12/28/15460001169797.png" height="100px" width="300px">
+				</div>
+				<div class="col-md-8 column">
+					 <a style="display: block;height: 80px ;font-size: 55px;text-align: center;text-align-all: center;text-decoration: none;color: #fff;"> <strong>Tester Home .</strong> </a>
+				</div>
+				<div class="col-md-2 column">
+					<a style="text-align: left;"></a>
+				</div>
+			</div>
+			<ul class="breadcrumb" >
+				<li>
+					 <a href="http://152.136.202.79:9092/web/index">返回主页</a>
+				</li>
+				<li>
+					 <a href="#list">查看明细</a>
+				</li>
+				<li class="active" href="#statics">
+					统计
+				</li>
+                <li>
+					 <a id="down1" class="down" href="" download="downImg">保存为图片</a>
+				</li>
+			</ul>
+			<div class="row">
+				<div class="col-md-12 column">
+					<div style="padding: 1% 1%;" id='canvasDiv'></div>
+				</div>
+			</div>
+            {% for item in person.result.detail %}
+			<div class="page-header">
+				<h1>
+					模块:{{ item.model }}
+				</h1>
+			</div>
+			<table class="table table-striped" id="list">
+				<thead>
+					<tr>
+						<th class="col-md-2 column">
+							用例名称
+						</th>
+                        <th class="col-md-1 column">
+							执行结果
+						</th>
+						<th class="col-md-1 column">
+							用时
+						</th>
+						<th class="col-md-4 column">
+							日志信息
+						</th>
+						<th class="col-md-2 column">
+							截图/录屏信息
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+                {% for fail in item.failed %}
+                    <tr class="">
+                            <td>
+                                {{ fail.caseName }}
+                            </td>
+                            <td>
+                                Failed
+                            </td>
+                            <td>
+                                {{ fail.useTime }} 秒
+                            </td>
+                            <td >
+                                {{ fail.comment |truncatechars:"100"}}<a onclick="test('{{fail.comment|safe}}')">点击查看全部日志</a>
+                            </td>
+                            <td>
+                                {% if not fail.pic == '' %}
+                                    <a href='{{ fail.pic}}'>
+                                        <img src='{{ fail.pic }}' padding="10% 0%" width="150" height="300">
+                                    </a>
+                                    {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% for passitem in item.pass %}
+                    <tr class="">
+                            <td>
+                                {{ passitem.caseName }}
+                            </td>
+                            <td>
+                                Pass
+                            </td>
+                            <td>
+                                {{ passitem.useTime }} 秒
+                            </td>
+                            <td >
+                                /
+                            </td>
+                            <td>
+                                /
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                    {% endfor %}
+            <br>
+
+			 <span class="label label-success">Tester Home</span>
+		</div>
+	</div>
+</div>
+    <script>
+        function test(data) {
+            console.log(data);
+            alert(data);
+        };
+    </script>
+{% else %}
+    参数错误或没有找到对应的结果哦！
+{% endif %}
+<script defer="defer">
+    $(document).ready(function () {
+        html2canvas($("#contbox"), {
+            height: $("#contbox").outerHeight() + 20,
+                width: $("#contbox").outerWidth() + 20  ,
+                onrendered: function(canvas) {
+                    var timestamp = Date.parse(new Date());
+                    $("#down1").attr('href',canvas.toDataURL('image/jpeg', 1.0));
+                    $("#down1").attr('download',timestamp + '.png') ;
+            }
+        });
+    });
+</script>
+</body>
+</html>

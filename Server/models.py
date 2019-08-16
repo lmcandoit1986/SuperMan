@@ -40,6 +40,19 @@ class CaseDetail(models.Model):
     class Meta:
         db_table = 'CaseDetail'
 
+class UICaseDetail(models.Model):
+    model = models.CharField(max_length=100)
+    case = models.CharField(max_length=100)
+    caseName = models.CharField(max_length=200)
+    result = models.IntegerField()
+    useTime =models.CharField(max_length=100)
+    comment =models.CharField(max_length=1000)
+    all = models.CharField(max_length=128000)
+    pic = models.CharField(max_length=1000)
+    listid = models.IntegerField()
+    class Meta:
+        db_table = 'UICaseDetail'
+
 class listAPIMointor(models.Model):
     rt = models.CharField(max_length=100)
     all = models.IntegerField()
