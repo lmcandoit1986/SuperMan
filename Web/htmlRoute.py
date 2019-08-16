@@ -34,7 +34,7 @@ def getAndroidList(request):
     else:
         # print('Pass')
         context = {'person': res_dict,'rate':res2}
-    # print(context)
+    print(context)
     return render(request, 'listAndroid.html', context)
 
 def getAPIMonitorList(request):
@@ -74,6 +74,18 @@ def Deatail(request):
     # print(context)
     return render(request, 'resultDetail.html', context)
 
+def Deatailv2(request):
+    res = Server.getResultsv2(request)
+    res_dict = eval(res)
+    if res_dict['code'] == -1:
+        # print("fail")
+        context = {'person': None}
+    else:
+        # print('Pass')
+        context = {'person': res_dict}
+    # print(context)
+    return render(request, 'resultDetailv2.html', context)
+
 def statistics(request):
     res = Server.getRate(request)
     res_dict = eval(res)
@@ -108,7 +120,7 @@ def performanceListiOS(request):
     else:
         # print('Pass')
         context = {'person': res_dict}
-    # print(context)
+    print(context)
     return render(request, 'performanceListiOS.html', context)
 
 def performance(request):
