@@ -255,7 +255,7 @@ def getRate(request):
             list = []
             for line in object[:7]:
                 detail =eval(line.sumery)
-                list.append(100-round(detail['fail']/detail['all'],2)*100)
+                list.append(100-detail['fail']* 100//detail['all'])
             result['result'] = list
             result['code'] = 0
             print_Log(api, result)
@@ -266,14 +266,14 @@ def getRate(request):
         list = []
         for line in object[:7]:
             detail = eval(line.sumery)
-            list.append(100 - round(detail['fail']/detail['all'],2) * 100)
+            list.append(100 - detail['fail']* 100//detail['all'])
         result['android'] = list
         result['code'] = 0
         object = resultAll.objects.filter(platform='iOS').order_by('-id')
         list1 = []
         for line in object[:7]:
             detail = eval(line.sumery)
-            list1.append(100 - round(detail['fail']/detail['all'],2) * 100)
+            list1.append(100 - detail['fail']* 100//detail['all'])
         result['ios'] = list1
         print_Log(api, result)
         return (simplejson.dumps(result))
@@ -358,7 +358,7 @@ def getResultsv2(request):
 
         back['detail'] = detail
         result['result']=back
-        result['rate'] = round(back['sum']['fail']/back['sum']['all'],2)*100
+        result['rate'] = back['sum']['fail'] *100 // back['sum']['all']
         print_Log(api, result)
         return simplejson.dumps(result)
     else:
@@ -523,7 +523,7 @@ def getAPIMonitorDataJson(request):
         Back['id'] = object.id
         Back['code'] = 0
         Back['all'] = object.all
-        Back['rate'] = object.fail/object.all*100
+        Back['rate'] = object.fail*100//object.all
         failedlistCase = CaseDetail.objects.filter(only=id, result=-1)
         fail =[]
         for failitem in failedlistCase:
@@ -565,10 +565,10 @@ def getAPIMonitorRateJson(request):
     else:
         for item in object[:7]:
             back ={}
-            back['rate'] = 100-item.fail/item.all*100
+            back['rate'] = 100-item.fail*100//item.all
             back['only'] = item.only
             back['rt'] = item.rt
-            listrate.append(100-item.fail/item.all*100)
+            listrate.append(100-item.fail*100//item.all)
             listall.append(back)
         result['code']=0
         result['result']=listall

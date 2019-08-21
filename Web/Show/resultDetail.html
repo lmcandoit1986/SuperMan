@@ -16,7 +16,7 @@
 <script>
     $(function(){
             platform ='{{ person.result.sum.platform }}'
-            failed =('{{ person.result.sum.fail }}'/'{{ person.result.sum.all }}').toFixed(2)*100
+            failed ='{{ person.rate }}'
 			var data = [
 			        	{name : 'Pass',value : 100-failed,color:'#32CD32'},
 			        	{name : 'Failed',value : failed,color:'#FF0000'},
