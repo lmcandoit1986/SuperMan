@@ -188,7 +188,7 @@ def pushPerformanceData(request):
     #               'model':'HuaweiP9',设备型号
     #               'runt':'2019-07-01 12:10:01', 脚本触发的时间标示
     #               'codev':'123 代码code版本',
-    #               'platform':'android or iOS'
+    #               'platform':'Android or iOS'
     #               },
     #           'data':{'fps':
     #                       [
@@ -240,7 +240,7 @@ def pushPerformanceData(request):
 def getRate(request):
     # 接口：server/result/rate
     # 方式：GET
-    # 参数：platform = android or iOS
+    # 参数：platform = Android or iOS
     api = 'server/result/rate'
     platform = request.GET.get('platform')
     print_Log(api, platform)
