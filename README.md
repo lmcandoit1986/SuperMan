@@ -86,7 +86,7 @@ JSON:
                   'model':'HuaweiP9',设备型号
                   'runt':'2019-07-01 12:10:01', 脚本触发的时间标示
                   'codev':'123 代码code版本',
-                  'platform':'android or iOS'
+                  'platform':'Android or iOS'
                   },
               'data':{
                   'fps':

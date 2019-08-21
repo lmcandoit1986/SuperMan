@@ -262,7 +262,7 @@ def getRate(request):
             return (simplejson.dumps(result))
     else:
         result = {}
-        object = resultAll.objects.filter(platform='android').order_by('-id')
+        object = resultAll.objects.filter(platform='Android').order_by('-id')
         list = []
         for line in object[:7]:
             detail = eval(line.sumery)

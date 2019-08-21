@@ -116,7 +116,7 @@
         $("#android-list").click(function () {
             $(".panel-body.active_tab_self").removeClass("active_tab_self");
             $(this).addClass("active_tab_self");
-            $.get("web/list/android?platform=android",function (data) {
+            $.get("web/list/android?platform=Android",function (data) {
                 $("#context").empty();
                 $("#context").html(data);
             });
@@ -132,7 +132,7 @@
         $("#android-pt").click(function () {
             $(".panel-body.active_tab_self").removeClass("active_tab_self");
             $(this).addClass("active_tab_self");
-            $.get("web/performance/list/android?platform=android",function (data) {
+            $.get("web/performance/list/android?platform=Android",function (data) {
                 $("#context").empty();
                 $("#context").html(data);
             });
