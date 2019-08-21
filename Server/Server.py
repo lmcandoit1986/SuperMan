@@ -358,6 +358,7 @@ def getResultsv2(request):
 
         back['detail'] = detail
         result['result']=back
+        result['rate'] = round(back['sum']['fail']/back['sum']['all'],2)*100
         print_Log(api, result)
         return simplejson.dumps(result)
     else:
