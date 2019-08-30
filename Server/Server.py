@@ -354,6 +354,33 @@ def getResultsv2(request):
                 print(item1)
                 listp.append(item1)
             item['pass'] = listp
+
+            SElist = UICaseDetail.objects.filter(listid=object.id, model=model, result=-2)
+            listp = []
+            for linep in SElist:
+                item1 = {}
+                item1['case'] = linep.case
+                item1['caseName'] = linep.caseName
+                item1['useTime'] = linep.useTime
+                item1['comment'] = linep.comment
+                item1['pic'] = linep.pic
+                print(item1)
+                listp.append(item1)
+            item['ServerError'] = listp
+
+            EXlist = UICaseDetail.objects.filter(listid=object.id, model=model, result=-3)
+            listp = []
+            for linep in EXlist:
+                item1 = {}
+                item1['case'] = linep.case
+                item1['caseName'] = linep.caseName
+                item1['useTime'] = linep.useTime
+                item1['comment'] = linep.comment
+                item1['pic'] = linep.pic
+                print(item1)
+                listp.append(item1)
+            item['EX'] = listp
+
             detail.append(item)
 
         back['detail'] = detail

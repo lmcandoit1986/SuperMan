@@ -193,6 +193,52 @@
                             </td>
                         </tr>
                     {% endfor %}
+                {% for fail in item.EX %}
+                    <tr class="">
+                            <td>
+                                {{ fail.caseName }}
+                            </td>
+                            <td>
+                                未捕获异常报错
+                            </td>
+                            <td>
+                                {{ fail.useTime }} 秒
+                            </td>
+                            <td >
+                                {{ fail.comment |truncatechars:"100"}}<a onclick="test('{{fail.comment|safe}}')">点击查看全部日志</a>
+                            </td>
+                            <td>
+                                {% if not fail.pic == '' %}
+                                    <a href='{{ fail.pic}}'>
+                                        <img src='{{ fail.pic }}' padding="10% 0%" width="150" height="300">
+                                    </a>
+                                    {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% for fail in item.ServerError %}
+                    <tr class="">
+                            <td>
+                                {{ fail.caseName }}
+                            </td>
+                            <td>
+                                Server Error
+                            </td>
+                            <td>
+                                {{ fail.useTime }} 秒
+                            </td>
+                            <td >
+                                {{ fail.comment |truncatechars:"100"}}<a onclick="test('{{fail.comment|safe}}')">点击查看全部日志</a>
+                            </td>
+                            <td>
+                                {% if not fail.pic == '' %}
+                                    <a href='{{ fail.pic}}'>
+                                        <img src='{{ fail.pic }}' padding="10% 0%" width="150" height="300">
+                                    </a>
+                                    {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
                 {% for passitem in item.pass %}
                     <tr class="">
                             <td>
