@@ -69,7 +69,7 @@ def Deatail(request):
         # print("fail")
         context = {'person': None}
     else:
-        # print('Pass')
+        print('Pass')
         context = {'person': res_dict}
     # print(context)
     return render(request, 'resultDetail.html', context)
@@ -83,7 +83,7 @@ def Deatailv2(request):
     else:
         # print('Pass')
         context = {'person': res_dict}
-    # print(context)
+    print(context)
     return render(request, 'resultDetailv2.html', context)
 
 def statistics(request):
@@ -105,9 +105,9 @@ def performanceListAndroid(request):
         # print("fail")
         context = {'person': None}
     else:
-        # print('Pass')
+        print('Pass')
         context = {'person':res_dict}
-    # print(context)
+    print(context)
     return render(request, 'performanceList.html', context)
 
 
@@ -132,5 +132,5 @@ def performance(request):
     else:
         # print('Pass')
         context = {'person': res_dict,'jss':res}
-    # print(context)
+    print(context)
     return render(request, 'performance.html', context)
