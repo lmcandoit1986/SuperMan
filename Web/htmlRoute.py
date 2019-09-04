@@ -69,7 +69,7 @@ def Deatail(request):
         # print("fail")
         context = {'person': None}
     else:
-        print('Pass')
+        # print('Pass')
         context = {'person': res_dict}
     # print(context)
     return render(request, 'resultDetail.html', context)

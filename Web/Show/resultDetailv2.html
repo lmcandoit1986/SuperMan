@@ -100,7 +100,7 @@
 						chart.target.textAlign('start')
 						.textBaseline('top')
 						.textFont('600 20px Verdana')
-						.fillText('平台:'+platform+'\n设备:{{ person.result.sum.model }}\n执行用例数:{{ person.result.sum.all }}\n失败用例数:{{ person.result.sum.fail }}\n执行时长:{{ person.result.sum.uset }}\n触发时间:{{ person.result.sum.runt }}',120,80,false,'#be5985',false,24)
+						.fillText('平台:'+platform+'\napp版本:{{ person.result.sum.version }}\n设备:{{ person.result.sum.model }}\n执行用例数:{{ person.result.sum.all }}\n失败用例数:{{ person.result.sum.fail }}\n执行时长:{{ person.result.sum.uset }}\n触发时间:{{ person.result.sum.runt }}',120,80,false,'#be5985',false,24)
 						.textFont('600 12px Verdana')
 						.fillText('',120,160,false,'#999999');
 					}
