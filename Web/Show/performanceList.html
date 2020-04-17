@@ -1,76 +1,76 @@
 <br>
 <div class="row clearfix" style="padding: 0% 5%;">
-		<div class="col-md-12 column">
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-						<th >
-							执行时间
-						</th>
-						<th >
-							平台
-						</th>
-                        <th >
-							设备
-						</th>
-						<th >
-							App
-						</th>
-                        <th >
-							Code Version
-						</th>
-						<th>
-							详情
-						</th>
-					</tr>
-				</thead>
-				<tbody id="list">
-                {% for item in person.result %}
-                    <tr class="success">
-						<th>
-							{{ item.rt|default:"未知" }}
-						</th>
-						<th>
-							{{ item.platform|default:"未知" }}
-						</th>
-                        <th>
-							{{ item.model|default:"未知" }}
-						</th>
-						<th>
-							{{ item.app|default:"未知" }}
-						</th>
-                        <th>
-							{{ item.codeversion|default:"未知" }}
-						</th>
-						<th>
-							<a href="http://superqa.com.cn:9092/web/performance/detail?jenkinsId={{ item.Jenkinsid }}&platform=Android">查看结果</a>
-						</th>
-					</tr>
-                {% endfor %}
-				</tbody>
-			</table>
-            <ul class="pagination">
-				<li>
-					 <a href="#">Prev</a>
-				</li>
-				<li>
-					 <a href="#">1</a>
-				</li>
-				<li>
-					 <a href="#">2</a>
-				</li>
-				<li>
-					 <a href="#">3</a>
-				</li>
-				<li>
-					 <a href="#">4</a>
-				</li>
-				<li>
-					 <a href="#">5</a>
-				</li>
-				<li>
-					 <a href="#">Next</a>
-				</li>
-			</ul>
-		</div>
-	</div>
+    <div class="col-md-12 column">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>
+                    执行时间
+                </th>
+                <th>
+                    平台
+                </th>
+                <th>
+                    设备
+                </th>
+                <th>
+                    App
+                </th>
+                <th>
+                    Code Version
+                </th>
+                <th>
+                    详情
+                </th>
+            </tr>
+            </thead>
+            <tbody id="list">
+            {% for item in person.result %}
+                <tr class="success">
+                    <th>
+                        {{ item.rt|default:"未知" }}
+                    </th>
+                    <th>
+                        {{ item.platform|default:"未知" }}
+                    </th>
+                    <th>
+                        {{ item.model|default:"未知" }}
+                    </th>
+                    <th>
+                        {{ item.app|default:"未知" }}
+                    </th>
+                    <th>
+                        {{ item.codeversion|default:"未知" }}
+                    </th>
+                    <th>
+                        <a href="http://superqa.com.cn:9092/web/performance/detail?jenkinsId={{ item.Jenkinsid }}&platform=Android">查看结果</a>
+                    </th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <ul class="pagination">
+            <li>
+                <a href="#">Prev</a>
+            </li>
+            <li>
+                <a href="#">1</a>
+            </li>
+            <li>
+                <a href="#">2</a>
+            </li>
+            <li>
+                <a href="#">3</a>
+            </li>
+            <li>
+                <a href="#">4</a>
+            </li>
+            <li>
+                <a href="#">5</a>
+            </li>
+            <li>
+                <a href="#">Next</a>
+            </li>
+        </ul>
+    </div>
+</div>

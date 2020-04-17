@@ -24,7 +24,7 @@ print(BASE_DIR)
 SECRET_KEY = '&@)h=2%x5_$)k@&0sn$=9@n_79ma_w77%y(6tbm0emw-2c*%ar'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -122,8 +122,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_PATH= os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS =(
-    STATIC_PATH,
+STATICFILES_DIRS = (
+    ('css',os.path.join(STATIC_PATH,'css').replace('\\','/') ),
+    ('js',os.path.join(STATIC_PATH,'js').replace('\\','/') ),
+    ('img',os.path.join(STATIC_PATH,'img').replace('\\','/') ),
+    ('fonts',os.path.join(STATIC_PATH,'fonts').replace('\\','/') ),
+    ('font-awesome',os.path.join(STATIC_PATH,'font-awesome').replace('\\','/') ),
 )
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')
 MEDIA_URL = '/media/'

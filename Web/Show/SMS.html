@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<style>
+.divcss5 {
+	text-align: center;
+	vertical-align: middle;
+}
+</style>
+<script type="text/javascript" src={% static "js/jquery-1.8.3.js" %}></script>
+<script type="text/javascript" src={% static "js/public.js" %}></script>
+<script type="text/javascript">
+	$(function() {
+		$("#startDate").val(getCurrentDate());
+		$("#endDate").val(getCurrentDate());
+	});
+
+	function getMsg() {
+		var flag = true;
+		$("#result").html('');
+		if (!chMobilePhone($("#mobile").val())) {
+			flag = false;
+			alert("请正确输入手机号");
+		}
+		if (!checkDate($("#startDate").val())) {
+			flag = false;
+			alert("时间格式不正确");
+		}
+		if (!checkDate($("#endDate").val())) {
+			flag = false;
+			alert("时间格式不正确");
+		}
+		if (flag) {
+			$.ajax({
+				url : "https://ts-wechat.zgcbank.com/dibs-web-open/message/dealNeedNotLoginTrade.do",
+				type : "post",
+				timeout : 10,
+				async : false,
+				data : {
+					"mobile" : $("#mobile").val(),
+					"req_time_begin" : $("#startDate").val(),
+					"req_time_end" : $("#endDate").val()
+				},
+				success : function(data) {
+					var base = JSON.parse(data);
+					var ret = base.SYS_HEAD.RET[0];
+					if (ret != null && ret != undefined) {
+						if ("0000" == ret.RET_CODE) {
+							var list = base.BODY.list;
+							console.log(list);
+							var text = "";
+							if (list != null && list != undefined && !list.length == 0) {
+								for ( var i = 0; i < list.length; i++) {
+									var data = list[i];
+									if("发送成功" == data.send_sts) {
+										var content = utf8to16(base64decode(checkValIsNull(data.content)));
+										var send_res_msg = utf8to16(base64decode(checkValIsNull(data.send_res_msg)));
+										var brf = utf8to16(base64decode(checkValIsNull(data.brf)));
+										var reqTime = data.req_time;
+										var date = reqTime.split("\.")[0];
+										if(date.length == 14) {
+											reqTime = formatDate(date.substring(0, 8)) + " " + formatTime(date.substring(8, 14));
+										}
+										console.log("内容：" + content + ",返回信息：" + send_res_msg + ",发送结果：" + brf);
+										text = text + i + "、短信内容：" + content + "&#10;请求时间：" + reqTime + "&#10;";
+									}
+								}
+							} else {
+								text = "查询结果为空";
+							}
+							$("#result").html(text);
+
+						}
+					}
+				},
+				error : function(e) {
+				},
+				complete : function(XMLHttpRequest, status) {
+				}
+			});
+		}
+	}
+</script>
+</head>
+<body style="align:center">
+	<div class="divcss5">
+
+		<p>
+			手机号：<input id="mobile" name="mobile" type="text" value="">
+			<button onclick="getMsg()">查询</button>
+		</p>
+		<p>
+			开始时间：<input id="startDate" name="startDate" type="text"
+				value=""> 结束时间：<input id="endDate" name="endDate"
+				type="text" value="">
+		</p>
+		<p>
+			<textarea id="result" rows="20" cols="100"></textarea>
+		</p>
+	</div>
+</body>
+</html>
+

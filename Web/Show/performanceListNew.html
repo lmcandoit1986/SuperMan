@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Super  Tester</title>
+
+    <link href={% static "css/bootstrap.min.css" %} rel="stylesheet">
+    <link href={% static "font-awesome/css/font-awesome.css" %} rel="stylesheet">
+
+    <!-- Morris -->
+    <link href={% static "css/plugins/morris/morris-0.4.3.min.css" %} rel="stylesheet">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">
+    </script>
+    <link href={% static "css/animate.css" %} rel="stylesheet">
+    <link href={% static "css/style.css" %} rel="stylesheet">
+
+</head>
+
+<body>
+<script type="text/javascript" defer="defer">
+    $(function () {
+        var all ={{ dict_data|safe }}
+        var rateAndroid = all.rate.android
+        var rateiOS = all.rate.ios
+        var lineDataAndroid = {
+            labels: ["1", "2", "3", "4", "5", "6", "7"],
+
+            datasets: [
+
+                {
+                    label: "android",
+                    {#height:90% ,#}
+                    backgroundColor: 'rgba(26,179,148,0.5)',
+                    borderColor: "rgba(26,179,148,0.7)",
+                    pointBackgroundColor: "rgba(26,179,148,1)",
+                    pointBorderColor: "#fff",
+                    data: rateAndroid,
+
+                }
+            ]
+        };
+        var lineDataiOS = {
+            labels: ["1", "2", "3", "4", "5", "6", "7"],
+
+            datasets: [
+
+                {
+                    label: "iOS",
+                    {#height:90% ,#}
+                    backgroundColor: 'rgba(26,179,148,0.5)',
+                    borderColor: "rgba(26,179,148,0.7)",
+                    pointBackgroundColor: "rgba(26,179,148,1)",
+                    pointBorderColor: "#fff",
+                    data: rateiOS,
+
+                }
+            ]
+        };
+
+        var lineOptions = {
+            responsive: true,
+
+        };
+
+
+        var ctx = document.getElementById("lineChart").getContext("2d");
+        new Chart(ctx, {type: 'line', data: lineDataAndroid, options: lineOptions});
+
+        var ctx1 = document.getElementById("lineChart1").getContext("2d");
+        new Chart(ctx1, {type: 'line', data: lineDataiOS, options: lineOptions});
+
+    });
+</script>
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <img alt="image" class="rounded-circle" src={% static "img/profile_small.jpg" %}/>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="block m-t-xs font-bold">阿明</span>
+                            <span class="text-muted text-xs block">管理员 <b class="caret"></b></span>
+                        </a>
+                    </div>
+                    <div class="logo-element">
+                        IN+
+                    </div>
+                </li>
+                <li class="active">
+                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">前端</span> <span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="/web/uiAuto">UI 自动化 <span class="fa arrow"></span></a>
+{#                            <ul class="nav nav-third-level">#}
+{#                                <li class="active">#}
+{#                                    <a href="#"> UI 自动化</a>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <a href="#">性能</a>#}
+{#                                </li>#}
+{#                                <li>#}
+{#                                    <a href="#">其他</a>#}
+{#                                </li>#}
+{##}
+{#                            </ul>#}
+                        </li>
+                        <li class="active"><a href="#">性能 <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level">
+                                <li class="active">
+                                    <a href="#">iOS 平台</a>
+                                </li>
+                                <li>
+                                    <a href="#">Android 平台</a>
+                                </li>
+                                <li>
+                                    <a href="#">其他</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">后端</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="#">接口自动化</a></li>
+                        <li><a href="#">监控</a></li>
+                        <li><a href="#">接口性能</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href=""><i class="fa fa-edit"></i> <span class="nav-label">数据Mock</span><span
+                            class="fa arrow"></span> </a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="/web/mock">插入数据</a></li>
+                        <li><a href="/web/list/mock">数据管理</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+        </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
+                    </a>
+                    <form role="search" class="navbar-form-custom" action="">
+                        <div class="form-group">
+                            <input type="text" placeholder="请输入搜索内容" class="form-control" name="top-search"
+                                   id="top-search">
+                        </div>
+                    </form>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <span class="m-r-sm text-muted welcome-message">欢迎来到测试展示平台</span>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-sign-out"></i> 注销
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+
+
+
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>执行记录 </h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#" class="dropdown-item">Config option 1</a>
+                                </li>
+                                <li><a href="#" class="dropdown-item">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-9 m-b-xs">
+                                <div data-toggle="buttons" class="btn-group btn-group-toggle">
+                                    <label class="btn btn-sm btn-white"> <input type="radio" id="option1"
+                                                                                name="options"> 天 </label>
+                                    <label class="btn btn-sm btn-white active"> <input type="radio" id="option2"
+                                                                                       name="options"> 周 </label>
+                                    <label class="btn btn-sm btn-white"> <input type="radio" id="option3"
+                                                                                name="options"> 月 </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control form-control-sm" placeholder="搜索">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-sm btn-primary" type="button">搜索!</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+
+                                    <th>#</th>
+                                    <th>平台</th>
+                                    <th>设备</th>
+                                    <th>App</th>
+
+
+                                    <th>版本</th>
+                                    <th>执行时间</th>
+
+                                    <!-- <th>日期</th> -->
+                                    <th>查看明细</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in person.result %}
+                                    <tr>
+                                        <td>{{ item.id|default:"未知" }}</td>
+                                        {% if item.platform == 'Android' %}
+                                            <td><i class="fa fa-android text-navy"></i></td>
+                                        {% else %}
+                                            <td><i class="fa fa-apple text-danger"></i></td>
+                                        {% endif %}
+                                        <td>{{ item.model|default:"未知" }}</td>
+                                        <td>{{ item.app|default:"未知" }}</td>
+
+
+                                        <td>{{ item.codeversion|default:"未知" }}</td>
+                                        <td>{{ item.rt|default:"未知" }}</td>
+                                        <td>
+                                            <a href="web/performance/detail?jenkinsId={{ item.Jenkinsid }}&platform={{ item.platform }}"><i
+                                                    class="fa fa-link text-navy"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        <div class="col-lg-12">
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">
+                                            上传示例
+                                        </div>
+                                        <div class="panel-body">
+                                            <p>
+                                                {
+	'data': {
+		'sum': {
+			'Jenkinsid': 11,
+			'app': '华能成长宝',
+			'model': 'HuaweiP9',
+			'runt': '2020-03-10 12:10:01',
+			'codev': '5.7.10',
+			'platform': 'iOS'
+		},
+		'data': {
+			'fps': [{
+				'activity': '主页面',
+				'info': '页面简单信息介绍',
+				'data': [{
+					'fpslist': [45, 56, 45, 65, 75, 56, 23, 43, 53, 43, 23]
+				}, {
+					'fpslist': [41, 52, 35, 65, 75, 56, 23, 43, 53, 43, 23, 34, 34, 54, 22, 45, 66, 76, 76, 87]
+				}, {
+					'fpslist': [23, 34, 53, 41, 52, 35, 65, 75, 56, 23, 43, 53, 43, 23, 34, 34]
+				}]
+			}, {
+				'activity': '主页面1',
+				'info': '页面简单信息介绍',
+				'data': [{
+					'fpslist': [45, 56, 45, 65, 75, 56, 23, 43, 53, 43, 23]
+				}, {
+					'fpslist': [41, 52, 35, 65, 75, 56, 23, 43, 53, 43, 23, 34, 34, 54, 22, 45, 66, 76, 76, 87]
+				}, {
+					'fpslist': [23, 34, 53, 41, 52, 35, 65, 75, 56, 23, 43, 53, 43, 23, 34, 34]
+				}]
+			}],
+			'mem': [{
+				'activity': '主页面',
+				'info': '页面简单信息介绍',
+				'data': [45, 46, 47, 56, 43, 45, 45]
+			}, {
+				'activity': '主页面1',
+				'info': '页面简单信息介绍',
+				'data': [45, 46, 47, 56, 43, 45, 45]
+			}],
+			'cpu': [{
+				'activity': '主页面',
+				'info': '',
+				'data': [23, 12, 41, 32, 12]
+			}, {
+				'activity': '主页面1',
+				'info': '',
+				'data': [23, 12, 41, 32, 12]
+			}],
+			'pt': [{
+				'activity': '主页面1',
+				'info': '',
+				'data': 460
+			}],
+			'st': {
+				'sumer': 123,
+				'data': [12, 123, 1234, 12345]
+			}
+		}
+	}
+}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+        </div>
+    </div>
+
+</div>
+<div id="right-sidebar">
+    <div class="sidebar-container">
+
+        <ul class="nav nav-tabs navs-3">
+            <li>
+                <a class="nav-link active" data-toggle="tab" href="#tab-1"> 记录 </a>
+            </li>
+            <li>
+                <a class="nav-link" data-toggle="tab" href="#tab-2"> 项目 </a>
+            </li>
+            <li>
+                <a class="nav-link" data-toggle="tab" href="#tab-3"> <i class="fa fa-gear"></i> </a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+
+
+            <div id="tab-1" class="tab-pane active">
+
+                <div class="sidebar-title">
+                    <h3><i class="fa fa-comments-o"></i> 最新记录</h3>
+                    <small><i class="fa fa-tim"></i> 你有10条新消息。</small>
+                </div>
+
+                <div>
+
+                    <div class="sidebar-message">
+                        <a href="#">
+                            <div class="float-left text-center">
+                                <img alt="image" class="rounded-circle message-avatar" src={% static "img/a1.jpg" %}>
+
+                                <div class="m-t-xs">
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                </div>
+                            </div>
+                            <div class="media-body">
+
+                                Lorem Ipsum的通道有许多变化。
+                                <br>
+                                <small class="text-muted">今天 4:21 pm</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="sidebar-message">
+                        <a href="#">
+                            <div class="float-left text-center">
+                                <img alt="image" class="rounded-circle message-avatar" src={% static "img/a2.jpg" %}>
+                            </div>
+                            <div class="media-body">
+                                使用Lorem Ipsum的观点是它具有或多或少的正常。
+                                <br>
+                                <small class="text-muted">昨天 2:45 pm</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="sidebar-message">
+                        <a href="#">
+                            <div class="float-left text-center">
+                                <img alt="image" class="rounded-circle message-avatar" src={% static "img/a3.jpg" %}>
+
+                                <div class="m-t-xs">
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                这些年来，有时是意外的，有时是有目的的（注入幽默等）。
+                                <br>
+                                <small class="text-muted">昨天 1:10 pm</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="sidebar-message">
+                        <a href="#">
+                            <div class="float-left text-center">
+                                <img alt="image" class="rounded-circle message-avatar" src={% static "img/a4.jpg" %}>
+                            </div>
+
+                            <div class="media-body">
+                                Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the
+                                <br>
+                                <small class="text-muted">星期一 8:37 pm</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="sidebar-message">
+                        <a href="#">
+                            <div class="float-left text-center">
+                                <img alt="image" class="rounded-circle message-avatar" src={% static "img/a8.jpg" %}>
+                            </div>
+                            <div class="media-body">
+
+                                互联网上的所有Lorem Ipsum发电机往往重复。
+                                <br>
+                                <small class="text-muted">今天 4:21 pm</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="sidebar-message">
+                        <a href="#">
+                            <div class="float-left text-center">
+                                <img alt="image" class="rounded-circle message-avatar" src={% static "img/a7.jpg" %}>
+                            </div>
+                            <div class="media-body">
+                                再生。 Lorem Ipsum的第一行“Lorem ipsum dolor sit amet ..”来自1.10.32节的一行。
+                                <br>
+                                <small class="text-muted">昨天 2:45 pm</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="sidebar-message">
+                        <a href="#">
+                            <div class="float-left text-center">
+                                <img alt="image" class="rounded-circle message-avatar" src={% static "img/a3.jpg" %}>
+
+                                <div class="m-t-xs">
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                    <i class="fa fa-star text-warning"></i>
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                从1500年代以来使用的Lorem Ipsum的标准块转载如下。
+                                <br>
+                                <small class="text-muted">昨天 1:10 pm</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="sidebar-message">
+                        <a href="#">
+                            <div class="float-left text-center">
+                                <img alt="image" class="rounded-circle message-avatar" src={% static "img/a4.jpg" %}>
+                            </div>
+                            <div class="media-body">
+                                揭开许多网站仍处于起步阶段。 各种版本有。
+                                <br>
+                                <small class="text-muted">星期一 8:37 pm</small>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="tab-2" class="tab-pane">
+
+                <div class="sidebar-title">
+                    <h3><i class="fa fa-cube"></i> 最新项目</h3>
+                    <small><i class="fa fa-tim"></i> 你有14个项目。 10没有完成</small>
+                </div>
+
+                <ul class="sidebar-list">
+                    <li>
+                        <a href="#">
+                            <div class="small float-right m-t-xs">9小时前</div>
+                            <h4>业务估值</h4>
+                            一个长期以来的事实是，读者会分心。
+
+                            <div class="small">完成度: 22%</div>
+                            <div class="progress progress-mini">
+                                <div style="width: 22%;" class="progress-bar progress-bar-warning"></div>
+                            </div>
+                            <div class="small text-muted m-t-xs">时间: 4:00 pm - 12.06.2014</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="small float-right m-t-xs">9小时前</div>
+                            <h4>与公司签订合同 </h4>
+                            许多桌面出版包和网页编辑器。
+
+                            <div class="small">完成度: 48%</div>
+                            <div class="progress progress-mini">
+                                <div style="width: 48%;" class="progress-bar"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="small float-right m-t-xs">9小时前</div>
+                            <h4>会议</h4>
+                            通过查看其布局时页面的可读内容。
+
+                            <div class="small">完成度: 14%</div>
+                            <div class="progress progress-mini">
+                                <div style="width: 14%;" class="progress-bar progress-bar-info"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-primary float-right">NEW</span>
+                            <h4>生成的</h4>
+                            Lorem Ipsum的通道有许多变化。
+                            <div class="small">完成度: 22%</div>
+                            <div class="small text-muted m-t-xs">时间: 4:00 pm - 12.06.2014</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="small float-right m-t-xs">9小时前</div>
+                            <h4>业务估值</h4>
+                            一个长期以来的事实是，读者会分心。
+
+                            <div class="small">完成度: 22%</div>
+                            <div class="progress progress-mini">
+                                <div style="width: 22%;" class="progress-bar progress-bar-warning"></div>
+                            </div>
+                            <div class="small text-muted m-t-xs">时间: 4:00 pm - 12.06.2014</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="small float-right m-t-xs">9小时前</div>
+                            <h4>与公司签订合同 </h4>
+                            许多桌面出版包和网页编辑器。
+
+                            <div class="small">完成度: 48%</div>
+                            <div class="progress progress-mini">
+                                <div style="width: 48%;" class="progress-bar"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <div class="small float-right m-t-xs">9小时前</div>
+                            <h4>会议</h4>
+                            通过查看其布局时页面的可读内容。
+
+                            <div class="small">完成度: 14%</div>
+                            <div class="progress progress-mini">
+                                <div style="width: 14%;" class="progress-bar progress-bar-info"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="label label-primary float-right">NEW</span>
+                            <h4>生成的</h4>
+                            <!--<div class="small float-right m-t-xs">9小时前</div>-->
+                            Lorem Ipsum的通道有许多变化。
+                            <div class="small">完成度: 22%</div>
+                            <div class="small text-muted m-t-xs">时间: 4:00 pm - 12.06.2014</div>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div id="tab-3" class="tab-pane">
+
+                <div class="sidebar-title">
+                    <h3><i class="fa fa-gears"></i> 设置</h3>
+                    <small><i class="fa fa-tim"></i> 你有14个项目。 10没有完成</small>
+                </div>
+
+                <div class="setings-item">
+                    <span>
+                        显示通知
+                    </span>
+                    <div class="switch">
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="example">
+                            <label class="onoffswitch-label" for="example">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="setings-item">
+                    <span>
+                        停用聊天
+                    </span>
+                    <div class="switch">
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="collapsemenu" checked class="onoffswitch-checkbox"
+                                   id="example2">
+                            <label class="onoffswitch-label" for="example2">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="setings-item">
+                    <span>
+                        启用历史记录
+                    </span>
+                    <div class="switch">
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="example3">
+                            <label class="onoffswitch-label" for="example3">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="setings-item">
+                    <span>
+                        显示图表
+                    </span>
+                    <div class="switch">
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="example4">
+                            <label class="onoffswitch-label" for="example4">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="setings-item">
+                    <span>
+                        离线用户
+                    </span>
+                    <div class="switch">
+                        <div class="onoffswitch">
+                            <input type="checkbox" checked name="collapsemenu" class="onoffswitch-checkbox"
+                                   id="example5">
+                            <label class="onoffswitch-label" for="example5">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="setings-item">
+                    <span>
+                        全球搜索
+                    </span>
+                    <div class="switch">
+                        <div class="onoffswitch">
+                            <input type="checkbox" checked name="collapsemenu" class="onoffswitch-checkbox"
+                                   id="example6">
+                            <label class="onoffswitch-label" for="example6">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="setings-item">
+                    <span>
+                        每天更新
+                    </span>
+                    <div class="switch">
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="example7">
+                            <label class="onoffswitch-label" for="example7">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-content">
+                    <h4>设置</h4>
+                    <div class="small">
+                        我相信那个 Lorem Ipsum只是印刷和排版行业的虚拟文字。
+                        排版行业。 Lorem Ipsum自15世纪15年代以来一直是行业的标准虚拟文本。
+                        多年来，有时偶然地，有时是目的（注入幽默等）。
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+</div>
+
+<!-- Mainly scripts -->
+<script src={% static "js/jquery-3.1.1.min.js" %}></script>
+<script src={% static "js/popper.min.js" %}></script>
+<script src={% static "js/bootstrap.js" %}></script>
+<script src={% static "js/plugins/metisMenu/jquery.metisMenu.js" %}></script>
+<script src={% static "js/plugins/slimscroll/jquery.slimscroll.min.js" %}></script>
+
+<!-- Flot -->
+<script src={% static "js/plugins/flot/jquery.flot.js" %}></script>
+<script src={% static "js/plugins/flot/jquery.flot.tooltip.min.js" %}></script>
+<script src={% static "js/plugins/flot/jquery.flot.spline.js" %}></script>
+<script src={% static "js/plugins/flot/jquery.flot.resize.js" %}></script>
+<script src={% static "js/plugins/flot/jquery.flot.pie.js" %}></script>
+<script src={% static "js/plugins/flot/jquery.flot.symbol.js" %}></script>
+<script src={% static "js/plugins/flot/curvedLines.js" %}></script>
+
+<!-- Peity -->
+<script src={% static "js/plugins/peity/jquery.peity.min.js" %}></script>
+<script src={% static "js/demo/peity-demo.js" %}></script>
+
+<!-- Custom and plugin javascript -->
+<script src={% static "js/inspinia.js" %}></script>
+<script src={% static "js/plugins/pace/pace.min.js" %}></script>
+
+<!-- jQuery UI -->
+<script src={% static "js/plugins/jquery-ui/jquery-ui.min.js" %}></script>
+
+<!-- Jvectormap -->
+<script src={% static "js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js" %}></script>
+<script src={% static "js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" %}></script>
+
+<!-- Sparkline -->
+<script src={% static "js/plugins/sparkline/jquery.sparkline.min.js" %}></script>
+
+<!-- Sparkline demo data  -->
+<script src={% static "js/demo/sparkline-demo.js" %}></script>
+
+<!-- ChartJS-->
+<script src={% static "js/plugins/chartJs/Chart.min.js" %}></script>
+{#    <script src={% static "js/demo/listUse.js" %}></script>#}
+
+
+</body>
+</html>

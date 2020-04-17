@@ -12,6 +12,38 @@ def index(request):
     html = t.render()
     return HttpResponse(html)
 
+def sms(request):
+    t = get_template('SMS.html')
+    html = t.render()
+    return HttpResponse(html)
+
+def new(request):
+    t = get_template('mock.html')
+    html = t.render()
+    return HttpResponse(html)
+
+def error(request):
+    # conten = {'person':""}
+    t = get_template('error.html')
+    html = t.render()
+    return HttpResponse(html)
+
+def mocklist(request):
+    res = Server.mock_data_list(request)
+    res_dict = eval(res)
+    context = {'person': res_dict}
+    return render(request, 'mockList.html', context)
+
+def uiauto(request):
+    res = Server.getListResultNew(request)
+    res_dict = eval(res)
+    print(res_dict)
+    context = {'person': res, 'dict_data': res_dict}
+    return render(request, 'base.html', context)
+    # t = get_template('base.html')
+    # html = t.render()
+    # return HttpResponse(html)
+
 def APIWatcher(request):
     res = Server.getAPIMonitorDataJson(request)
     res_dict = eval(res)
@@ -86,6 +118,25 @@ def Deatailv2(request):
     print(context)
     return render(request, 'resultDetailv2.html', context)
 
+def Deatailv3(request):
+    key = 0
+    if request.GET['user'] == 'visitor':
+        key = 0
+    elif request.GET['user'] == 'admin':
+        key = 1
+    res = Server.getResultsv3(request)
+    res_dict = eval(res)
+    res2 = Server.getRealReason(request)
+    res2_dict = eval(res2)
+    if res_dict['code'] == -1:
+        # print("fail")
+        context = {'person': None}
+    else:
+        # print('Pass')
+        context = {'person': res_dict,'reason':res2_dict,'key':key}
+    print(context)
+    return render(request, 'resultDetailNew.html', context)
+
 def statistics(request):
     res = Server.getRate(request)
     res_dict = eval(res)
@@ -122,6 +173,18 @@ def performanceListiOS(request):
         context = {'person': res_dict}
     print(context)
     return render(request, 'performanceListiOS.html', context)
+
+def performanceList(request):
+    res = Server.getPTResultslistJson(request)
+    res_dict = eval(res)
+    if res_dict['code'] == -1:
+        # print("fail")
+        context = {'person': None}
+    else:
+        # print('Pass')
+        context = {'person': res_dict}
+    print(context)
+    return render(request, 'performanceListNew.html', context)
 
 def performance(request):
     res = Server.getPtResultsJson(request)

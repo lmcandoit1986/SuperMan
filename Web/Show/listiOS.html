@@ -1,56 +1,56 @@
 <br>
 <script>
     'iOS 平台自动化执行结果最近7次成功率统计'
-    $(function(){
+    $(function () {
         var data_pt_json = eval('(' + '{{ rate|safe }}' + ')');
-        var list =data_pt_json.result;
-            var data = [
-                {
-                    name :'',
-                    value:list,
-                    color:'#292421',
-                    line_width:1
-                }
-            ];
-            var chart = new iChart.LineBasic2D({
-                render : 'androidautorate',
-                data: data,
-                title : 'android 平台自动化执行结果最近7次成功率统计',
-                width : 825,
-                height : 250,
-                coordinate:{height:'90%',background_color:'#F5F5F5'},
-                sub_option:{
-                    hollow_inside:false,//设置一个点的亮色在外环的效果
-                    point_size:1
-                },
-                labels:["1","2","3","4","5","6","7"]
-            });
-            chart.draw();
-{#        $.getJSON("http://localhost:9090/server/result/rate?platform=iOS",function(getdata){#}
-{#            var list =getdata.result;#}
-{#            var data = [#}
-{#                {#}
-{#                    name :'',#}
-{#                    value:list,#}
-{#                    color:'#292421',#}
-{#                    line_width:1#}
-{#                }#}
-{#            ];#}
-{#            var chart = new iChart.LineBasic2D({#}
-{#                render : 'androidautorate',#}
-{#                data: data,#}
-{#                title : 'iOS 平台自动化执行结果最近7次成功率统计',#}
-{#                width : 825,#}
-{#                height : 250,#}
-{#                coordinate:{height:'90%',background_color:'#F5F5F5'},#}
-{#                sub_option:{#}
-{#                    hollow_inside:false,//设置一个点的亮色在外环的效果#}
-{#                    point_size:1#}
-{#                },#}
-{#                labels:["1","2","3","4","5","6","7"]#}
-{#            });#}
-{#            chart.draw();#}
-{#        });#}
+        var list = data_pt_json.result;
+        var data = [
+            {
+                name: '',
+                value: list,
+                color: '#292421',
+                line_width: 1
+            }
+        ];
+        var chart = new iChart.LineBasic2D({
+            render: 'androidautorate',
+            data: data,
+            title: 'android 平台自动化执行结果最近7次成功率统计',
+            width: 825,
+            height: 250,
+            coordinate: {height: '90%', background_color: '#F5F5F5'},
+            sub_option: {
+                hollow_inside: false,//设置一个点的亮色在外环的效果
+                point_size: 1
+            },
+            labels: ["1", "2", "3", "4", "5", "6", "7"]
+        });
+        chart.draw();
+        {#        $.getJSON("http://localhost:9090/server/result/rate?platform=iOS",function(getdata){#}
+        {#            var list =getdata.result;#}
+        {#            var data = [#}
+        {#                {#}
+        {#                    name :'',#}
+        {#                    value:list,#}
+        {#                    color:'#292421',#}
+        {#                    line_width:1#}
+        {#                }#}
+        {#            ];#}
+        {#            var chart = new iChart.LineBasic2D({#}
+        {#                render : 'androidautorate',#}
+        {#                data: data,#}
+        {#                title : 'iOS 平台自动化执行结果最近7次成功率统计',#}
+        {#                width : 825,#}
+        {#                height : 250,#}
+        {#                coordinate:{height:'90%',background_color:'#F5F5F5'},#}
+        {#                sub_option:{#}
+        {#                    hollow_inside:false,//设置一个点的亮色在外环的效果#}
+        {#                    point_size:1#}
+        {#                },#}
+        {#                labels:["1","2","3","4","5","6","7"]#}
+        {#            });#}
+        {#            chart.draw();#}
+        {#        });#}
     });
 </script>
 
@@ -59,83 +59,81 @@
 <br>
 
 <div class="row clearfix" style="padding: 0% 5%;">
-		<div class="col-md-12 column">
-			<table class="table table-bordered">
-				<thead>
-					<tr>
-                        <th class="col-md-1 column">
-							index
-						</th>
-						<th class="col-md-3 column">
-							执行时间
-						</th>
-						<th class="col-md-2 column">
-							产品
-						</th>
-						<th class="col-md-1 column">
-							设备
-						</th>
-                        <th class="col-md-1 column">
-							用时
-						</th>
-						<th class="col-md-2 column">
-							详情
-						</th>
-					</tr>
-				</thead>
-				<tbody id="list">
-                {% for item in person.result %}
-                    <tr class="success">
-                        <th>
-							{{ item.id|default:"未知" }}
-						</th>
-						<th>
-							{{ item.sum.runt|default:"未知" }}
-						</th>
-						<th>
-							{{ item.sum.app|default:"未知" }}
-						</th>
-						<th>
-							{{ item.sum.model|default:"未知" }}
-						</th>
-                        <th>
-							{{ item.sum.uset|default:"未知" }}
-						</th>
-						<th>
-							<a href='http://superqa.com.cn:9092/web/result/detail?jenkinsId={{ item.sum.Jenkinsid }}&platform=iOS'>旧版结果</a>
-                            <a href='http://superqa.com.cn:9092/web/result/v2/detail?jenkinsId={{ item.sum.Jenkinsid }}&platform=iOS'>新版结果</a>
-						</th>
-					</tr>
-                {% endfor %}
-				</tbody>
-			</table>
-            <ul class="pagination">
-				<li>
-					 <a href="#">Prev</a>
-				</li>
-				<li>
-					 <a href="#">1</a>
-				</li>
-				<li>
-					 <a href="#">2</a>
-				</li>
-				<li>
-					 <a href="#">3</a>
-				</li>
-				<li>
-					 <a href="#">4</a>
-				</li>
-				<li>
-					 <a href="#">5</a>
-				</li>
-				<li>
-					 <a href="#">Next</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-
-
+    <div class="col-md-12 column">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th class="col-md-1 column">
+                    index
+                </th>
+                <th class="col-md-3 column">
+                    执行时间
+                </th>
+                <th class="col-md-2 column">
+                    产品
+                </th>
+                <th class="col-md-1 column">
+                    设备
+                </th>
+                <th class="col-md-1 column">
+                    用时
+                </th>
+                <th class="col-md-2 column">
+                    详情
+                </th>
+            </tr>
+            </thead>
+            <tbody id="list">
+            {% for item in person.result %}
+                <tr class="success">
+                    <th>
+                        {{ item.id|default:"未知" }}
+                    </th>
+                    <th>
+                        {{ item.sum.runt|default:"未知" }}
+                    </th>
+                    <th>
+                        {{ item.sum.app|default:"未知" }}
+                    </th>
+                    <th>
+                        {{ item.sum.model|default:"未知" }}
+                    </th>
+                    <th>
+                        {{ item.sum.uset|default:"未知" }}
+                    </th>
+                    <th>
+                        <a href='http://superqa.com.cn:9092/web/result/detail?jenkinsId={{ item.sum.Jenkinsid }}&platform=iOS'>旧版结果</a>
+                        <a href='http://superqa.com.cn:9092/web/result/v2/detail?jenkinsId={{ item.sum.Jenkinsid }}&platform=iOS'>新版结果</a>
+                    </th>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <ul class="pagination">
+            <li>
+                <a href="#">Prev</a>
+            </li>
+            <li>
+                <a href="#">1</a>
+            </li>
+            <li>
+                <a href="#">2</a>
+            </li>
+            <li>
+                <a href="#">3</a>
+            </li>
+            <li>
+                <a href="#">4</a>
+            </li>
+            <li>
+                <a href="#">5</a>
+            </li>
+            <li>
+                <a href="#">Next</a>
+            </li>
+        </ul>
+    </div>
+</div>
 
 
 {#<script>#}

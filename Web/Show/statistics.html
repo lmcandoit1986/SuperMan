@@ -1,54 +1,54 @@
 <br>
 <script>
     'android 平台自动化执行结果最近7次成功率统计'
-    $(function(){
+    $(function () {
         var data_pt_json = eval('(' + '{{ personjson|safe }}' + ')');
-        var list =data_pt_json.android;
-            var data = [
-                {
-                    name :'',
-                    value:list,
-                    color:'#292421',
-                    line_width:1
-                }
-            ];
-            var listios =data_pt_json.ios;
-            var dataios = [
-                {
-                    name :'',
-                    value:listios,
-                    color:'#292421',
-                    line_width:1
-                }
-            ];
-            var chart = new iChart.LineBasic2D({
-                render : 'androidautorate',
-                data: data,
-                title : 'android 平台自动化执行结果最近7次成功率统计',
-                width : 825,
-                height : 250,
-                coordinate:{height:'90%',background_color:'#F5F5F5'},
-                sub_option:{
-                    hollow_inside:false,//设置一个点的亮色在外环的效果
-                    point_size:1
-                },
-                labels:["1","2","3","4","5","6","7"]
-            });
-            chart.draw();
-            var chartios = new iChart.LineBasic2D({
-                render : 'androidautorate1',
-                data: dataios,
-                title : 'iOS 平台自动化执行结果最近7次成功率统计',
-                width : 825,
-                height : 250,
-                coordinate:{height:'90%',background_color:'#F5F5F5'},
-                sub_option:{
-                    hollow_inside:false,//设置一个点的亮色在外环的效果
-                    point_size:1
-                },
-                labels:["1","2","3","4","5","6","7"]
-            });
-            chartios.draw();
+        var list = data_pt_json.android;
+        var data = [
+            {
+                name: '',
+                value: list,
+                color: '#292421',
+                line_width: 1
+            }
+        ];
+        var listios = data_pt_json.ios;
+        var dataios = [
+            {
+                name: '',
+                value: listios,
+                color: '#292421',
+                line_width: 1
+            }
+        ];
+        var chart = new iChart.LineBasic2D({
+            render: 'androidautorate',
+            data: data,
+            title: 'android 平台自动化执行结果最近7次成功率统计',
+            width: 825,
+            height: 250,
+            coordinate: {height: '90%', background_color: '#F5F5F5'},
+            sub_option: {
+                hollow_inside: false,//设置一个点的亮色在外环的效果
+                point_size: 1
+            },
+            labels: ["1", "2", "3", "4", "5", "6", "7"]
+        });
+        chart.draw();
+        var chartios = new iChart.LineBasic2D({
+            render: 'androidautorate1',
+            data: dataios,
+            title: 'iOS 平台自动化执行结果最近7次成功率统计',
+            width: 825,
+            height: 250,
+            coordinate: {height: '90%', background_color: '#F5F5F5'},
+            sub_option: {
+                hollow_inside: false,//设置一个点的亮色在外环的效果
+                point_size: 1
+            },
+            labels: ["1", "2", "3", "4", "5", "6", "7"]
+        });
+        chartios.draw();
     });
 </script>
 

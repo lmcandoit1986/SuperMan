@@ -50,6 +50,9 @@ class UICaseDetail(models.Model):
     all = models.CharField(max_length=128000)
     pic = models.CharField(max_length=1000)
     listid = models.IntegerField()
+    Jenkinsid = models.IntegerField()
+    platform = models.CharField(max_length=100)
+    reason = models.IntegerField()
     class Meta:
         db_table = 'UICaseDetail'
 
@@ -60,3 +63,31 @@ class listAPIMointor(models.Model):
     only = models.IntegerField()
     class Meta:
         db_table = 'listAPIMointor'
+
+class uiAutoRunListN(models.Model):
+    platform = models.CharField(max_length=100)
+    allNum = models.IntegerField()
+    failNum = models.IntegerField()
+    rt = models.CharField(max_length=100)
+    Jenkinsid = models.IntegerField()
+    link = models.CharField(max_length=200)
+    appName = models.CharField(max_length=100)
+    model = models.CharField(max_length=200)
+    device = models.CharField(max_length=100)
+    ut = models.CharField(max_length=100)
+    appVersion = models.CharField(max_length=100)
+    class Meta:
+        db_table = 'uiAutoRunListN'
+
+class mockData(models.Model):
+    api = models.CharField(max_length=100)
+    keyword = models.CharField(max_length=100)
+    data = models.CharField(max_length=2000)
+    status = models.IntegerField()
+    class Meta:
+        db_table = 'mockData'
+
+class failReason(models.Model):
+    reason = models.CharField(max_length=100)
+    class Meta:
+        db_table = 'failReason'
