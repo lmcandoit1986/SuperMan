@@ -17,9 +17,9 @@ from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 
-from Server import Server, views
+from Server import Server, views, API
 from SuperMan import settings
-from Web import htmlRoute
+from Web import htmlRoute, routehtml
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -50,6 +50,9 @@ urlpatterns = [
     url(r'server/monitor/list$',Server.getAPIMonitorRateJson),
     url(r'server/monitor/del$',views.del_listAPIMointor),
 
+    url(r'^api/uiauto/result/upload$', API.api_auto_result_upload),  # 测试结果上传
+    url(r'^api/mock/data/edit$', API.api_mock_data_edit),  # 测试结果上传
+
     url(r'web/watcher$',htmlRoute.APIWatcher),
     url(r'web/uiAuto$',htmlRoute.uiauto),
     url(r'web/mock$',htmlRoute.new),
@@ -69,6 +72,9 @@ urlpatterns = [
     url(r'web/performance/list/android$',htmlRoute.performanceListAndroid),
     url(r'web/performance/list/ios$',htmlRoute.performanceListiOS),
     url(r'web/api/monitor/list$',htmlRoute.getAPIMonitorList),
+
+    url(r'^web/result/uiauto/detail$', routehtml.result_uiauto_details),
+    url(r'^web/result/uiauto/list$', routehtml.result_uiauto_list),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

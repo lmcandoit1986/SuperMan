@@ -312,7 +312,7 @@
     }
 
     function shutDownItem(obj) {
-        $.get('/mock/data/status/change?id=' + $(obj).attr('name') + '&status=1', function (data, status) {
+        $.get('/api/mock/data/edit?id=' + $(obj).attr('name') + '&value=1&key=status', function (data, status) {
             swal({
                 title: "成功！",
                 text: "已同步数据库！",
@@ -325,7 +325,7 @@
     }
 
     function UseItem(obj) {
-        $.get('/mock/data/status/change?id=' + $(obj).attr('name') + '&status=0', function (data, status) {
+        $.get('/api/mock/data/edit?id=' + $(obj).attr('name') + '&value=0&key=status', function (data, status) {
             swal({
                 title: "成功！",
                 text: "已同步数据库！",

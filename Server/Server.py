@@ -469,6 +469,7 @@ def getResultsv3(request):
             else:
                 casedetail['pic'] = case.pic
             list.append(casedetail)
+        list.sort(key=takeRes, reverse=True)
         print(reasons)
         for line in set(reasons):
             backReason.append((failReason.objects.get(id=line).reason))
@@ -485,6 +486,9 @@ def getResultsv3(request):
         result['result'] = {}
         print_Log(api, result)
         return simplejson.dumps(result)
+
+def takeRes(el):
+    return el['result']
 
 
 def getResultsv2(request):
