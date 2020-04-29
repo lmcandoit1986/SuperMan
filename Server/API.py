@@ -17,6 +17,17 @@ from Server.models import mockData, failReason
 
 
 @csrf_exempt
+def api_auto_detail_del(request):
+    if request.GET:
+        id = request.GET['id']
+    else:
+        return HttpResponse(simplejson.dumps({'code': -1, 'msg': '暂不支持该请求方式'}))
+
+    item = uiAutoRunListN.objects.get(id=id)
+    item.delete()
+    return HttpResponse(simplejson.dumps({'code': 0, 'msg': 'pass'}))
+
+@csrf_exempt
 def api_auto_detail(request):
     if request.POST:
         platform = request.POST['platform']
