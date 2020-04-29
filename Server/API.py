@@ -91,7 +91,10 @@ def api_auto_list(request):
         Result['Android']['rate'] = []
         Result['Android']['list'] = []
         for item in objectAndroid:
-            Result['Android']['rate'].append(100 - item.failNum * 100 // item.allNum)
+            if item.allNum == 0:
+                Result['Android']['rate'].append(0)
+            else:
+                Result['Android']['rate'].append(100 - item.failNum * 100 // item.allNum)
             Result['Android']['list'].append(ModelObject.objectUiAutoRunList(item))
     if objectiOS:
         Result['iOS']['rate'] = []
