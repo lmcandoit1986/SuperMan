@@ -171,4 +171,4 @@ def assertUiAutoRunListObjectIsExist(id, platform):
 
 
 def takeRes(el):
-    return el['result']
+    return int(el['result'])
