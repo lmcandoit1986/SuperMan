@@ -38,7 +38,10 @@ def objectUICaseDetail(ob):
     如果使用静态资源，则需要添加图片路径
     '''
     if ob.pic != '':
-        result['pic'] = 'img/' + ob.pic
+        if '.' in ob.pic:
+            result['pic'] = 'img/' + ob.pic
+        else:
+            result['pic'] = 'img/' + ob.pic + '.png'
     else:
         result['pic'] = ob.pic
 
