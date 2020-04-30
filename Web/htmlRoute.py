@@ -183,7 +183,7 @@ def performanceList(request):
     else:
         # print('Pass')
         context = {'person': res_dict}
-    print(context)
+    # print(context)
     return render(request, 'performanceListNew.html', context)
 
 def performance(request):
