@@ -79,7 +79,7 @@ def api_auto_detail(request):
 
 @csrf_exempt
 def api_auto_list(request):
-    objectAndroid = uiAutoRunListN.objects.filter(platform='Android').order_by('-id')[0:7]
+    objectAndroid = uiAutoRunListN.objects.filter(platform='Android').order_by('-id')[0:30]
     objectiOS = uiAutoRunListN.objects.filter(platform='iOS').order_by('-id')[0:7]
 
     Result = {
