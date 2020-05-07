@@ -65,7 +65,10 @@ def objectUiAutoRunList(object):
     result['ut'] = object.ut
     result['rt'] = object.rt
     result['platform'] = object.platform
-    result['rate'] = 100 - object.failNum * 100 // object.allNum
+    if object.allNum:
+        result['rate'] = 100 - object.failNum * 100 // object.allNum
+    else:
+        result['rate'] = 0
     result['model'] = object.model
     result['link'] = object.link
     return result
