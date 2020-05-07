@@ -165,19 +165,19 @@ def pushResultsV3(request):
         # sum['version'] = '3.13s.1'
         # sum['fail'] = self.getFailed(item)
         # sum['Jenkinsid'] = time.strftime("%Y%m%d%H%M", time.localtime())
+        if body_json['data']['sum']['all']:
+            uiAutoRunListN(platform=body_json['data']['sum']['platform'], allNum=body_json['data']['sum']['all'],
+                           failNum=body_json['data']['sum']['fail'], rt=body_json['data']['sum']['runt'],
+                           ut=body_json['data']['sum']['uset'], Jenkinsid=body_json['data']['sum']['Jenkinsid'],
+                           link='', appName=body_json['data']['sum']['app'], model='',
+                           device=body_json['data']['sum']['model'], appVersion=body_json['data']['sum']['version']).save()
 
-        uiAutoRunListN(platform=body_json['data']['sum']['platform'], allNum=body_json['data']['sum']['all'],
-                       failNum=body_json['data']['sum']['fail'], rt=body_json['data']['sum']['runt'],
-                       ut=body_json['data']['sum']['uset'], Jenkinsid=body_json['data']['sum']['Jenkinsid'],
-                       link='', appName=body_json['data']['sum']['app'], model='',
-                       device=body_json['data']['sum']['model'], appVersion=body_json['data']['sum']['version']).save()
-
-        for item in body_json['data']['detail']:
-            UICaseDetail(model=item['model'], case=item['case'], caseName=item['caseName'], result=item['result'],
-                         useTime=item['useTime'],
-                         comment=item['comment'], pic=item['pic'], listid=0,
-                         platform=body_json['data']['sum']['platform'], Jenkinsid=body_json['data']['sum']['Jenkinsid'],
-                         all=item, reason=0).save()
+            for item in body_json['data']['detail']:
+                UICaseDetail(model=item['model'], case=item['case'], caseName=item['caseName'], result=item['result'],
+                             useTime=item['useTime'],
+                             comment=item['comment'], pic=item['pic'], listid=0,
+                             platform=body_json['data']['sum']['platform'], Jenkinsid=body_json['data']['sum']['Jenkinsid'],
+                             all=item, reason=0).save()
         print_Log(api, '保存成功')
         result = {}
         result['code'] = 0
