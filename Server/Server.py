@@ -507,7 +507,7 @@ def getResultsv2(request):
         back = {}
         back['sum'] = eval(object.sumery)
         detail = []
-        print('id:{}'.format(object.id))
+        # print('id:{}'.format(object.id))
         for model in back['sum']['module']:
             item = {}
             item['model'] = model
