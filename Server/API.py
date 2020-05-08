@@ -100,7 +100,10 @@ def api_auto_list(request):
         Result['iOS']['rate'] = []
         Result['iOS']['list'] = []
         for item in objectiOS:
-            Result['iOS']['rate'].append(100 - item.failNum * 100 // item.allNum)
+            if item.allNum != 0:
+                Result['iOS']['rate'].append(100 - item.failNum * 100 // item.allNum)
+            else:
+                Result['iOS']['rate'].append(0)
             Result['iOS']['list'].append(ModelObject.objectUiAutoRunList(item))
 
     Result['code'] = 0

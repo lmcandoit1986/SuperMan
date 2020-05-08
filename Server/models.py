@@ -98,6 +98,7 @@ class APIrunlist(models.Model):
     failNum = models.IntegerField()
     rt = models.CharField(max_length=100)
     ut = models.CharField(max_length=100)
+    type = models.IntegerField()
     class Meta:
         db_table = 'APIrunlist'
 
