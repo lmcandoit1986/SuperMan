@@ -197,6 +197,29 @@ def api_api_result_upload(request):
                      Jenkinsid=body_json['data']['Jenkinsid']).save()
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
 
+@csrf_exempt
+def api_server_list(request):
+    if request.POST:
+        type = request.POST['type']
+    elif request.GET:
+        type = request.GET['type']
+    else:
+        return simplejson.dumps({'code': -1, 'msg': '暂不支持该请求方式'})
+    objectapi = APIrunlist.objects.filter(type=type).order_by('-id')[0:30]
+
+    Result = {}
+    autolist =[]
+
+    if objectapi:
+        for item in objectapi:
+            itemdict = ModelObject.objectAPIList(item)
+            autolist.append(itemdict)
+    Result['code'] = 0
+    Result['msg'] = '成功'
+    Result['result'] = autolist
+
+    return simplejson.dumps(Result)
+
 
 '''
 辅助方法

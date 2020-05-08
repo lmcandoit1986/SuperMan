@@ -45,6 +45,20 @@ def result_uiauto_list(request):
     else:
         context = {'person': listRun_dict}
 
-    print(context)
-
     return render(request, 'uiAutoList.html', context)
+
+def result_apicheck_list(request):
+    '''
+    :param request:
+    :return:
+    '''
+    listRun = API.api_server_list(request)
+    listRun_dict = simplejson.loads(listRun)
+    if listRun_dict['code'] != 0:
+        context = {'person': None}
+    else:
+        context = {'person': listRun_dict}
+
+    # print(context)
+
+    return render(request, 'apiMonitor.html', context)
