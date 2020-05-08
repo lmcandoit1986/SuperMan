@@ -51,6 +51,7 @@ urlpatterns = [
     url(r'server/monitor/del$',views.del_listAPIMointor),
 
     url(r'^api/uiauto/result/upload$', API.api_auto_result_upload),  # 测试结果上传
+    url(r'^api/insert/fail/reason$', API.insertReason),  # 测试结果上传
     url(r'^api/mock/data/edit$', API.api_mock_data_edit),  # 测试结果上传
     url(r'^api/uiauto/result/del$', API.api_auto_detail_del),  # 测试结果上传
     url(r'^api/server/result/upload$', API.api_api_result_upload),  # 测试结果上传

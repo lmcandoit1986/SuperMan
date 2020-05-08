@@ -220,6 +220,16 @@ def api_server_list(request):
 
     return simplejson.dumps(Result)
 
+def insertReason(request):
+    if request.POST:
+        type = request.POST['type']
+    elif request.GET:
+        type = request.GET['type']
+    else:
+        return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
+    failReason(reason=type).save()
+    return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
+
 
 '''
 辅助方法
