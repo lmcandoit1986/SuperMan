@@ -74,9 +74,11 @@ def api_auto_detail(request):
         res = failReason.objects.get(id=line)
         if res:
             result['rD'].append(res.reason)
+            result['rN'].append(reasons.count(line))
         else:
             result['rD'].append('未定位')
-        result['rN'].append(reasons.count(line))
+            result['rN'].append(1)
+
 
     result['code'] = 0
     result['msg'] = '成功'
