@@ -30,7 +30,7 @@ def result_uiauto_details(request):
     else:
         context = {'person': detail_dict, 'reason': simplejson.loads(reason), 'key': key}
 
-    print(context)
+    # print(context)
 
     return render(request, 'uiAutoDetail.html', context)
 
