@@ -91,3 +91,24 @@ class failReason(models.Model):
     reason = models.CharField(max_length=100)
     class Meta:
         db_table = 'failReason'
+
+class APIrunlist(models.Model):
+    Jenkinsid = models.IntegerField()
+    allNum = models.IntegerField()
+    failNum = models.IntegerField()
+    rt = models.CharField(max_length=100)
+    ut = models.CharField(max_length=100)
+    class Meta:
+        db_table = 'APIrunlist'
+
+class apiCases(models.Model):
+    model = models.CharField(max_length=100)
+    api = models.CharField(max_length=100)
+    case = models.CharField(max_length=100)
+    title = models.CharField(max_length=200)
+    result = models.IntegerField()
+    useTime = models.CharField(max_length=100)
+    comment = models.CharField(max_length=1000)
+    Jenkinsid = models.IntegerField()
+    class Meta:
+        db_table = 'apiCases'

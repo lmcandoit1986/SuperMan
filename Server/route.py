@@ -53,6 +53,7 @@ urlpatterns = [
     url(r'^api/uiauto/result/upload$', API.api_auto_result_upload),  # 测试结果上传
     url(r'^api/mock/data/edit$', API.api_mock_data_edit),  # 测试结果上传
     url(r'^api/uiauto/result/del$', API.api_auto_detail_del),  # 测试结果上传
+    url(r'^api/api/result/upload$', API.api_api_result_upload),  # 测试结果上传
 
     url(r'web/watcher$',htmlRoute.APIWatcher),
     url(r'web/uiAuto$',htmlRoute.uiauto),

@@ -86,3 +86,40 @@ def objectMockDate(item):
     itemdict['status'] = item.status
     itemdict['data'] = eval(item.data)
     return itemdict
+
+def objectAPIList(item):
+    '''
+    APIrunlist 数据表记录转字典
+    :param item:
+    :return:
+    '''
+    itemdict = {}
+    itemdict['id'] = item.id
+    itemdict['Jenkinsid'] = item.Jenkinsid
+    itemdict['allNum'] = item.allNum
+    itemdict['failNum'] = item.failNum
+    itemdict['rt'] = item.rt
+    if item.allNum:
+        itemdict['rate'] = 100 - item.failNum * 100 // item.allNum
+    else:
+        itemdict['rate'] = 0
+    itemdict['ut'] = item.ut
+    return itemdict
+
+def objectAPICase(item):
+    '''
+    APIrunlist 数据表记录转字典
+    :param item:
+    :return:
+    '''
+    itemdict = {}
+    itemdict['id'] = item.id
+    itemdict['model'] = item.model
+    itemdict['api'] = item.api
+    itemdict['case'] = item.case
+    itemdict['title'] = item.title
+    itemdict['result'] = item.result
+    itemdict['useTime'] = item.useTime
+    itemdict['comment'] = item.comment
+    itemdict['Jenkinsid'] = item.Jenkinsid
+    return itemdict

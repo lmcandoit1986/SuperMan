@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 from Server import ModelObject
 from Server.models import resultAll, performanceData, listAPIMointor
 from Server.models import CaseDetail, UICaseDetail, uiAutoRunListN
-from Server.models import mockData, failReason
+from Server.models import mockData, failReason, APIrunlist, apiCases
 
 
 @csrf_exempt
@@ -170,7 +170,34 @@ def api_mock_data_edit(request):
     item.save()
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
 
+@csrf_exempt
+def api_api_result_upload(request):
+    if request.POST:
+        body = (request.body).decode()
+        body_json = eval(urllib.parse.unquote(body))
+    else:
+        return simplejson.dumps({'code': -1, 'msg': '暂不支持该请求方式'})
 
+    if assertAPIARunListObjectIsExist(body_json['Jenkinsid']):
+        return HttpResponse(simplejson.dumps({'code': -2, 'msg': '数据库已存在匹配数据'}))
+
+    uiAutoRunListN(Jenkinsid=body_json['Jenkinsid'],
+                   allNum=body_json['allNum'],
+                   failNum=body_json['failNum'],
+                   rt=body_json['rt'],
+                   ut=body_json['ut'],
+                   ).save()
+
+    for item in body_json['data']['result']:
+        UICaseDetail(model=item['model'],
+                     api=item['api'],
+                     case=item['case'],
+                     title=item['title'],
+                     result=item['result'],
+                     useTime=item['useTime'],
+                     comment=item['comment'],
+                     Jenkinsid=sum['Jenkinsid']).save()
+    return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
 
 
 '''
@@ -180,6 +207,10 @@ def api_mock_data_edit(request):
 
 def assertUiAutoRunListObjectIsExist(id, platform):
     list = uiAutoRunListN.objects.filter(Jenkinsid=id, platform=platform)
+    return True if list else False
+
+def assertAPIARunListObjectIsExist(id):
+    list = APIrunlist.objects.filter(Jenkinsid=id)
     return True if list else False
 
 
