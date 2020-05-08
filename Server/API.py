@@ -69,7 +69,7 @@ def api_auto_detail(request):
     result['rD'] = []
     result['rN'] = []
     for line in set(reasons):
-        res = failReason.objects.get(id=list)
+        res = failReason.objects.get(id=line)
         if res:
             result['rD'].append(res.reason)
         else:
