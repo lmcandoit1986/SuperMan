@@ -226,7 +226,7 @@ def insertReason(request):
     elif request.GET:
         type = request.GET['type']
     else:
-        return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
+        return HttpResponse(simplejson.dumps({'code': -1, 'msg': '成功'}))
     failReason(reason=type).save()
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
 
