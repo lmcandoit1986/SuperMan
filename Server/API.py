@@ -178,7 +178,7 @@ def api_api_result_upload(request):
     if assertAPIARunListObjectIsExist(body_json['data']['Jenkinsid']):
         return HttpResponse(simplejson.dumps({'code': -2, 'msg': '数据库已存在匹配数据'}))
 
-    uiAutoRunListN(Jenkinsid=body_json['data']['Jenkinsid'],
+    APIrunlist(Jenkinsid=body_json['data']['Jenkinsid'],
                    allNum=body_json['data']['allNum'],
                    failNum=body_json['data']['failNum'],
                    rt=body_json['data']['rt'],
