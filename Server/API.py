@@ -183,6 +183,7 @@ def api_api_result_upload(request):
                    failNum=body_json['data']['failNum'],
                    rt=body_json['data']['rt'],
                    ut=body_json['data']['ut'],
+                   type=body_json['data']['type'],
                    ).save()
 
     for item in body_json['data']['result']:
