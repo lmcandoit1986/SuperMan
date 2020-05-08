@@ -378,7 +378,7 @@
                                                     <ul class="dropdown-menu float-right">
                                                         {% if key == 1 %}
                                                             {% for line in reason %}
-                                                                {% if line.id != 0 %}
+                                                                {% if line.id != 1 %}
                                                                     <li><a onclick="setReason(this)"
                                                                            name='{{ item.id }}'
                                                                            type="{{ line.id }}">{{ line.reason }}</a>
