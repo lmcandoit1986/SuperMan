@@ -867,6 +867,17 @@ def getRealReason(request):
             res.append(itemDict)
         return simplejson.dumps(res)
 
+def getRealReasonHttp(request):
+    if request.GET:
+        items = failReason.objects.all()
+        res = []
+        for item in items:
+            itemDict = {}
+            itemDict['id'] = item.id
+            itemDict['reason'] = item.reason
+            res.append(itemDict)
+        return HttpResponse(simplejson.dumps(res))
+
 
 def setRealReason(request):
     if request.GET:

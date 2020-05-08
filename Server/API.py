@@ -69,7 +69,11 @@ def api_auto_detail(request):
     result['rD'] = []
     result['rN'] = []
     for line in set(reasons):
-        result['rD'].append((failReason.objects.get(id=line).reason))
+        res = failReason.objects.get(id=list)
+        if res:
+            result['rD'].append(res.reason)
+        else:
+            result['rD'].append('未定位')
         result['rN'].append(reasons.count(line))
 
     result['code'] = 0

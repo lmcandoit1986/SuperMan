@@ -23,6 +23,8 @@ def result_uiauto_details(request):
     detail = API.api_auto_detail(request)
     detail_dict = simplejson.loads(detail)
     reason = Server.getRealReason(request)
+    print(reason)
+    print(detail_dict)
     if detail_dict['code'] != 0:
         context = {'person': None}
     else:
