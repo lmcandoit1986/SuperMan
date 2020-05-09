@@ -60,7 +60,10 @@ def api_auto_detail(request):
     for case in listCase:
         result['detail'].append(ModelObject.objectUICaseDetail(case))
         if case.result != 0:
-            reasons.append(case.reason)
+            if case.reason == 0:
+                reasons.append(1)
+            else:
+                reasons.append(case.reason)
 
     result['detail'].sort(key=takeRes, reverse=True)
     '''
@@ -78,6 +81,8 @@ def api_auto_detail(request):
             result['rD'].append(res.reason)
             if change:
                 result['rN'].append(reasons.count(line-1))
+            else:
+                result['rN'].append(reasons.count(line))
         else:
             result['rD'].append('未定位')
             result['rN'].append(1)
