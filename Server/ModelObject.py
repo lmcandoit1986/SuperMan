@@ -35,6 +35,8 @@ def objectUICaseDetail(ob):
     result['comment'] = ob.comment
     if ob.reason ==0:
         result['reason'] = 1
+    else:
+        result['reason'] = ob.reason
     '''
     如果使用静态资源，则需要添加图片路径
     '''
