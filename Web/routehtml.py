@@ -29,9 +29,6 @@ def result_uiauto_details(request):
         context = {'person': None}
     else:
         context = {'person': detail_dict, 'reason': simplejson.loads(reason), 'key': key}
-
-    print(context)
-
     return render(request, 'uiAutoDetail.html', context)
 
 def result_uiauto_list(request):
