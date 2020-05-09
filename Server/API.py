@@ -68,13 +68,16 @@ def api_auto_detail(request):
     '''
     result['rD'] = []
     result['rN'] = []
+    change = False
     for line in set(reasons):
         if line == 0:
             line = 1
+            change = True
         res = failReason.objects.get(id=line)
         if res:
             result['rD'].append(res.reason)
-            result['rN'].append(reasons.count(line))
+            if change:
+                result['rN'].append(reasons.count(line-1))
         else:
             result['rD'].append('未定位')
             result['rN'].append(1)

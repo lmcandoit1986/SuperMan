@@ -33,7 +33,8 @@ def objectUICaseDetail(ob):
     result['result'] = ob.result
     result['useTime'] = ob.useTime
     result['comment'] = ob.comment
-    result['reason'] = ob.reason
+    if ob.reason ==0:
+        result['reason'] = 1
     '''
     如果使用静态资源，则需要添加图片路径
     '''
