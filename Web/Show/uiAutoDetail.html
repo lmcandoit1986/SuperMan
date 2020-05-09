@@ -282,7 +282,9 @@
                                                 <i class="fa fa-circle text-navy"></i>
                                             </td>
                                             <td>
-                                                {{ item.reason }}
+                                                {% if item.id != 0 %}
+                                                    {{ item.reason }}
+                                                {% endif %}
                                             </td>
                                         </tr>
                                     {% endfor %}

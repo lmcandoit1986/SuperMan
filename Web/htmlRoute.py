@@ -6,6 +6,8 @@ from django.shortcuts import render
 from django.template.loader import get_template
 
 from Server import Server
+from Server.models import Imgdb
+
 
 def index(request):
     t = get_template('index.html')
