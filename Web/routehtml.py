@@ -58,6 +58,4 @@ def result_apicheck_list(request):
     else:
         context = {'person': listRun_dict}
 
-    # print(context)
-
     return render(request, 'apiMonitor.html', context)

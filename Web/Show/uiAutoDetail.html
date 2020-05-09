@@ -22,7 +22,8 @@
 <body>
 <script>
     $(function () {
-        var result = {{ person|safe }}
+        var result =
+        {{ person|safe }}
         var reason = result.rD
         var num = result.rN
         console.log(reason)
@@ -277,16 +278,18 @@
                                 <table class="table table-stripped small m-t-md">
                                     <tbody>
                                     {% for item in reason %}
-                                        <tr>
-                                            <td>
-                                                <i class="fa fa-circle text-navy"></i>
-                                            </td>
-                                            <td>
-                                                {% if item.id != 1 %}
+
+                                        {% if item.id != 1 %}
+                                            <tr>
+                                                <td>
+                                                    <i class="fa fa-circle text-navy"></i>
+                                                </td>
+                                                <td>
                                                     {{ item.reason }}
-                                                {% endif %}
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+
                                     {% endfor %}
                                     </tbody>
                                 </table>
