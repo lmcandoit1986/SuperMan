@@ -177,7 +177,7 @@ def pushResultsV3(request):
                              useTime=item['useTime'],
                              comment=item['comment'], pic=item['pic'], listid=0,
                              platform=body_json['data']['sum']['platform'], Jenkinsid=body_json['data']['sum']['Jenkinsid'],
-                             all=item, reason=0).save()
+                             all=item, reason=1).save()
         print_Log(api, '保存成功')
         result = {}
         result['code'] = 0
