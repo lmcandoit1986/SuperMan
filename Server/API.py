@@ -11,7 +11,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from Server import ModelObject
-from Server.models import resultAll, performanceData, listAPIMointor
+from Server.models import resultAll, performanceData, listAPIMointor, Imgdb
 from Server.models import CaseDetail, UICaseDetail, uiAutoRunListN
 from Server.models import mockData, failReason, APIrunlist, apiCases
 
@@ -244,6 +244,13 @@ def insertReason(request):
     else:
         return HttpResponse(simplejson.dumps({'code': -1, 'msg': '成功'}))
     failReason(reason=type).save()
+    return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
+
+@csrf_exempt
+def uploadImg(request): # 图片上传函数
+    if request.method == 'POST':
+        imgob = Imgdb(img_url=request.FILES.get('img'))
+        imgob.save()
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
 
 

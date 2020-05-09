@@ -56,6 +56,7 @@ urlpatterns = [
     url(r'^api/uiauto/result/del$', API.api_auto_detail_del),  # 测试结果上传
     url(r'^api/server/result/upload$', API.api_api_result_upload),  # 测试结果上传
     url(r'^api/fail/reason/get$', Server.getRealReasonHttp),  # 测试结果上传
+    url(r'^api/img/upload$', API.uploadImg),  # 测试结果上传
 
     url(r'web/watcher$',htmlRoute.APIWatcher),
     url(r'web/uiAuto$',htmlRoute.uiauto),

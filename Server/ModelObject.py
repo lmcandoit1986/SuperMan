@@ -42,9 +42,15 @@ def objectUICaseDetail(ob):
     '''
     if ob.pic != '':
         if 'png' in ob.pic:
-            result['pic'] = 'img/' + ob.pic
+            if 'img' in ob.pic:
+                result['pic'] = ob.pic
+            else:
+                result['pic'] = 'img/' + ob.pic
         else:
-            result['pic'] = 'img/' + ob.pic + '.png'
+            if 'img' in ob.pic:
+                result['pic'] = ob.pic
+            else:
+                result['pic'] = 'img/' + ob.pic + '.png'
     else:
         result['pic'] = ob.pic
 

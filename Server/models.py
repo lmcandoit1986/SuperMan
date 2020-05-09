@@ -92,6 +92,11 @@ class failReason(models.Model):
     class Meta:
         db_table = 'failReason'
 
+class Imgdb(models.Model):
+    img_url = models.ImageField(upload_to='img')
+    class Meta:
+        db_table = 'Imgdb'
+
 class APIrunlist(models.Model):
     Jenkinsid = models.IntegerField()
     allNum = models.IntegerField()
