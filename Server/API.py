@@ -246,6 +246,20 @@ def insertReason(request):
     failReason(reason=type).save()
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
 
+def updateReason(request):
+    if request.POST:
+        type = request.POST['type']
+        id = requests.POSt['id']
+    elif request.GET:
+        type = request.GET['type']
+        id = requests.GET['id']
+    else:
+        return HttpResponse(simplejson.dumps({'code': -1, 'msg': '不支持该类型请求'}))
+    item = failReason.objects.get(id=id)
+    item.reason = type
+    item.save()
+    return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
+
 @csrf_exempt
 def uploadImg(request): # 图片上传函数
     if request.method == 'POST':
