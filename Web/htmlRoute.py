@@ -25,7 +25,6 @@ def new(request):
     return HttpResponse(html)
 
 def error(request):
-    # conten = {'person':""}
     t = get_template('error.html')
     html = t.render()
     return HttpResponse(html)
@@ -42,9 +41,6 @@ def uiauto(request):
     print(res_dict)
     context = {'person': res, 'dict_data': res_dict}
     return render(request, 'base.html', context)
-    # t = get_template('base.html')
-    # html = t.render()
-    # return HttpResponse(html)
 
 def APIWatcher(request):
     res = Server.getAPIMonitorDataJson(request)
