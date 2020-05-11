@@ -264,12 +264,10 @@
                                     <th>平台</th>
                                     <th>设备</th>
                                     <th>App</th>
-
-
                                     <th>版本</th>
                                     <th>执行时间</th>
                                     <th>用时</th>
-                                    <th>模块</th>
+                                    <th>用例数</th>
                                     <th>成功率</th>
                                     <th>状态</th>
                                     <!-- <th>日期</th> -->
@@ -292,7 +290,7 @@
                                         <td>{{ item.appVersion|default:"未知" }}</td>
                                         <td>{{ item.rt|default:"未知" }}</td>
                                         <td>{{ item.ut|default:"未知" }}</td>
-                                        <td>{{ item.model|default:"全用例" }}</td>
+                                        <td>{{ item.allNum|default:"全用例" }}</td>
                                         <td><span
                                                 class="pie">{{ item.allNum }}-{{ item.failNum }}/{{ item.allNum }}</span>
                                         </td>
