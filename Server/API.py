@@ -249,10 +249,10 @@ def insertReason(request):
 def updateReason(request):
     if request.POST:
         type = request.POST['type']
-        id = requests.POSt['id']
+        id = request.POST['id']
     elif request.GET:
         type = request.GET['type']
-        id = requests.GET['id']
+        id = request.GET['id']
     else:
         return HttpResponse(simplejson.dumps({'code': -1, 'msg': '不支持该类型请求'}))
     item = failReason.objects.get(id=id)
