@@ -203,12 +203,16 @@ def api_api_result_upload(request):
                    ).save()
 
     for item in body_json['data']['result']:
+        if 'useTime' in item:
+            tiemuse = str(item['useTime'])
+        else:
+            tiemuse = '0'
         apiCases(model=item['model'],
                      api=item['api'],
                      case=item['case'],
                      title=item['title'],
                      result=item['result'],
-                     useTime=str(item['useTime']),
+                     useTime=tiemuse,
                      comment=item['comment'],
                      Jenkinsid=body_json['data']['Jenkinsid']).save()
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
