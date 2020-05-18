@@ -27,6 +27,7 @@ def api_auto_detail_del(request):
     item.delete()
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': 'pass'}))
 
+
 @csrf_exempt
 def api_auto_detail(request):
     if request.POST:
@@ -80,18 +81,18 @@ def api_auto_detail(request):
         if res:
             result['rD'].append(res.reason)
             if change:
-                result['rN'].append(reasons.count(line-1))
+                result['rN'].append(reasons.count(line - 1))
             else:
                 result['rN'].append(reasons.count(line))
         else:
             result['rD'].append('未定位')
             result['rN'].append(1)
 
-
     result['code'] = 0
     result['msg'] = '成功'
 
     return simplejson.dumps(result)
+
 
 @csrf_exempt
 def api_auto_list(request):
@@ -127,6 +128,7 @@ def api_auto_list(request):
 
     return simplejson.dumps(Result)
 
+
 @csrf_exempt
 def api_auto_result_upload(request):
     body = (request.body).decode()
@@ -146,24 +148,25 @@ def api_auto_result_upload(request):
                    appName=sum['app'],
                    model='',
                    device=sum['model'],
-                   appVersion=sum['version'])\
+                   appVersion=sum['version']) \
         .save()
 
     for item in body_json['data']['detail']:
-        UICaseDetail(model=item['model'],
-                     case=item['case'],
-                     caseName=item['caseName'],
-                     result=item['result'],
-                     useTime=item['useTime'],
-                     comment=item['comment'],
-                     pic=item['pic'],
+        UICaseDetail(model=getValue(item, 'model'),
+                     case=getValue(item, 'case'),
+                     caseName=getValue(item, 'caseName'),
+                     result=getValue(item, 'result'),
+                     useTime=getValue(item, 'useTime'),
+                     comment=getValue(item, 'comment'),
+                     pic=getValue(item, 'pic'),
                      listid=0,
                      platform=sum['platform'],
                      Jenkinsid=sum['Jenkinsid'],
                      all=item,
-                     reason=0)\
+                     reason=0) \
             .save()
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
+
 
 @csrf_exempt
 def api_mock_data_edit(request):
@@ -186,6 +189,7 @@ def api_mock_data_edit(request):
     item.save()
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
 
+
 @csrf_exempt
 def api_api_result_upload(request):
     body = (request.body).decode()
@@ -195,27 +199,24 @@ def api_api_result_upload(request):
         return HttpResponse(simplejson.dumps({'code': -2, 'msg': '数据库已存在匹配数据'}))
 
     APIrunlist(Jenkinsid=body_json['data']['Jenkinsid'],
-                   allNum=body_json['data']['allNum'],
-                   failNum=body_json['data']['failNum'],
-                   rt=body_json['data']['rt'],
-                   ut=body_json['data']['ut'],
-                   type=body_json['data']['type'],
-                   ).save()
+               allNum=body_json['data']['allNum'],
+               failNum=body_json['data']['failNum'],
+               rt=body_json['data']['rt'],
+               ut=body_json['data']['ut'],
+               type=getValue(body_json['data'], 'type', 0),
+               ).save()
 
     for item in body_json['data']['result']:
-        if 'useTime' in item:
-            tiemuse = str(item['useTime'])
-        else:
-            tiemuse = '0'
-        apiCases(model=item['model'],
-                     api=item['api'],
-                     case=item['case'],
-                     title=item['title'],
-                     result=item['result'],
-                     useTime=tiemuse,
-                     comment=item['comment'],
-                     Jenkinsid=body_json['data']['Jenkinsid']).save()
+        apiCases(model=getValue(item, 'model'),
+                 api=getValue(item, 'api'),
+                 case=getValue(item, 'case'),
+                 title=getValue(item, 'title'),
+                 result=getValue(item, 'result'),
+                 useTime=getValue(item, 'useTime'),
+                 comment=getValue(item, 'comment'),
+                 Jenkinsid=body_json['data']['Jenkinsid']).save()
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
+
 
 @csrf_exempt
 def api_server_list(request):
@@ -228,7 +229,7 @@ def api_server_list(request):
     objectapi = APIrunlist.objects.filter(type=type).order_by('-id')[0:30]
 
     Result = {}
-    autolist =[]
+    autolist = []
 
     if objectapi:
         for item in objectapi:
@@ -240,6 +241,7 @@ def api_server_list(request):
 
     return simplejson.dumps(Result)
 
+
 def insertReason(request):
     if request.POST:
         type = request.POST['type']
@@ -249,6 +251,7 @@ def insertReason(request):
         return HttpResponse(simplejson.dumps({'code': -1, 'msg': '成功'}))
     failReason(reason=type).save()
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
+
 
 def updateReason(request):
     if request.POST:
@@ -264,8 +267,9 @@ def updateReason(request):
     item.save()
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
 
+
 @csrf_exempt
-def uploadImg(request): # 图片上传函数
+def uploadImg(request):  # 图片上传函数
     if request.method == 'POST':
         imgob = Imgdb(img_url=request.FILES.get('img'))
         imgob.save()
@@ -281,6 +285,7 @@ def assertUiAutoRunListObjectIsExist(id, platform):
     list = uiAutoRunListN.objects.filter(Jenkinsid=id, platform=platform)
     return True if list else False
 
+
 def assertAPIARunListObjectIsExist(id):
     list = APIrunlist.objects.filter(Jenkinsid=id)
     return True if list else False
@@ -288,3 +293,10 @@ def assertAPIARunListObjectIsExist(id):
 
 def takeRes(el):
     return abs(int(el['result']))
+
+
+def getValue(item, key, defaultValue=0):
+    try:
+        return item[key]
+    except KeyError as e:
+        return defaultValue
