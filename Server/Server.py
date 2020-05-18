@@ -898,7 +898,7 @@ def mock_data_list(request):
         itemdict['api'] = item.api
         itemdict['status'] = item.status
         itemdict['key'] = item.keyword
-        itemdict['data'] = eval(item.data)
+        itemdict['data'] = item.data
         result.append(itemdict)
     return simplejson.dumps(result)
 
@@ -972,7 +972,7 @@ def mock_data_get_by_id(request):
         id = request.GET['id']
         objects = mockData.objects.filter(id=id)
         if objects:
-            return HttpResponse(simplejson.dumps(eval(objects[0].data)))
+            return HttpResponse(simplejson.dumps(objects[0].data))
         else:
             itemdict = {}
             itemdict['code'] = -1
@@ -985,7 +985,7 @@ def mock_data_get_by_api_key(request):
         key = request.GET['key']
         objects = mockData.objects.filter(api=api, status=0, keyword=key)
         if objects:
-            return HttpResponse(simplejson.dumps(eval(objects[0].data)))
+            return HttpResponse(simplejson.dumps(objects[0].data))
         else:
             itemdict = {}
             itemdict['code'] = -1
