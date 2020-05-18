@@ -990,7 +990,7 @@ def mock_data_get_by_api_key(request):
             itemdict = {}
             itemdict['code'] = -1
             itemdict['msg'] = '无匹配数据或数据停用状态'
-            return HttpResponse(simplejson.dumps(itemdict))
+            return simplejson.dumps(itemdict)
 
 def investMSBank(request):
     if request.GET:
