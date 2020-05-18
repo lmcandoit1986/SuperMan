@@ -208,7 +208,7 @@ def api_api_result_upload(request):
                      case=item['case'],
                      title=item['title'],
                      result=item['result'],
-                     useTime=item['useTime'],
+                     useTime=str(item['useTime']),
                      comment=item['comment'],
                      Jenkinsid=body_json['data']['Jenkinsid']).save()
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
