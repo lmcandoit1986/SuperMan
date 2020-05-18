@@ -972,7 +972,8 @@ def mock_data_get_by_id(request):
         id = request.GET['id']
         objects = mockData.objects.filter(id=id)
         if objects:
-            return HttpResponse(simplejson.dumps(objects[0].data))
+            print(simplejson.dumps(objects[0].data))
+            return HttpResponse(simplejson.dumps(eval(objects[0].data)))
         else:
             itemdict = {}
             itemdict['code'] = -1
