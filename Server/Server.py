@@ -988,7 +988,7 @@ def mock_data_get_by_api_key(request):
             res = eval(objects[0].data)
             res['cotent-type'] = 'application/json;charset=UTF-8'
 
-            return HttpResponse(simplejson.loads(res))
+            return HttpResponse(res)
         else:
             itemdict = {}
             itemdict['code'] = -1
