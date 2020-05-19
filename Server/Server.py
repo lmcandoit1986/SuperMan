@@ -170,13 +170,15 @@ def pushResultsV3(request):
                            failNum=body_json['data']['sum']['fail'], rt=body_json['data']['sum']['runt'],
                            ut=body_json['data']['sum']['uset'], Jenkinsid=body_json['data']['sum']['Jenkinsid'],
                            link='', appName=body_json['data']['sum']['app'], model='',
-                           device=body_json['data']['sum']['model'], appVersion=body_json['data']['sum']['version']).save()
+                           device=body_json['data']['sum']['model'],
+                           appVersion=body_json['data']['sum']['version']).save()
 
             for item in body_json['data']['detail']:
                 UICaseDetail(model=item['model'], case=item['case'], caseName=item['caseName'], result=item['result'],
                              useTime=item['useTime'],
                              comment=item['comment'], pic=item['pic'], listid=0,
-                             platform=body_json['data']['sum']['platform'], Jenkinsid=body_json['data']['sum']['Jenkinsid'],
+                             platform=body_json['data']['sum']['platform'],
+                             Jenkinsid=body_json['data']['sum']['Jenkinsid'],
                              all=item, reason=1).save()
         print_Log(api, '保存成功')
         result = {}
@@ -486,6 +488,7 @@ def getResultsv3(request):
         result['result'] = {}
         print_Log(api, result)
         return simplejson.dumps(result)
+
 
 def takeRes(el):
     return el['result']
@@ -838,7 +841,9 @@ def mock_data_insert(request):
             context = {'person': "api or json data 数据为空"}
             return render(request, 'error.html', context)
         try:
-            dictData = eval(request.POST['jsonData'])
+            strbody = request.POST['jsonData']
+            DealWithdict = strbody.replace('"', "'").replace('false', 'False').replace('true', 'True')
+            dictData = eval(DealWithdict)
         except NameError as ne:
             context = {'person': "json data 数据格式异常"}
             return render(request, 'error.html', context)
@@ -866,6 +871,7 @@ def getRealReason(request):
             itemDict['reason'] = item.reason
             res.append(itemDict)
         return simplejson.dumps(res)
+
 
 def getRealReasonHttp(request):
     if request.GET:
@@ -929,9 +935,11 @@ def mock_data_edit(request):
     if request.POST:
         id = request.POST['id']
         try:
-            status = eval(request.POST['jsonData'])
+            strbody = request.POST['jsonData']
+            DealWithdict = strbody.replace('"', "'").replace('false', 'False').replace('true', 'True')
+            dictData = eval(DealWithdict)
             item = mockData.objects.get(id=id)
-            item.data = status
+            item.data = dictData
             item.save()
         except NameError as ne:
             context = {'person': "json data 数据格式异常"}
@@ -967,6 +975,7 @@ def mock_data_get_by_api(request):
         return render(request, 'mockList.html', context)
         # return HttpResponse(simplejson.dumps([]))
 
+
 def mock_data_get_by_id(request):
     if request.GET:
         id = request.GET['id']
@@ -979,6 +988,7 @@ def mock_data_get_by_id(request):
             itemdict['code'] = -1
             itemdict['msg'] = '无匹配数据或数据停用状态'
             return HttpResponse(simplejson.dumps(itemdict))
+
 
 def mock_data_get_by_api_key(request):
     if request.GET:
@@ -995,6 +1005,7 @@ def mock_data_get_by_api_key(request):
             itemdict['code'] = -1
             itemdict['msg'] = '无匹配数据或数据停用状态'
             return simplejson.dumps(itemdict)
+
 
 def investMSBank(request):
     if request.GET:
