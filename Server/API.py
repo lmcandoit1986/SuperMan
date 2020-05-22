@@ -211,7 +211,7 @@ def api_api_result_upload(request):
                  api=getValue(item, 'api'),
                  case=getValue(item, 'case'),
                  title=getValue(item, 'title'),
-                 result=getValue(item, 'result'),
+                 result=getValue(item, 'res', -1),
                  useTime=getValue(item, 'useTime'),
                  comment=getValue(item, 'comment'),
                  Jenkinsid=body_json['data']['Jenkinsid']).save()
@@ -238,6 +238,32 @@ def api_server_list(request):
     Result['code'] = 0
     Result['msg'] = '成功'
     Result['result'] = autolist
+
+    return simplejson.dumps(Result)
+
+
+@csrf_exempt
+def api_server_detail(request):
+    if request.POST:
+        type = request.POST['id']
+    elif request.GET:
+        type = request.GET['id']
+    else:
+        return simplejson.dumps({'code': -1, 'msg': '暂不支持该请求方式'})
+    Result = {}
+    objectlist = APIrunlist.objects.get(Jenkinsid=type)
+    res = ModelObject.objectAPIList(objectlist)
+    objectapi = apiCases.objects.filter(Jenkinsid=type)
+    caselist = []
+    for item in objectapi:
+        caselist.append(ModelObject.objectAPICase(item))
+    # 排序
+    caselist.sort(key=takeRes, reverse=True)
+
+    Result['code'] = 0
+    Result['msg'] = '成功'
+    Result['sum'] = res
+    Result['result'] = caselist
 
     return simplejson.dumps(Result)
 

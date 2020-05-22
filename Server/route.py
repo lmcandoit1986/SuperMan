@@ -82,6 +82,7 @@ urlpatterns = [
     url(r'^web/result/uiauto/detail$', routehtml.result_uiauto_details),
     url(r'^web/result/uiauto/list$', routehtml.result_uiauto_list),
     url(r'^web/result/api/monitor$', routehtml.result_apicheck_list),
+    url(r'^web/result/api/detail$', routehtml.result_api_detail),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

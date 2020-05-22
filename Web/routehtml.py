@@ -57,3 +57,17 @@ def result_apicheck_list(request):
         context = {'person': listRun_dict}
 
     return render(request, 'apiMonitor.html', context)
+
+def result_api_detail(request):
+    '''
+    :param request:
+    :return:
+    '''
+    listRun = API.api_server_detail(request)
+    listRun_dict = simplejson.loads(listRun)
+    if listRun_dict['code'] != 0:
+        context = {'person': None}
+    else:
+        context = {'person': listRun_dict}
+
+    return render(request, 'APIDetail.html', context)
