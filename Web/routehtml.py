@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import get_template
 
-from Server import Server, API
+from Server import Server, API, LogSys
 
 
 def result_uiauto_details(request):
@@ -49,13 +49,15 @@ def result_apicheck_list(request):
     :param request:
     :return:
     '''
+    LogSys.logInfo('API:web/result/api/monitor')
+    LogSys.logInfo('Request:{0}'.format(request))
     listRun = API.api_server_list(request)
     listRun_dict = simplejson.loads(listRun)
     if listRun_dict['code'] != 0:
         context = {'person': None}
     else:
         context = {'person': listRun_dict}
-
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'apiMonitor.html', context)
 
 def result_api_detail(request):
@@ -63,11 +65,13 @@ def result_api_detail(request):
     :param request:
     :return:
     '''
+    LogSys.logInfo('API:web/result/api/detail')
+    LogSys.logInfo('Request:{0}'.format(request))
     listRun = API.api_server_detail(request)
     listRun_dict = simplejson.loads(listRun)
     if listRun_dict['code'] != 0:
         context = {'person': None}
     else:
         context = {'person': listRun_dict}
-
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'APIDetail.html', context)
