@@ -15,6 +15,7 @@ def result_uiauto_details(request):
     :param request:
     :return:
     '''
+    LogSys.logInfo('Request:{0}'.format(request))
     key = 0
     if request.GET['user'] == 'visitor':
         key = 0
@@ -27,6 +28,7 @@ def result_uiauto_details(request):
         context = {'person': None}
     else:
         context = {'person': detail_dict, 'reason': simplejson.loads(reason), 'key': key}
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'uiAutoDetail.html', context)
 
 def result_uiauto_list(request):
@@ -35,13 +37,14 @@ def result_uiauto_list(request):
     :param request:
     :return:
     '''
+    LogSys.logInfo('Request:{0}'.format(request))
     listRun = API.api_auto_list(request)
     listRun_dict = simplejson.loads(listRun)
     if listRun_dict['code'] != 0:
         context = {'person': None}
     else:
         context = {'person': listRun_dict}
-
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'uiAutoList.html', context)
 
 def result_apicheck_list(request):
