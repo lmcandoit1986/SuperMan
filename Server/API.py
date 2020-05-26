@@ -204,6 +204,7 @@ def api_api_result_upload(request):
                rt=body_json['data']['rt'],
                ut=body_json['data']['ut'],
                type=getValue(body_json['data'], 'type', 0),
+               kind=getValue(body_json['data'], 'modul', '全部')
                ).save()
 
     for item in body_json['data']['result']:
@@ -238,7 +239,7 @@ def api_server_list(request):
     Result['code'] = 0
     Result['msg'] = '成功'
     Result['result'] = autolist
-
+    print(Result)
     return simplejson.dumps(Result)
 
 

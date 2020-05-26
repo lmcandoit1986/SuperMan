@@ -161,6 +161,7 @@
                                 <tr>
 
                                     <th>#</th>
+                                    <th>模块</th>
                                     <th>执行时间</th>
                                     <th>用时</th>
                                     <th>失败用例</th>
@@ -174,6 +175,7 @@
                                 {% for item in person.result %}
                                     <tr>
                                         <td>{{ item.id|default:"未知" }}</td>
+                                        <td>{{ item.kind|default:"全部" }}</td>
                                         <td>{{ item.rt|default:"未知" }}</td>
                                         <td>{{ item.ut|default:"未知" }}</td>
                                         <td>{{ item.failNum|default:"0" }}</td>
