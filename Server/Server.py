@@ -851,7 +851,7 @@ def mock_data_insert(request):
             context = {'person': "json data 数据格式异常"}
             return render(request, 'error.html', context)
 
-    item = mockData.objects.filter(api=api)
+    item = mockData.objects.filter(api=api,keyword=key)
     if item:
         context = {'person': "api 数据重复"}
         return render(request, 'error.html', context)
