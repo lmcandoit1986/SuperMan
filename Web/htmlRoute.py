@@ -5,44 +5,53 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import get_template
 
-from Server import Server
+from Server import Server, LogSys
 from Server.models import Imgdb
 
 
 def index(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     t = get_template('index.html')
     html = t.render()
     return HttpResponse(html)
 
 def sms(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     t = get_template('SMS.html')
     html = t.render()
     return HttpResponse(html)
 
 def new(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     t = get_template('mock.html')
     html = t.render()
     return HttpResponse(html)
 
 def error(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     t = get_template('error.html')
     html = t.render()
     return HttpResponse(html)
 
 def mocklist(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     res = Server.mock_data_list(request)
     res_dict = eval(res)
     context = {'person': res_dict}
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'mockList.html', context)
 
 def uiauto(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     res = Server.getListResultNew(request)
     res_dict = eval(res)
     print(res_dict)
     context = {'person': res, 'dict_data': res_dict}
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'base.html', context)
 
 def APIWatcher(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     res = Server.getAPIMonitorDataJson(request)
     res_dict = eval(res)
     if res_dict['code'] == -1:
@@ -51,10 +60,11 @@ def APIWatcher(request):
     else:
         # print('Pass')
         context = {'person': res,'dict_data':res_dict}
-    # print(context)
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request,'CheckAPI.html',context)
 
 def getAndroidList(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     res = Server.getResultslistJson(request)
     res_dict = eval(res)
     res2 =Server.getRate(request)
@@ -64,10 +74,11 @@ def getAndroidList(request):
     else:
         # print('Pass')
         context = {'person': res_dict,'rate':res2}
-    print(context)
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'listAndroid.html', context)
 
 def getAPIMonitorList(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     res = Server.getAPIMonitorRateJson(request)
     res_dict = eval(res)
     if res_dict['code'] == -1:
@@ -76,10 +87,11 @@ def getAPIMonitorList(request):
     else:
         # print('Pass')
         context = {'person': res,'JS':res_dict}
-    # print(context)
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'listAPIMonitor.html', context)
 
 def getiOSList(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     res = Server.getResultslistJson(request)
     res_dict = eval(res)
     res2 = Server.getRate(request)
@@ -89,10 +101,11 @@ def getiOSList(request):
     else:
         # print('Pass')
         context = {'person': res_dict, 'rate': res2}
-    # print(context)
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'listiOS.html', context)
 
 def Deatail(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     res = Server.getResults(request)
     res_dict = eval(res)
     if res_dict['code'] == -1:
@@ -101,10 +114,11 @@ def Deatail(request):
     else:
         # print('Pass')
         context = {'person': res_dict}
-    # print(context)
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'resultDetail.html', context)
 
 def Deatailv2(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     res = Server.getResultsv2(request)
     res_dict = eval(res)
     if res_dict['code'] == -1:
@@ -113,10 +127,11 @@ def Deatailv2(request):
     else:
         # print('Pass')
         context = {'person': res_dict}
-    print(context)
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'resultDetailv2.html', context)
 
 def Deatailv3(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     key = 0
     if request.GET['user'] == 'visitor':
         key = 0
@@ -132,10 +147,11 @@ def Deatailv3(request):
     else:
         # print('Pass')
         context = {'person': res_dict,'reason':res2_dict,'key':key}
-    print(context)
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'resultDetailNew.html', context)
 
 def statistics(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     res = Server.getRate(request)
     res_dict = eval(res)
     if res_dict['code'] == -1:
@@ -144,10 +160,11 @@ def statistics(request):
     else:
         # print('Pass')
         context = {'personjson':res}
-    # print(context)
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'statistics.html', context)
 
 def performanceListAndroid(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     res = Server.getPTResultslistJson(request)
     res_dict =eval(res)
     if res_dict['code'] == -1:
@@ -156,11 +173,12 @@ def performanceListAndroid(request):
     else:
         print('Pass')
         context = {'person':res_dict}
-    print(context)
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'performanceList.html', context)
 
 
 def performanceListiOS(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     res = Server.getPTResultslistJson(request)
     res_dict = eval(res)
     if res_dict['code'] == -1:
@@ -169,29 +187,27 @@ def performanceListiOS(request):
     else:
         # print('Pass')
         context = {'person': res_dict}
-    print(context)
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'performanceListiOS.html', context)
 
 def performanceList(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     res = Server.getPTResultslistJson(request)
     res_dict = eval(res)
     if res_dict['code'] == -1:
-        # print("fail")
         context = {'person': None}
     else:
-        # print('Pass')
         context = {'person': res_dict}
-    # print(context)
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'performanceListNew.html', context)
 
 def performance(request):
+    LogSys.logInfo('Request:{0}'.format(request))
     res = Server.getPtResultsJson(request)
     res_dict = eval(res)
     if res_dict['code'] == -1:
-        # print("fail")
         context = {'person': None}
     else:
-        # print('Pass')
         context = {'person': res_dict,'jss':res}
-    print(context)
+    LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'performance.html', context)
