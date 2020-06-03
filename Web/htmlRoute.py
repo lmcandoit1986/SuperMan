@@ -45,7 +45,6 @@ def uiauto(request):
     LogSys.logInfo('Request:{0}'.format(request))
     res = Server.getListResultNew(request)
     res_dict = eval(res)
-    print(res_dict)
     context = {'person': res, 'dict_data': res_dict}
     LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'base.html', context)
@@ -55,10 +54,8 @@ def APIWatcher(request):
     res = Server.getAPIMonitorDataJson(request)
     res_dict = eval(res)
     if res_dict['code'] == -1:
-        print("fail")
         context = {'person': None}
     else:
-        # print('Pass')
         context = {'person': res,'dict_data':res_dict}
     LogSys.logInfo('Result:{0}'.format(context))
     return render(request,'CheckAPI.html',context)
