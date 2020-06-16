@@ -282,11 +282,7 @@
                                         {% endif %}
                                         <td>{{ item.device|default:"未知" }}</td>
                                         <td>{{ item.env|default:"线下" }}</td>
-                                        {% if item.m == 'Android' %}
-                                            <td><i class="fa fa-android text-navy"></i></td>
-                                        {% else %}
-                                            <td><i class="fa fa-apple text-danger"></i></td>
-                                        {% endif %}
+                                        <td>{{ item.model|default:"全模块" }}</td>
                                         <td>{{ item.appVersion|default:"未知" }}</td>
                                         <td>{{ item.rt|default:"未知" }}</td>
                                         <td>{{ item.ut|default:"未知" }}</td>
