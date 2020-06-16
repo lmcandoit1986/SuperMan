@@ -79,7 +79,7 @@ def objectUiAutoRunList(object):
         result['rate'] = 100 - object.failNum * 100 // object.allNum
     else:
         result['rate'] = 0
-    result['model'] = object.model
+    result['model'] = "全模块" if object.model == "" else object.model
     result['link'] = object.link
     return result
 

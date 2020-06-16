@@ -166,10 +166,14 @@ def pushResultsV3(request):
         # sum['fail'] = self.getFailed(item)
         # sum['Jenkinsid'] = time.strftime("%Y%m%d%H%M", time.localtime())
         if body_json['data']['sum']['all']:
+            if len(body_json['data']['sum']['module'])==1:
+                module = body_json['data']['sum']['module'][0]
+            else:
+                module = "全模块"
             uiAutoRunListN(platform=body_json['data']['sum']['platform'], allNum=body_json['data']['sum']['all'],
                            failNum=body_json['data']['sum']['fail'], rt=body_json['data']['sum']['runt'],
                            ut=body_json['data']['sum']['uset'], Jenkinsid=body_json['data']['sum']['Jenkinsid'],
-                           link='', appName=body_json['data']['sum']['app'], model='',
+                           link='', appName=body_json['data']['sum']['app'], model=module,
                            device=body_json['data']['sum']['model'],
                            appVersion=body_json['data']['sum']['version'],env=body_json['data']['sum']['env']).save()
 

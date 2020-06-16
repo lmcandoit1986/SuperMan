@@ -260,6 +260,7 @@
                                     <th>平台</th>
                                     <th>设备</th>
                                     <th>环境</th>
+                                    <th>模块</th>
                                     <th>版本</th>
                                     <th>执行时间</th>
                                     <th>用时</th>
@@ -281,8 +282,11 @@
                                         {% endif %}
                                         <td>{{ item.device|default:"未知" }}</td>
                                         <td>{{ item.env|default:"线下" }}</td>
-
-
+                                        {% if item.m == 'Android' %}
+                                            <td><i class="fa fa-android text-navy"></i></td>
+                                        {% else %}
+                                            <td><i class="fa fa-apple text-danger"></i></td>
+                                        {% endif %}
                                         <td>{{ item.appVersion|default:"未知" }}</td>
                                         <td>{{ item.rt|default:"未知" }}</td>
                                         <td>{{ item.ut|default:"未知" }}</td>
