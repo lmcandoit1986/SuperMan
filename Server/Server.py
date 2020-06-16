@@ -171,7 +171,7 @@ def pushResultsV3(request):
                            ut=body_json['data']['sum']['uset'], Jenkinsid=body_json['data']['sum']['Jenkinsid'],
                            link='', appName=body_json['data']['sum']['app'], model='',
                            device=body_json['data']['sum']['model'],
-                           appVersion=body_json['data']['sum']['version']).save()
+                           appVersion=body_json['data']['sum']['version'],env=body_json['data']['sum']['env']).save()
 
             for item in body_json['data']['detail']:
                 UICaseDetail(model=item['model'], case=item['case'], caseName=item['caseName'], result=item['result'],

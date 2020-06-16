@@ -71,6 +71,7 @@ class uiAutoRunListN(models.Model):
     rt = models.CharField(max_length=100)
     Jenkinsid = models.IntegerField()
     link = models.CharField(max_length=200)
+    env = models.CharField(max_length=20)
     appName = models.CharField(max_length=100)
     model = models.CharField(max_length=200)
     device = models.CharField(max_length=100)

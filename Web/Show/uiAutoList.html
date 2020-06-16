@@ -259,7 +259,7 @@
                                     <th>#</th>
                                     <th>平台</th>
                                     <th>设备</th>
-                                    <th>App</th>
+                                    <th>环境</th>
                                     <th>版本</th>
                                     <th>执行时间</th>
                                     <th>用时</th>
@@ -280,7 +280,7 @@
                                             <td><i class="fa fa-apple text-danger"></i></td>
                                         {% endif %}
                                         <td>{{ item.device|default:"未知" }}</td>
-                                        <td>{{ item.appName|default:"未知" }}</td>
+                                        <td>{{ item.env|default:"线下" }}</td>
 
 
                                         <td>{{ item.appVersion|default:"未知" }}</td>

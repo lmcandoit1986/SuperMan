@@ -73,6 +73,7 @@ def objectUiAutoRunList(object):
     result['appName'] = object.appName
     result['ut'] = object.ut
     result['rt'] = object.rt
+    result['env'] = "线上" if object.env == 'rel' else "线下"
     result['platform'] = object.platform
     if object.allNum:
         result['rate'] = 100 - object.failNum * 100 // object.allNum
