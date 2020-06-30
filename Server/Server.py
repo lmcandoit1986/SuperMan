@@ -6,7 +6,8 @@ import urllib
 
 import requests
 import simplejson
-from django.http import HttpResponse
+from django.http import JsonResponse
+from django.shortcuts import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
@@ -993,7 +994,7 @@ def mock_data_get_by_id(request):
             itemdict['msg'] = '无匹配数据或数据停用状态'
             return HttpResponse(simplejson.dumps(itemdict))
 
-
+@csrf_exempt
 def mock_data_get_by_api_key(request):
     if request.GET:
         api = request.GET['api']
@@ -1001,14 +1002,25 @@ def mock_data_get_by_api_key(request):
         objects = mockData.objects.filter(api=api, status=0, keyword=key)
         if objects:
             res = eval(objects[0].data)
-            # res['cotent-type'] = 'application/json;charset=UTF-8'
-            # print(res)
-            return HttpResponse(json.dumps(res))
+            return JsonResponse(res)
         else:
             itemdict = {}
             itemdict['code'] = -1
             itemdict['msg'] = '无匹配数据或数据停用状态'
-            return simplejson.dumps(itemdict)
+            return JsonResponse(itemdict)
+    elif request.POST:
+        api = request.POST['api']
+        key = request.POST['key']
+        objects = mockData.objects.filter(api=api, status=0, keyword=key)
+        if objects:
+            res = eval(objects[0].data)
+            return JsonResponse(res)
+        else:
+            itemdict = {}
+            itemdict['code'] = -1
+            itemdict['msg'] = '无匹配数据或数据停用状态'
+            return JsonResponse(itemdict)
+
 
 
 def investMSBank(request):

@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^mock/data/status/change$', Server.mock_data_status_change),
     url(r'^mock/data/edit$', Server.mock_data_edit),
     url(r'^mock/data/by/api$', Server.mock_data_get_by_api),
-    url(r'^mock/data/by/api/key$', Server.mock_data_get_by_api_key),  # 获取mock 匹配数据,通过api 和key 筛选,过滤失效的数据
+    url(r'^mock/data/by/api/key', Server.mock_data_get_by_api_key),  # 获取mock 匹配数据,通过api 和key 筛选,过滤失效的数据
     url(r'^mock/data/by/id$',Server.mock_data_get_by_id), # 获取mock 匹配数据，通过 id 筛选,不过滤
     url(r'^server/bank/ms/invest$',Server.investMSBank),
     url(r'server/result/get$',Server.getResults),
