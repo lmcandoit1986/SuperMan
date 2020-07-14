@@ -32,7 +32,7 @@ def objectUICaseDetail(ob):
     result['caseName'] = ob.caseName
     result['result'] = ob.result
     result['useTime'] = ob.useTime
-    result['comment'] = ob.comment
+    result['comment'] = ob.comment.replace('\r\n','<br/>')
     if ob.reason ==0:
         result['reason'] = 1
     else:

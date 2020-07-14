@@ -359,7 +359,9 @@
                                             {% else %}
                                                 <td><i class="text-danger">fail</i></td>
                                             {% endif %}
-                                            <td>{{ item.comment }}</td>
+                                            <td>
+                                                {{item.comment|safe}}
+                                            </td>
                                             {% if item.pic == '' %}
                                                 <td>/</td>
                                             {% else %}
