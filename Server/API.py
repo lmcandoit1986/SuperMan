@@ -203,6 +203,7 @@ def api_api_result_upload(request):
                failNum=body_json['data']['failNum'],
                rt=body_json['data']['rt'],
                ut=body_json['data']['ut'],
+               env=body_json['data']['env'],
                type=getValue(body_json['data'], 'type', 0),
                kind=getValue(body_json['data'], 'kind', '全部')
                ).save()
