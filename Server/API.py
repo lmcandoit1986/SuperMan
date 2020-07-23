@@ -265,7 +265,12 @@ def api_server_detail(request):
         if v['result'] != 0:
             pass
         else:
-            caselist[i:].sort(key=takeTime, reverse=True)
+            for j in (i,len(caselist)-1):
+                for k in (i,len(caselist)-2):
+                    if takeTime(caselist[j]) < takeTime(caselist[k]):
+                        caselist[j],caselist[k] = caselist[k],caselist[j]
+
+            # caselist[i:].sort(key=takeTime, reverse=True)
             break
 
     Result['code'] = 0
