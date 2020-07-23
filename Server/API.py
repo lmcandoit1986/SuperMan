@@ -261,6 +261,12 @@ def api_server_detail(request):
         caselist.append(ModelObject.objectAPICase(item))
     # 排序
     caselist.sort(key=takeRes, reverse=True)
+    for i, v in enumerate(caselist):
+        if v['result'] != 0:
+            pass
+        else:
+            caselist[i:].sort(key=v['useTime'], reverse=True)
+            break
 
     Result['code'] = 0
     Result['msg'] = '成功'
