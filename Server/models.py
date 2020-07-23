@@ -106,6 +106,7 @@ class APIrunlist(models.Model):
     ut = models.CharField(max_length=100)
     type = models.IntegerField()
     kind = models.CharField(max_length=200)
+    env = models.IntegerField()
     class Meta:
         db_table = 'APIrunlist'
 

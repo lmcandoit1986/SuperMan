@@ -109,7 +109,10 @@ def objectAPIList(item):
     itemdict['allNum'] = item.allNum
     itemdict['failNum'] = item.failNum
     itemdict['rt'] = item.rt
-
+    if item.env == 0:
+        itemdict['env'] = '测试环境'
+    else:
+        itemdict['env'] = '线上'
     itemdict['kind'] = '理财' if item.kind == '0' else item.kind
     if item.allNum:
         itemdict['rate'] = 100 - item.failNum * 100 // item.allNum
