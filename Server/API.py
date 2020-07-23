@@ -265,10 +265,10 @@ def api_server_detail(request):
         if v['result'] != 0:
             pass
         else:
-            for j in (i,len(caselist)-1):
-                for k in (i,len(caselist)-2):
+            for j in range(i, len(caselist) - 1):
+                for k in range(i, len(caselist) - 2):
                     if takeTime(caselist[j]) < takeTime(caselist[k]):
-                        caselist[j],caselist[k] = caselist[k],caselist[j]
+                        caselist[j], caselist[k] = caselist[k], caselist[j]
 
             # caselist[i:].sort(key=takeTime, reverse=True)
             break
@@ -332,6 +332,7 @@ def assertAPIARunListObjectIsExist(id):
 
 def takeRes(el):
     return abs(int(el['result']))
+
 
 def takeTime(el):
     return abs(int(el['useTime']))
