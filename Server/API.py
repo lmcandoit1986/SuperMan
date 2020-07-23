@@ -267,7 +267,7 @@ def api_server_detail(request):
         else:
             for j in range(i, len(caselist) - 1):
                 for k in range(i, len(caselist) - 2):
-                    if takeTime(caselist[j]) < takeTime(caselist[k]):
+                    if takeTime(caselist[j]) > takeTime(caselist[k]):
                         caselist[j], caselist[k] = caselist[k], caselist[j]
 
             # caselist[i:].sort(key=takeTime, reverse=True)
