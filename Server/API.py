@@ -265,7 +265,7 @@ def api_server_detail(request):
         if v['result'] != 0:
             pass
         else:
-            caselist[i:].sort(key=v['useTime'], reverse=True)
+            caselist[i:].sort(key=takeTime, reverse=True)
             break
 
     Result['code'] = 0
@@ -327,6 +327,9 @@ def assertAPIARunListObjectIsExist(id):
 
 def takeRes(el):
     return abs(int(el['result']))
+
+def takeTime(el):
+    return abs(int(el['useTime']))
 
 
 def getValue(item, key, defaultValue=0):
