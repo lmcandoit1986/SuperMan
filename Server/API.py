@@ -310,7 +310,6 @@ def uploadImg(request):  # 图片上传函数
         imgob.save()
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
 
-
 '''
 辅助方法
 '''
