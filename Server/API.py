@@ -206,6 +206,7 @@ def api_api_result_upload(request):
                type=getValue(body_json['data'], 'type', 0),
                kind=getValue(body_json['data'], 'kind', '全部')
                ).save()
+
     for item in body_json['data']['result']:
         apiCases(model=getValue(item, 'model'),
                  api=getValue(item, 'api'),
