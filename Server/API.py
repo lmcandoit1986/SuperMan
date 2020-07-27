@@ -240,7 +240,7 @@ def api_server_list(request):
     Result['code'] = 0
     Result['msg'] = '成功'
     Result['result'] = autolist
-    print(Result)
+
     return simplejson.dumps(Result)
 
 
