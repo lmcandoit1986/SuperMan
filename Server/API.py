@@ -274,7 +274,6 @@ def api_server_detail(request):
     Result['msg'] = '成功'
     Result['sum'] = res
     Result['result'] = caselist
-
     return simplejson.dumps(Result)
 
 
