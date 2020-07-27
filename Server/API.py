@@ -216,6 +216,7 @@ def api_api_result_upload(request):
                  useTime=getValue(item, 'useTime'),
                  comment=getValue(item, 'comment'),
                  Jenkinsid=body_json['data']['Jenkinsid']).save()
+
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
 
 
