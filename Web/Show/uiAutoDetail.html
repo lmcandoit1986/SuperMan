@@ -366,11 +366,11 @@
                                                 <td>/</td>
                                             {% else %}
                                                 {% if 'media' in item.pic %}
-                                                    <td><img href="http://superqa.com.cn:9091{{ item.pic }}" src={% static item.pic %} width="150"
+                                                    <td><img src={% static item.pic %} width="150"
                                                              height="300"><br/>
                                                     </td>
                                                 {% else %}
-                                                    <td><img href="http://superqa.com.cn:9091{{ item.pic }}" src={% static item.pic %} width="150" height="300"/>
+                                                    <td><img src={% static item.pic %} width="150" height="300"/>
                                                     </td>
                                                 {% endif %}
 
