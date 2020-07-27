@@ -373,6 +373,7 @@
                                                     <td><img src={% static item.pic %} width="150" height="300"/>
                                                     </td>
                                                 {% endif %}
+                                                <div id="dialog_large_image"></div>
 
                                             {% endif %}
                                             {% if item.result != 0 %}
@@ -485,6 +486,14 @@
         })
     }
 
+</script>
+<script type="text/javascript">
+    $(function () {
+        $("img.dialog").click(function() {
+            var large_image = '<img src= ' + $(this).attr("src") + '></img>';
+            $('#dialog_large_image').html($(large_image).animate({ height: '100%', width: '100%' }, 500));
+        });
+    });
 </script>
 
 </body>

@@ -270,7 +270,6 @@ def api_server_detail(request):
                     if takeTime(caselist[j]) > takeTime(caselist[k]):
                         caselist[j], caselist[k] = caselist[k], caselist[j]
             break
-
     Result['code'] = 0
     Result['msg'] = '成功'
     Result['sum'] = res
