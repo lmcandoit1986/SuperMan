@@ -226,6 +226,7 @@ def api_server_list(request):
         type = request.GET['type']
     else:
         return simplejson.dumps({'code': -1, 'msg': '暂不支持该请求方式'})
+
     objectapi = APIrunlist.objects.filter(type=type).order_by('-id')[0:30]
     Result = {}
     autolist = []
