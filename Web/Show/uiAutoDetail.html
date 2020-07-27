@@ -365,11 +365,10 @@
                                                 <td>/</td>
                                             {% else %}
                                                 {% if 'media' in item.pic %}
-                                                    <td href="http://superqa.com.cn:9091{{ item.pic }}" target=_blank><img src="{{ item.pic }}" width="150"
-                                                             height="300"><br/>
+                                                    <td><a href="http://superqa.com.cn:9091{{ item.pic }}" target=_blank><img src={% static item.pic %} width="150" height="300"/></a>
                                                     </td>
                                                 {% else %}
-                                                    <td href="http://superqa.com.cn:9091{{ item.pic }}" target=_blank><img src={% static item.pic %} width="150" height="300"/>
+                                                    <td><a href="http://superqa.com.cn:9091{{ item.pic }}" target=_blank><img src={% static item.pic %} width="150" height="300"/></a>
                                                     </td>
                                                 {% endif %}
 {#                                                <div id="dialog_large_image"></div>#}
