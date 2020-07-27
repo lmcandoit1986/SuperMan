@@ -229,7 +229,6 @@ def api_server_list(request):
     objectapi = APIrunlist.objects.filter(type=type).order_by('-id')[0:30]
     Result = {}
     autolist = []
-
     if objectapi:
         for item in objectapi:
             itemdict = ModelObject.objectAPIList(item)

@@ -18,6 +18,7 @@
     <link href={% static "css/style.css" %} rel="stylesheet">
 
 </head>
+
 <body>
 <script>
     $(function () {
@@ -359,19 +360,19 @@
                                                 <td><i class="text-danger">fail</i></td>
                                             {% endif %}
                                             <td>
-                                                {{ item.comment|safe }}
+                                                {{item.comment|safe}}
                                             </td>
                                             {% if item.pic == '' %}
                                                 <td>/</td>
                                             {% else %}
                                                 {% if 'media' in item.pic %}
-                                                    <td><img src="{% static item.pic %}" width="150" height="300"/><a href="http://superqa.com.cn:9091{{ item.pic }}" target=_blank>放大查看</a>
+                                                    <td><img href="http://superqa.com.cn:9091{{ item.pic }}" src={% static item.pic %} width="150"
+                                                             height="300"><br/>
                                                     </td>
                                                 {% else %}
-                                                    <td><img src="{% static item.pic %}" width="150" height="300"/><a href="http://superqa.com.cn:9091{{ item.pic }}" target=_blank>放大查看</a>
+                                                    <td><img href="http://superqa.com.cn:9091{{ item.pic }}" src={% static item.pic %} width="150" height="300"/>
                                                     </td>
                                                 {% endif %}
-{#                                                <div id="dialog_large_image"></div>#}
 
                                             {% endif %}
                                             {% if item.result != 0 %}
@@ -484,14 +485,6 @@
         })
     }
 
-</script>
-<script type="text/javascript">
-    $(function () {
-        $("img.dialog").click(function () {
-            var large_image = '<img src= ' + $(this).attr("src") + '></img>';
-            $('#dialog_large_image').html($(large_image).animate({height: '100%', width: '100%'}, 500));
-        });
-    });
 </script>
 
 </body>
