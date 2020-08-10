@@ -29,6 +29,21 @@
             new Chart(ctx4, {type: 'doughnut', data: doughnutData, options: doughnutOptions});
         });
     </script>
+    <script>
+    function setReason(obj) {
+        $.get('/server/reason/set?caseid=' + $(obj).attr('name') + '&reasonid=' + $(obj).attr('type'), function (data, status) {
+            swal({
+                title: "成功！",
+                text: "已同步数据库！",
+                type: "success"
+            }, function () {
+                window.location.reload();
+            });
+
+        })
+    }
+
+</script>
 {% endblock %}
 {% block nav %}
     {% if person %}
