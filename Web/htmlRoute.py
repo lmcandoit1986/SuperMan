@@ -9,6 +9,16 @@ from Server import Server, LogSys
 from Server.models import Imgdb
 
 
+def nav(request):
+    t = get_template('basis.html')
+    html = t.render()
+    return HttpResponse(html)
+
+def nav_ui_list(request):
+    t = get_template('basis_uiauto_list.html')
+    html = t.render()
+    return HttpResponse(html)
+
 def index(request):
     LogSys.logInfo('Request:{0}'.format(request))
     t = get_template('index.html')

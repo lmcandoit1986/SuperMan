@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Tester</title>
+    <link href={% static "css/bootstrap.min.css" %} rel="stylesheet">
+    <link href={% static "font-awesome/css/font-awesome.css" %} rel="stylesheet">
+    <!-- Morris -->
+    <link href={% static "css/plugins/morris/morris-0.4.3.min.css" %} rel="stylesheet">
+    <script src={% static "js/jquery.min.js" %}></script>
+    <link href={% static "css/animate.css" %} rel="stylesheet">
+    <link href={% static "css/style.css" %} rel="stylesheet">
+
+</head>
+
+<body>
+<script defer="defer">
+    $(function () {
+        var all =
+        {{ person|safe }}
+        var rateAndroid = all.Android.rate
+        var rateiOS = all.iOS.rate
+        var lineDataAndroid = {
+            labels: ["1", "2", "3", "4", "5", "6", "7"],
+
+            datasets: [
+
+                {
+                    label: "android",
+                    {#height:90% ,#}
+                    backgroundColor: 'rgba(26,179,148,0.5)',
+                    borderColor: "rgba(26,179,148,0.7)",
+                    pointBackgroundColor: "rgba(26,179,148,1)",
+                    pointBorderColor: "#fff",
+                    data: rateAndroid,
+
+                }
+            ]
+        };
+        var lineDataiOS = {
+            labels: ["1", "2", "3", "4", "5", "6", "7"],
+
+            datasets: [
+
+                {
+                    label: "iOS",
+                    {#height:90% ,#}
+                    backgroundColor: 'rgba(26,179,148,0.5)',
+                    borderColor: "rgba(26,179,148,0.7)",
+                    pointBackgroundColor: "rgba(26,179,148,1)",
+                    pointBorderColor: "#fff",
+                    data: rateiOS,
+
+                }
+            ]
+        };
+
+        var lineOptions = {
+            responsive: true,
+
+        };
+
+
+        var ctx = document.getElementById("lineChart").getContext("2d");
+        new Chart(ctx, {type: 'line', data: lineDataAndroid, options: lineOptions});
+
+        var ctx1 = document.getElementById("lineChart1").getContext("2d");
+        new Chart(ctx1, {type: 'line', data: lineDataiOS, options: lineOptions});
+
+    });
+</script>
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element">
+                        <img alt="image" class="rounded-circle" src={% static "img/profile_small.jpg" %}/>
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="block m-t-xs font-bold">阿明</span>
+                            <span class="text-muted text-xs block">管理员 <b class="caret"></b></span>
+                        </a>
+                    </div>
+                    <div class="logo-element">
+                        IN+
+                    </div>
+                </li>
+                <li class="active">
+                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">前端</span> <span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li class="active">
+                            <a href="#">UI 自动化 <span class="fa arrow"></span></a>
+                        </li>
+                        <li><a href="#">性能 <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level">
+                                <li>
+                                    <a href="/web/performance/v2/detail?platform=all">iOS 平台</a>
+                                </li>
+                                <li>
+                                    <a href="#">Android 平台</a>
+                                </li>
+                                <li>
+                                    <a href="#">其他</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">后端</span><span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="#">接口自动化</a></li>
+                        <li><a href="/web/result/api/monitor?type=0">监控</a></li>
+                        <li><a href="#">接口性能</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href=""><i class="fa fa-edit"></i> <span class="nav-label">数据Mock</span><span
+                            class="fa arrow"></span> </a>
+                    <ul class="nav nav-second-level collapse">
+                        <li><a href="/web/mock">插入数据</a></li>
+                        <li><a href="/web/list/mock">数据管理</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+
+        </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
+                    </a>
+                    <form role="search" class="navbar-form-custom" action="">
+                        <div class="form-group">
+                            <input type="text" placeholder="请输入搜索内容" class="form-control" name="top-search"
+                                   id="top-search">
+                        </div>
+                    </form>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <span class="m-r-sm text-muted welcome-message">欢迎来到测试展示平台</span>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="fa fa-sign-out"></i> 注销
+                        </a>
+                    </li>
+                </ul>
+
+            </nav>
+        </div>
+        <div class="wrapper wrapper-content">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>成功率统计-Android平台
+                                <small>最近7次执行结果</small>
+                            </h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div>
+                                <canvas id="lineChart" height="140"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>成功率统计-iOS平台
+                                <small>最近7次执行结果</small>
+                            </h5>
+
+                        </div>
+                        <div class="ibox-content">
+                            <div>
+                                <canvas id="lineChart1" height="140"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>Android 平台执行记录 </h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#" class="dropdown-item">Config option 1</a>
+                                </li>
+                                <li><a href="#" class="dropdown-item">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-9 m-b-xs">
+                                <div data-toggle="buttons" class="btn-group btn-group-toggle">
+                                    <label class="btn btn-sm btn-white"> <input type="radio" id="option1"
+                                                                                name="options"> 天 </label>
+                                    <label class="btn btn-sm btn-white active"> <input type="radio" id="option2"
+                                                                                       name="options"> 周 </label>
+                                    <label class="btn btn-sm btn-white"> <input type="radio" id="option3"
+                                                                                name="options"> 月 </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control form-control-sm" placeholder="搜索">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-sm btn-primary" type="button">搜索!</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+
+                                    <th>#</th>
+                                    <th>平台</th>
+                                    <th>设备</th>
+                                    <th>App</th>
+                                    <th>版本</th>
+                                    <th>执行时间</th>
+                                    <th>用时</th>
+                                    <th>用例数</th>
+                                    <th>成功率</th>
+                                    <th>状态</th>
+                                    <!-- <th>日期</th> -->
+                                    <th>查看明细</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in person.Android.list %}
+                                    <tr>
+                                        <td>{{ item.id|default:"未知" }}</td>
+                                        {% if item.platform == 'Android' %}
+                                            <td><i class="fa fa-android text-navy"></i></td>
+                                        {% else %}
+                                            <td><i class="fa fa-apple text-danger"></i></td>
+                                        {% endif %}
+                                        <td>{{ item.device|default:"未知" }}</td>
+                                        <td>{{ item.appName|default:"未知" }}</td>
+
+
+                                        <td>{{ item.appVersion|default:"未知" }}</td>
+                                        <td>{{ item.rt|default:"未知" }}</td>
+                                        <td>{{ item.ut|default:"未知" }}</td>
+                                        <td>{{ item.allNum|default:"全用例" }}</td>
+                                        <td><span
+                                                class="pie">{{ item.allNum }}-{{ item.failNum }}/{{ item.allNum }}</span>
+                                        </td>
+                                        <td>完成</td>
+                                        <!-- <td>2017.11.11</td> -->
+                                        <td>
+                                            <a href="/web/result/uiauto/detail?jenkinsId={{ item.Jenkinsid }}&platform={{ item.platform }}&user=visitor"><i
+                                                    class="fa fa-link text-navy"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <h5>iOS 平台执行记录 </h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li><a href="#" class="dropdown-item">Config option 1</a>
+                                </li>
+                                <li><a href="#" class="dropdown-item">Config option 2</a>
+                                </li>
+                            </ul>
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-9 m-b-xs">
+                                <div data-toggle="buttons" class="btn-group btn-group-toggle">
+                                    <label class="btn btn-sm btn-white"> <input type="radio" id="option1"
+                                                                                name="options"> 天 </label>
+                                    <label class="btn btn-sm btn-white active"> <input type="radio" id="option2"
+                                                                                       name="options"> 周 </label>
+                                    <label class="btn btn-sm btn-white"> <input type="radio" id="option3"
+                                                                                name="options"> 月 </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control form-control-sm" placeholder="搜索">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-sm btn-primary" type="button">搜索!</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+
+                                    <th>#</th>
+                                    <th>平台</th>
+                                    <th>设备</th>
+                                    <th>App</th>
+
+
+                                    <th>版本</th>
+                                    <th>执行时间</th>
+                                    <th>用时</th>
+                                    <th>模块</th>
+                                    <th>成功率</th>
+                                    <th>状态</th>
+                                    <!-- <th>日期</th> -->
+                                    <th>查看明细</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                {% for item in person.iOS.list %}
+                                    <tr>
+                                        <td>{{ item.id|default:"未知" }}</td>
+                                        {% if item.platform == 'Android' %}
+                                            <td><i class="fa fa-android text-navy"></i></td>
+                                        {% else %}
+                                            <td><i class="fa fa-apple text-danger"></i></td>
+                                        {% endif %}
+                                        <td>{{ item.device|default:"未知" }}</td>
+                                        <td>{{ item.appName|default:"未知" }}</td>
+
+
+                                        <td>{{ item.appVersion|default:"未知" }}</td>
+                                        <td>{{ item.rt|default:"未知" }}</td>
+                                        <td>{{ item.ut|default:"未知" }}</td>
+                                        <td>{{ item.model|default:"全用例" }}</td>
+                                        <td><span
+                                                class="pie">{{ item.allNum }}-{{ item.failNum }}/{{ item.allNum }}</span>
+                                        </td>
+                                        <td>完成</td>
+                                        <!-- <td>2017.11.11</td> -->
+                                        <td>
+                                            <a href="/web/result/uiauto/detail?jenkinsId={{ item.Jenkinsid }}&platform={{ item.platform }}&user=visitor"><i
+                                                    class="fa fa-link text-navy"></i></a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</div>
+
+<!-- Mainly scripts -->
+<script src={% static "js/jquery-3.1.1.min.js" %}></script>
+<script src={% static "js/popper.min.js" %}></script>
+<script src={% static "js/bootstrap.js" %}></script>
+<script src={% static "js/plugins/metisMenu/jquery.metisMenu.js" %}></script>
+<script src={% static "js/plugins/slimscroll/jquery.slimscroll.min.js" %}></script>
+
+<!-- Flot -->
+<script src={% static "js/plugins/flot/jquery.flot.js" %}></script>
+<script src={% static "js/plugins/flot/jquery.flot.tooltip.min.js" %}></script>
+<script src={% static "js/plugins/flot/jquery.flot.spline.js" %}></script>
+<script src={% static "js/plugins/flot/jquery.flot.resize.js" %}></script>
+<script src={% static "js/plugins/flot/jquery.flot.pie.js" %}></script>
+<script src={% static "js/plugins/flot/jquery.flot.symbol.js" %}></script>
+<script src={% static "js/plugins/flot/curvedLines.js" %}></script>
+
+<!-- Peity -->
+<script src={% static "js/plugins/peity/jquery.peity.min.js" %}></script>
+<script src={% static "js/demo/peity-demo.js" %}></script>
+
+<!-- Custom and plugin javascript -->
+<script src={% static "js/inspinia.js" %}></script>
+<script src={% static "js/plugins/pace/pace.min.js" %}></script>
+
+<!-- jQuery UI -->
+<script src={% static "js/plugins/jquery-ui/jquery-ui.min.js" %}></script>
+
+<!-- Jvectormap -->
+<script src={% static "js/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js" %}></script>
+<script src={% static "js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" %}></script>
+
+<!-- Sparkline -->
+<script src={% static "js/plugins/sparkline/jquery.sparkline.min.js" %}></script>
+
+<!-- Sparkline demo data  -->
+<script src={% static "js/demo/sparkline-demo.js" %}></script>
+
+<!-- ChartJS-->
+<script src={% static "js/plugins/chartJs/Chart.min.js" %}></script>
+
+
+</body>
+</html>

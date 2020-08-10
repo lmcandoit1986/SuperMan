@@ -1,0 +1,54 @@
+{% extends 'basis.html' %}
+{% block cs %}
+    <script>
+        $(function () {
+            $("li.active").removeClass();
+            $("#mock").addClass("active");
+            $("#mock_insert").addClass("active");
+        });
+    </script>
+{% endblock %}
+{% block nav %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>接口Mock
+                                <small>精准测试前端场景</small>
+                            </h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Mock数据插入</h3>
+                                    <p>设置接口和返回数据对应关系，通过Map来指定返回数据</p>
+                                    <form role="form" action="/mock/data/insert" method="post">
+                                        {% csrf_token %}
+                                        <div class="form-group"><label>接口</label> <input type="text"
+                                                                                         placeholder="接口"
+                                                                                         class="form-control"
+                                                                                         name="api"></div>
+                                        <div class="form-group"><label>关键字</label> <input type="text"
+                                                                                         placeholder="关键字"
+                                                                                         class="form-control"
+                                                                                         name="key"></div>
+                                        <div class="form-group"><label>返回数据</label> <input type="text"
+                                                                                           placeholder="Json 返回数据"
+                                                                                           class="form-control"
+                                                                                           name="jsonData"></div>
+                                        <div>
+                                            <button class="btn btn-sm btn-primary float-left m-t-n-xs" type="submit">
+                                                <strong>插入</strong></button>
+                                        </div>
+                                    </form>
+                                    <p>{{ rlt }}</p>
+
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

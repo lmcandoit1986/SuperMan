@@ -1,0 +1,142 @@
+{% extends 'basis.html' %}
+{% block cs %}
+    <script>
+        $(function () {
+            $("li.active").removeClass();
+            $("#mock").addClass("active");
+            $("#mock_insert").addClass("active");
+        });
+    </script>
+{% endblock %}
+{% block nav %}
+
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2>数据库存储列表</h2>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="/api/web/ui/list">主页</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <strong>数据列表</strong>
+                </li>
+            </ol>
+        </div>
+        <div class="col-lg-2">
+
+        </div>
+    </div>
+
+    <div class="ibox-content">
+        <div class="row" id="edit">
+            <div class="col-sm-12 b-r"><h3 class="m-t-none m-b"></h3>
+
+                <form role="form" action="/mock/data/edit" method="post">
+                    {% csrf_token %}
+                    <div class="form-group"><label>接口</label> <input type="text"
+                                                                     value="接口"
+                                                                     class="form-control"
+                                                                     name="api"></div>
+                    <div class="form-group">
+                        <label>返回数据</label> <input type="text"
+                                                   value="Json 返回数据"
+                                                   class="form-control"
+                                                   name="jsonData">
+                    </div>
+                    <div>
+                        <button class="btn btn-sm btn-primary float-left m-t-n-xs" type="submit">
+                            <strong>修改</strong></button>
+                    </div>
+                </form>
+                <p>{{ rlt }}</p>
+
+            </div>
+            <br>
+        </div>
+    </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight ecommerce">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox">
+                    <div class="ibox-content">
+
+                        <table class="footable table table-stripped toggle-arrow-tiny" data-page-size="15">
+                            <thead>
+                            <tr>
+
+                                <th data-toggle="true">#</th>
+                                <th data-hide="phone">接口</th>
+                                <th data-hide="phone">Key</th>
+                                <th data-hide="all">Json 数据</th>
+                                <th data-hide="phone">状态</th>
+                                <th class="text-right" data-sort-ignore="true">操作</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for item in person %}
+                                <tr>
+                                    <td>
+                                        {{ item.id }}
+                                    </td>
+                                    <td>
+                                        {{ item.api }}
+                                    </td>
+                                    <td>
+                                        {{ item.key }}
+                                    </td>
+                                    <td>
+                                        {{ item.data }}
+                                    </td>
+                                    {% if item.status == 0 %}
+                                        <td>
+                                            <span class="label label-primary">启用</span>
+                                        </td>
+                                    {% else %}
+                                        <td>
+                                            <span class="label label-warning">停用</span>
+                                        </td>
+                                    {% endif %}
+                                    <td class="text-right">
+                                        <div class="btn-group">
+                                            <button class="btn-white btn btn-xs" onclick="delItem(this)"
+                                                    name="{{ item.id }}">删除
+                                            </button>
+                                            <button class="btn-white btn btn-xs" onclick="shutDownItem(this)"
+                                                    name="{{ item.id }}">停用
+                                            </button>
+                                            <button class="btn-white btn btn-xs" onclick="UseItem(this)"
+                                                    name="{{ item.id }}" id="test">启用
+                                            </button>
+                                            <button class="btn-white btn btn-xs" onclick="EditItem(this)"
+                                                    name="{{ item.id }}">编辑
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                            <tfoot>
+                            <tr>
+                                <td colspan="6">
+                                    <ul class="pagination float-right"></ul>
+                                </td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        {% if not person %}
+                            <h5>
+                                api可用，数据库无匹配数据!
+                            </h5>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,260 @@
+{% extends 'basis.html' %}
+{% block cs %}
+    {% load static %}
+    <script>
+        $(function () {
+            $("li.active").removeClass();
+            $("#detail").addClass("active");
+        });
+    </script>
+    <script>
+        $(function () {
+        var result =
+        {{ person|safe }}
+        var reason = result.rD
+        var num = result.rN
+        console.log(reason)
+        console.log(num)
+        var doughnutData = {
+            labels: reason,
+            datasets: [{
+                data: num,
+                backgroundColor: ["#a3e1d4", "#dedede", "#b5b8cf"]
+            }]
+        };
+
+
+        var doughnutOptions = {
+            responsive: true
+        };
+
+
+        var ctx4 = document.getElementById("doughnutChart").getContext("2d");
+        new Chart(ctx4, {type: 'doughnut', data: doughnutData, options: doughnutOptions});
+    });
+    </script>
+{% endblock %}
+{% block nav %}
+    {% if person %}
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>接口自动化执行结果</h2>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/web/result/api/monitor?type=0"><strong>主页</strong></a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a>统计</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <strong>明细</strong>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="m-b-md">
+                                    <h2>简介</h2>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <dl class="row mb-0">
+                                    <div class="col-sm-4 text-sm-right">
+                                        <dt>Status:</dt>
+                                    </div>
+                                    <div class="col-sm-8 text-sm-left">
+                                        <dd class="mb-1"><span class="label label-primary">完成</span></dd>
+                                    </div>
+                                </dl>
+                                <dl class="row mb-0">
+                                    <div class="col-sm-4 text-sm-right">
+                                        <dt>Created by:</dt>
+                                    </div>
+                                    <div class="col-sm-8 text-sm-left">
+                                        <dd class="mb-1">明</dd>
+                                    </div>
+                                </dl>
+                                <dl class="row mb-0">
+                                    <div class="col-sm-4 text-sm-right">
+                                        <dt>Module:</dt>
+                                    </div>
+                                    <div class="col-sm-8 text-sm-left">
+                                        <dd class="mb-1">  {{ person.sum.kind }}</dd>
+                                    </div>
+                                </dl>
+                                <dl class="row mb-0">
+                                    <div class="col-sm-4 text-sm-right">
+                                        <dt>Platform:</dt>
+                                    </div>
+                                    <div class="col-sm-8 text-sm-left">
+                                        <dd class="mb-1"> Server</dd>
+                                    </div>
+                                </dl>
+                                <dl class="row mb-0">
+                                    <div class="col-sm-4 text-sm-right">
+                                        <dt>Env:</dt>
+                                    </div>
+                                    <div class="col-sm-8 text-sm-left">
+                                        <dd class="mb-1">  {{ person.sum.env }}</dd>
+                                    </div>
+                                </dl>
+
+
+                            </div>
+                            <div class="col-lg-6" id="cluster_info">
+
+                                <dl class="row mb-0">
+                                    <div class="col-sm-4 text-sm-right">
+                                        <dt>Run time:</dt>
+                                    </div>
+                                    <div class="col-sm-8 text-sm-left">
+                                        <dd class="mb-1">{{ person.sum.rt }}</dd>
+                                    </div>
+                                </dl>
+                                <dl class="row mb-0">
+                                    <div class="col-sm-4 text-sm-right">
+                                        <dt>Use time</dt>
+                                    </div>
+                                    <div class="col-sm-8 text-sm-left">
+                                        <dd class="mb-1"> {{ person.sum.ut }}</dd>
+                                    </div>
+                                </dl>
+                                <dl class="row mb-0">
+                                    <div class="col-sm-4 text-sm-right">
+                                        <dt>Participants:</dt>
+                                    </div>
+                                    <div class="col-sm-8 text-sm-left">
+                                        <dd class="project-people mb-1">
+                                            <a href=""><img alt="image" class="rounded-circle"
+                                                            src={% static "img/profile_small.jpg" %}></a>
+                                        </dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <dl class="row mb-0">
+                                    <div class="col-sm-2 text-sm-right">
+                                        <dt>成功率:</dt>
+                                    </div>
+                                    <div class="col-sm-10 text-sm-left">
+                                        <dd>
+                                            <div class="progress m-b-1">
+                                                <div style="width:{{ person.sum.rate }}%;"
+                                                     class="progress-bar progress-bar-striped progress-bar-animated"></div>
+                                            </div>
+                                            <small>用例成功率 <strong>{{ person.sum.rate }}%</strong> 。</small>
+                                        </dd>
+                                    </div>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>用例列表</h5>
+                        </div>
+                        <div class="ibox-content">
+
+                            <table class="footable table table-stripped toggle-arrow-tiny">
+                                <thead>
+                                <tr>
+                                    <th>描述</th>
+                                    <th>API</th>
+                                    <th data-hide="all">用时(毫秒)</th>
+                                    <th data-hide="all">执行结果</th>
+                                    <th data-hide="all">错误信息</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in person.result %}
+                                    <tr>
+                                        <td>{{ item.title }}</td>
+                                        <td>{{ item.api }}</td>
+                                        <td>{{ item.useTime }}</td>
+                                        {% if item.result == 0 %}
+                                            <td><i class="text-navy">pass</i></td>
+                                        {% else %}
+                                            <td><i class="text-danger">fail</i></td>
+                                        {% endif %}
+                                        <td>{{ item.comment }}</td>
+
+                                        {% if item.result != 0 %}
+                                            <td>
+                                                <div class="input-group-append">
+                                                    <button tabindex="-1" class="btn btn-white" type="button">
+                                                        待补充
+                                                        {% for rid in reason %}
+                                                            {% if item.reason == rid.id %}
+                                                                {{ rid.reason }}
+
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </button>
+                                                    <button data-toggle="dropdown"
+                                                            class="btn btn-white dropdown-toggle"
+                                                            type="button"></button>
+                                                    <ul class="dropdown-menu float-right">
+                                                        {% if key == 1 %}
+                                                            {% for line in reason %}
+                                                                {% if line.id != 1 %}
+                                                                    <li><a onclick="setReason(this)"
+                                                                           name='{{ item.id }}'
+                                                                           type="{{ line.id }}">{{ line.reason }}</a>
+                                                                    </li>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        {% else %}
+                                            <td><a href="#"><i class="fa fa-check text-navy"></i></a></td>
+                                        {% endif %}
+
+                                    </tr>
+
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td colspan="5">
+                                        <ul class="pagination float-right"></ul>
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+
+    {% else %}
+        <h5>没有匹配数据哦</h5>
+    {% endif %}
+{% endblock %}
