@@ -84,8 +84,8 @@ urlpatterns = [
     url(r'^web/result/api/monitor$', routehtml.result_apicheck_list),
     url(r'^web/result/api/detail$', routehtml.result_api_detail),
 
-    url(r'^api/web/ui/list$', routehtml.v2_ui_list), # ui自动化结果列表
-    url(r'^api/web/api/list$', routehtml.v2_api_auto_list),
+    url(r'^api/web/ui/list$', routehtml.v2_ui_list),  # ui自动化结果列表
+    url(r'^api/web/api/list$', routehtml.v2_api_auto_list),  # api 自动化结果列表
     url(r'^api/web/mock/insert$', routehtml.v2_mock_insert),
     url(r'^api/web/mock/manager$', routehtml.v2_mock_manager),
     url(r'^api/web/ui/detail$', routehtml.v2_ui_detail),
