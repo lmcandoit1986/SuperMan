@@ -11,7 +11,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from Server import ModelObject
-from Server.models import resultAll, performanceData, listAPIMointor, Imgdb
+from Server.models import resultAll, performanceData, listAPIMointor, Imgdb, CIcontrol
 from Server.models import CaseDetail, UICaseDetail, uiAutoRunListN
 from Server.models import mockData, failReason, APIrunlist, apiCases
 
@@ -309,6 +309,22 @@ def uploadImg(request):  # 图片上传函数
         imgob = Imgdb(img_url=request.FILES.get('img'))
         imgob.save()
     return HttpResponse(simplejson.dumps({'code': 0, 'msg': '成功'}))
+
+def Control(request):
+    if request.GET:
+        id = request.GET['id']
+    elif request.GET:
+        type = request.GET['type']
+        id = request.GET['id']
+    else:
+        return HttpResponse(simplejson.dumps({'code': -1, 'msg': '不支持该类型请求'}))
+    item = CIcontrol.objects.get(id=id)
+    if item:
+        if item.status == 0:
+            return HttpResponse(simplejson.dumps({'run':True}))
+    return HttpResponse(simplejson.dumps({'run': False}))
+
+
 
 '''
 辅助方法

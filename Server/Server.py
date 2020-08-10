@@ -11,8 +11,9 @@ from django.shortcuts import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
+from Server import ModelObject, LogSys
 from Server.models import resultAll, performanceData, listAPIMointor, CaseDetail, UICaseDetail, uiAutoRunListN, \
-    mockData, failReason
+    mockData, failReason, CIcontrol
 
 
 @csrf_exempt
@@ -167,7 +168,7 @@ def pushResultsV3(request):
         # sum['fail'] = self.getFailed(item)
         # sum['Jenkinsid'] = time.strftime("%Y%m%d%H%M", time.localtime())
         if body_json['data']['sum']['all']:
-            if len(body_json['data']['sum']['module'])==1:
+            if len(body_json['data']['sum']['module']) == 1:
                 module = body_json['data']['sum']['module'][0]
             else:
                 module = "全模块"
@@ -176,7 +177,7 @@ def pushResultsV3(request):
                            ut=body_json['data']['sum']['uset'], Jenkinsid=body_json['data']['sum']['Jenkinsid'],
                            link='', appName=body_json['data']['sum']['app'], model=module,
                            device=body_json['data']['sum']['model'],
-                           appVersion=body_json['data']['sum']['version'],env=body_json['data']['sum']['env']).save()
+                           appVersion=body_json['data']['sum']['version'], env=body_json['data']['sum']['env']).save()
 
             for item in body_json['data']['detail']:
                 UICaseDetail(model=item['model'], case=item['case'], caseName=item['caseName'], result=item['result'],
@@ -856,7 +857,7 @@ def mock_data_insert(request):
             context = {'person': "json data 数据格式异常"}
             return render(request, 'error.html', context)
 
-    item = mockData.objects.filter(api=api,keyword=key)
+    item = mockData.objects.filter(api=api, keyword=key)
     if item:
         context = {'person': "api 数据重复"}
         return render(request, 'error.html', context)
@@ -994,6 +995,7 @@ def mock_data_get_by_id(request):
             itemdict['msg'] = '无匹配数据或数据停用状态'
             return HttpResponse(simplejson.dumps(itemdict))
 
+
 @csrf_exempt
 def mock_data_get_by_api_key(request):
     if request.GET:
@@ -1022,21 +1024,52 @@ def mock_data_get_by_api_key(request):
             return JsonResponse(itemdict)
 
 
-
-def investMSBank(request):
+def CIControlInsert(request):
     if request.GET:
-        user = request.GET['user']
-        psw = request.GET['psw']
-        money = request.GET['money']
-        cookies = requests.post(url='http://10.211.4.111/api2/auth/login',
-                                json={"username": user, "password": psw}).cookies.get_dict()
-        print(cookies)
-        headers = {'User-Agent': 'HN-Salary Android/6.7.2.772.772 (9; HUAWEI;EML-AL00) 2159x1080 [qh360]',
-                   'Content-Type': 'application/json'}
+        platform = request.GET['platform']
+        pro = request.GET['pro']
 
-        res = requests.post(url='http://10.211.4.111:8891/api/v3/bankplus/cmbc/ebank-transfer/transfer-in',
-                            json={"applicationAmount": money},
-                            headers=headers,
-                            cookies=cookies).json()
-        print(res)
+        CIcontrol(platform=platform, pro=pro, status=1).save()
+        itemdict = {}
+        itemdict['code'] = 0
+        itemdict['msg'] = '插入数据成功'
+        return HttpResponse(simplejson.dumps(itemdict))
+
+
+def CIControlDel(request):
+    if request.GET:
+        id = request.GET['id']
+
+        item = CIcontrol.objects.get(id=id)
+        item.delete()
+        itemdict = {}
+        itemdict['code'] = 0
+        itemdict['msg'] = '数据删除成功'
+        return HttpResponse(simplejson.dumps(itemdict))
+
+
+def CIControlEdit(request):
+    if request.GET:
+        id = request.GET['id']
+        status = request.GET['status']
+        item = CIcontrol.objects.get(id=id)
+        item.status = status
+        item.save()
         return HttpResponse(200)
+
+
+def CIControlList(request):
+    allItem = CIcontrol.objects.all()
+    back = []
+    Result = {}
+    if allItem:
+        for item in allItem:
+            back.append(ModelObject.objectCIControlList(item))
+        Result['code'] = 0
+        Result['msg'] = '成功'
+        Result['result'] = back
+    else:
+        Result['code'] = -1
+        Result['msg'] = '数据为空'
+    return simplejson.dumps(Result)
+

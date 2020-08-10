@@ -138,3 +138,16 @@ def objectAPICase(item):
     itemdict['comment'] = item.comment
     itemdict['Jenkinsid'] = item.Jenkinsid
     return itemdict
+
+def objectCIControlList(item):
+    '''
+    APIrunlist 数据表记录转字典
+    :param item:
+    :return:
+    '''
+    itemdict = {}
+    itemdict['id'] = item.id
+    itemdict['platform'] = item.platform
+    itemdict['pro'] = item.pro
+    itemdict['status'] = item.status
+    return itemdict

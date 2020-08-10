@@ -165,3 +165,19 @@ def v2_api_auto_detail(request):
         context = {'person': listRun_dict}
     LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'basis_api_detail.html', context)
+
+def v2_api_ci_control_list(request):
+    '''
+    :param request:
+    :return:
+    '''
+    LogSys.logInfo('API:web/result/api/detail')
+    listRun = Server.CIControlList(request)
+    print(listRun)
+    listRun_dict = simplejson.loads(listRun)
+    if listRun_dict['code'] != 0:
+        context = {'person': None}
+    else:
+        context = {'person': listRun_dict}
+    LogSys.logInfo('Result:{0}'.format(context))
+    return render(request, 'basis_ci_control.html', context)

@@ -34,7 +34,6 @@ urlpatterns = [
     url(r'^mock/data/by/api$', Server.mock_data_get_by_api),
     url(r'^mock/data/by/api/key', Server.mock_data_get_by_api_key),  # 获取mock 匹配数据,通过api 和key 筛选,过滤失效的数据
     url(r'^mock/data/by/id$',Server.mock_data_get_by_id), # 获取mock 匹配数据，通过 id 筛选,不过滤
-    url(r'^server/bank/ms/invest$',Server.investMSBank),
     url(r'server/result/get$',Server.getResults),
     url(r'server/reason/get$',Server.getRealReason),
     url(r'server/reason/set$',Server.setRealReason),
@@ -90,6 +89,12 @@ urlpatterns = [
     url(r'^api/web/mock/manager$', routehtml.v2_mock_manager),
     url(r'^api/web/ui/detail$', routehtml.v2_ui_detail),
     url(r'^api/web/api/detail$', routehtml.v2_api_auto_detail),
+    url(r'^api/web/ci/control$', routehtml.v2_api_ci_control_list),
+
+    url(r'^api/ci/control/del$', Server.CIControlDel),
+    url(r'^api/ci/control/edit$', Server.CIControlEdit),
+    url(r'^api/ci/control/insert$', Server.CIControlInsert),
+    url(r'^api/ci/control$', API.Control)
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

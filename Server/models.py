@@ -121,3 +121,10 @@ class apiCases(models.Model):
     Jenkinsid = models.IntegerField()
     class Meta:
         db_table = 'apiCases'
+
+class CIcontrol(models.Model):
+    platform = models.CharField(max_length=100)
+    pro = models.CharField(max_length=100)
+    status = models.IntegerField()
+    class Meta:
+        db_table = 'CIcontrol'
