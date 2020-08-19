@@ -90,7 +90,6 @@ urlpatterns = [
     url(r'^api/web/ui/detail$', routehtml.v2_ui_detail),
     url(r'^api/web/api/detail$', routehtml.v2_api_auto_detail),
     url(r'^api/web/ci/control$', routehtml.v2_api_ci_control_list),
-
     url(r'^api/ci/control/del$', Server.CIControlDel),
     url(r'^api/ci/control/edit$', Server.CIControlEdit),
     url(r'^api/ci/control/insert$', Server.CIControlInsert),
