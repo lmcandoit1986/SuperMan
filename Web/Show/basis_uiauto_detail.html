@@ -5,6 +5,13 @@
         $(function () {
             $("li.active").removeClass();
             $("#detail").addClass("active");
+            if ((navigator.userAgent.match(/(iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone)/i))) {
+                platformShow = false;
+                document.write("手机访问.");
+            }else{
+                platformShow = true;
+                document.write("电脑访问.");
+            }
             var system ={};
             var p = navigator.platform;
             system.win = p.indexOf("Win") == 0;
@@ -242,11 +249,11 @@
                                 <table class="footable table table-stripped toggle-arrow-tiny">
                                     <thead>
                                     <tr>
-                                        {% if system.win or system.mac or system.xll %}
+                                        {% if platformShow %}
                                             <th data-toggle="true">用例</th>
                                         {% endif %}
                                         <th>描述</th>
-                                        {% if system.win or system.mac or system.xll %}
+                                        {% if platformShow %}
                                             <th>模块</th>
                                             <th data-hide="all">用时</th>
                                         {% endif %}
@@ -261,11 +268,11 @@
                                     {% for item in person.detail %}
 
                                         <tr>
-                                            {% if system.win or system.mac or system.xll %}
+                                            {% if platformShow %}
                                                 <td>{{ item.case }}</td>
                                             {% endif %}
                                             <td>{{ item.caseName }}</td>
-                                            {% if system.win or system.mac or system.xll %}
+                                            {% if platformShow %}
                                                 <td>{{ item.model }}</td>
                                                 <td>{{ item.useTime }}</td>
                                             {% endif %}
