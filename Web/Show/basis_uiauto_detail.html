@@ -242,11 +242,11 @@
                                 <table class="footable table table-stripped toggle-arrow-tiny">
                                     <thead>
                                     <tr>
-                                        {% if(system.win||system.mac||system.xll) %}
+                                        {% if system.win||system.mac||system.xll %}
                                             <th data-toggle="true">用例</th>
                                         {% endif %}
                                         <th>描述</th>
-                                        {% if(system.win||system.mac||system.xll) %}
+                                        {% if system.win||system.mac||system.xll %}
                                             <th>模块</th>
                                             <th data-hide="all">用时</th>
                                         {% endif %}
@@ -261,11 +261,11 @@
                                     {% for item in person.detail %}
 
                                         <tr>
-                                            {% if(system.win||system.mac||system.xll) %}
+                                            {% if system.win||system.mac||system.xll %}
                                                 <td>{{ item.case }}</td>
                                             {% endif %}
                                             <td>{{ item.caseName }}</td>
-                                            {% if(system.win||system.mac||system.xll) %}
+                                            {% if system.win||system.mac||system.xll %}
                                                 <td>{{ item.model }}</td>
                                                 <td>{{ item.useTime }}</td>
                                             {% endif %}
