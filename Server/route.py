@@ -89,7 +89,7 @@ urlpatterns = [
     url(r'^api/web/mock/manager$', routehtml.v2_mock_manager),  # mock 管理
     url(r'^api/web/ui/detail$', routehtml.v2_ui_detail),   # ui自动化详情
     url(r'^api/web/api/detail$', routehtml.v2_api_auto_detail), # api 详情
-    url(r'^api/web/ci/control$', routehtml.v2_api_ci_control_list),
+    url(r'^api/web/ci/control$', routehtml.v2_api_ci_control_list), # ci 控制
     url(r'^api/ci/control/del$', Server.CIControlDel),
     url(r'^api/ci/control/edit$', Server.CIControlEdit),
     url(r'^api/ci/control/insert$', Server.CIControlInsert),

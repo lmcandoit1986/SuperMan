@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 # coding=UTF-8
+import re
+
 import simplejson
 
 from django.http import HttpResponse
@@ -84,11 +86,6 @@ def v2_ui_list(request):
     :param request:
     :return:
     '''
-    '''
-        用于判断编辑条件
-        :param request:
-        :return:
-        '''
     LogSys.logInfo('Request:{0}'.format(request))
     listRun = API.api_auto_list(request)
     listRun_dict = simplejson.loads(listRun)
@@ -140,6 +137,7 @@ def v2_ui_detail(request):
         key = 0
     elif request.GET['user'] == 'admin':
         key = 1
+    user_agent = request.META['HTTP_USER_AGENT']
     detail = API.api_auto_detail(request)
     detail_dict = simplejson.loads(detail)
     reason = Server.getRealReason(request)
@@ -148,7 +146,10 @@ def v2_ui_detail(request):
     else:
         context = {'person': detail_dict, 'reason': simplejson.loads(reason), 'key': key}
     LogSys.logInfo('Result:{0}'.format(context))
-    return render(request, 'basis_uiauto_detail.html', context)
+    if re.search('iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone',user_agent):
+        return render(request, 'basis_uiauto_detail_h5.html', context)
+    else:
+        return render(request, 'basis_uiauto_detail.html', context)
 
 def v2_api_auto_detail(request):
     '''
