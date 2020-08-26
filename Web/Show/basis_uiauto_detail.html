@@ -7,16 +7,9 @@
             $("#detail").addClass("active");
             if ((navigator.userAgent.match(/(iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone)/i))) {
                 platformShow = false;
-                document.write("手机访问.");
             }else{
                 platformShow = true;
-                document.write("电脑访问.");
             }
-            var system ={};
-            var p = navigator.platform;
-            system.win = p.indexOf("Win") == 0;
-            system.mac = p.indexOf("Mac") == 0;
-            system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
         });
     </script>
     <script>
