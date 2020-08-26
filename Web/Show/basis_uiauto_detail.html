@@ -5,6 +5,11 @@
         $(function () {
             $("li.active").removeClass();
             $("#detail").addClass("active");
+            var system ={};
+            var p = navigator.platform;
+            system.win = p.indexOf("Win") == 0;
+            system.mac = p.indexOf("Mac") == 0;
+            system.x11 = (p == "X11") || (p.indexOf("Linux") == 0);
         });
     </script>
     <script>
@@ -237,11 +242,14 @@
                                 <table class="footable table table-stripped toggle-arrow-tiny">
                                     <thead>
                                     <tr>
-
-                                        <th data-toggle="true">用例</th>
+                                        {% if(system.win||system.mac||system.xll) %}
+                                            <th data-toggle="true">用例</th>
+                                        {% endif %}
                                         <th>描述</th>
-                                        <th>模块</th>
-                                        <th data-hide="all">用时</th>
+                                        {% if(system.win||system.mac||system.xll) %}
+                                            <th>模块</th>
+                                            <th data-hide="all">用时</th>
+                                        {% endif %}
                                         <th data-hide="all">执行结果</th>
                                         <th data-hide="all">日志</th>
                                         <th data-hide="all">截图/录屏</th>
@@ -253,10 +261,14 @@
                                     {% for item in person.detail %}
 
                                         <tr>
-                                            <td>{{ item.case }}</td>
+                                            {% if(system.win||system.mac||system.xll) %}
+                                                <td>{{ item.case }}</td>
+                                            {% endif %}
                                             <td>{{ item.caseName }}</td>
-                                            <td>{{ item.model }}</td>
-                                            <td>{{ item.useTime }}</td>
+                                            {% if(system.win||system.mac||system.xll) %}
+                                                <td>{{ item.model }}</td>
+                                                <td>{{ item.useTime }}</td>
+                                            {% endif %}
                                             {% if item.result == 0 %}
                                                 <td><i class="text-navy">pass</i></td>
                                             {% else %}
