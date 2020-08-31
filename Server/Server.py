@@ -864,7 +864,7 @@ def mock_data_insert(request):
         # return HttpResponse(simplejson.dumps({'code': -1, 'msg': '数据重复'}))
     else:
         mockData(api=api, data=dictData, keyword=key, status=0).save()
-        return render(request, 'mock.html')
+        return render(request, 'basis_mock_manager.html')
 
 
 def getRealReason(request):
