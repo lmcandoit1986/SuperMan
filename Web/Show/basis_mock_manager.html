@@ -56,6 +56,34 @@
                 });
             })
         }
+
+        function EditItem(obj) {
+
+        $.get('/mock/data/by/id?id=' + $(obj).attr('name'), function (data, status) {
+            var text = unescape(data);
+            $('#edit').empty();
+            $('#edit').append('<div class="col-sm-12 b-r"><h3 class="m-t-none m-b"></h3>\n' +
+                '\n' +
+                '                    <form role="form" action="/mock/data/edit" method="post">\n' +
+                '                        {% csrf_token %}\n' +
+                '                        <div class="form-group"><label>接口</label> <input type="text"\n' +
+                '                                                                         value=' + $(obj).attr('name') + '\n' +
+                '                                                                         class="form-control"\n' +
+                '                                                                         name="id" readonly="readonly"></div>\n' +
+                '                        <div class="form-group"><label>返回数据</label> <input type="text"\n' +
+                '                                                                           value=\'' + text.toString() + '\'\n' +
+                '                                                                           class="form-control"\n' +
+                '                                                                           name="jsonData" ></div>\n' +
+                '                        <div>\n' +
+                '                            <button class="btn btn-sm btn-primary float-left m-t-n-xs" type="submit">\n' +
+                '                                <strong>修改</strong></button>\n' +
+                '                        </div>\n' +
+                '                    </form>\n' +
+                '                    <p>{{ rlt }}</p>\n' +
+                '\n' +
+                '                </div>');
+        })
+    }
     </script>
 {% endblock %}
 {% block nav %}
