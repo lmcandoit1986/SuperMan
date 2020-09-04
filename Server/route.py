@@ -93,7 +93,16 @@ urlpatterns = [
     url(r'^api/ci/control/del$', Server.CIControlDel),
     url(r'^api/ci/control/edit$', Server.CIControlEdit),
     url(r'^api/ci/control/insert$', Server.CIControlInsert),
-    url(r'^api/ci/control$', API.Control)
+    url(r'^api/ci/control$', API.Control),
+    url(r'^web/case/android$', routehtml.case_android_list),
+    url(r'^web/jobs$', routehtml.job_list),
+
+    url(r'^api/insert/class$',Server.insert_db_class),
+    url(r'^api/insert/case$', Server.insert_db_case),
+    url(r'^api/search/class$', Server.search_db_class),
+    url(r'^api/search/case$', Server.search_db_case),
+    url(r'^api/search/job$', Server.search_db_job),
+    url(r'^api/insert/job$', Server.insert_db_job),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

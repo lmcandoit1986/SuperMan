@@ -9,11 +9,12 @@ import simplejson
 from django.http import JsonResponse
 from django.shortcuts import HttpResponse
 from django.shortcuts import render
+from django.utils.timezone import now
 from django.views.decorators.csrf import csrf_exempt
 
-from Server import ModelObject, LogSys
+from Server import ModelObject, LogSys, jsonUtils
 from Server.models import resultAll, performanceData, listAPIMointor, CaseDetail, UICaseDetail, uiAutoRunListN, \
-    mockData, failReason, CIcontrol
+    mockData, failReason, CIcontrol, db_cron_job, db_case, db_class
 
 
 @csrf_exempt
@@ -1072,4 +1073,252 @@ def CIControlList(request):
         Result['code'] = -1
         Result['msg'] = '数据为空'
     return simplejson.dumps(Result)
+
+
+'''
+用例操作集合
+'''
+
+json_unsupport_method = {'code': -99, 'msg': '暂不支持该请求方式'}
+json_duplicate_data = {'code': -89, 'msg': '数据重复，请勿重复插入'}
+json_no_data = {'code': -79, 'msg': '数据为空,请核对参数'}
+json_success = {'code': 0, 'msg': '操作成功'}
+
+@csrf_exempt
+def insert_db_class(request):
+    '''
+    完成用例类的插入操作
+    :param request:
+    :return:
+    '''
+    isJson = False
+    if request.method == 'GET':
+        if 'isJson' in request.GET:
+            isJson = request.GET['isJson']
+        platform = request.GET['platform']
+        className = request.GET['className']
+        desc = request.GET['desc']
+    elif request.method == 'POST':
+        if 'isJson' in request.POST:
+            isJson = request.POST['isJson']
+        platform = request.POST['platform']
+        className = request.POST['className']
+        desc = request.POST['desc']
+    else:
+        return jsonUtils.result(json_unsupport_method, isJson)
+
+    LogSys.logInfo('isJson:{}'.format(isJson))
+    LogSys.logInfo('isJson:{}'.format(type(isJson)))
+    '''
+    判重
+    '''
+    isHave = db_class.objects.filter(platform=platform, name=className)
+    if isHave:
+        return jsonUtils.result(json_duplicate_data, isJson)
+
+    '''
+    插入
+    '''
+    db_class(name=className, platform=platform, desc=desc, create=now(), update=now()).save()
+    return jsonUtils.result(json_success, isJson)
+
+@csrf_exempt
+def insert_db_case(request):
+    '''
+    完成用例的插入操作
+    :param request:
+    :return:
+    '''
+    isJson = False
+    api = 'null'
+    if request.method == 'GET':
+        if 'isJson' in request.GET:
+            isJson = request.GET['isJson']
+        if 'api' in request.GET:
+            api = request.GET['api']
+        caseName = request.GET['caseName']
+        className = request.GET['className']
+        platform = request.GET['platform']
+        desc = request.GET['desc']
+
+    elif request.method == 'POST':
+        if 'isJson' in request.POST:
+            isJson = request.POST['isJson']
+        if 'api' in request.POST:
+            api = request.POST['api']
+        caseName = request.POST['platform']
+        className = request.POST['className']
+        platform = request.POST['platform']
+        desc = request.POST['desc']
+    else:
+        return jsonUtils.result(json_unsupport_method, isJson)
+
+    LogSys.logInfo('isJson:{}'.format(isJson))
+    '''
+    判重
+    '''
+    isHave = db_case.objects.filter(className=className, name=caseName)
+    if isHave:
+        return jsonUtils.result(json_duplicate_data, isJson)
+
+    '''
+    插入
+    '''
+    db_case(name=caseName, className=className, desc=desc, create=now(), update=now(), api=api, platform=platform).save()
+    return jsonUtils.result(json_success, isJson)
+
+@csrf_exempt
+def search_db_class(request):
+    '''
+    查询测试类列表
+    :param request:
+    :return:
+    '''
+    isJson = False
+    if request.method == 'GET':
+        if 'isJson' in request.GET:
+            isJson = request.GET['isJson']
+        platform = request.GET['platform']
+        page = int(request.GET['page'])
+        size = int(request.GET['size'])
+    elif request.method == 'POST':
+        if 'isJson' in request.POST:
+            isJson = request.POST['isJson']
+        platform = request.POST['platform']
+        page = int(request.POST['page'])
+        size = int(request.POST['size'])
+    else:
+        return jsonUtils.result(json_unsupport_method, isJson)
+
+    items = db_class.objects.filter(platform=platform)[size*(page-1):size*(page-1)+size]
+    caseList = []
+    if items:
+        for item in items:
+            caseDetail = {}
+            caseDetail['name'] = item.name
+            caseDetail['platform'] = item.platform
+            caseDetail['desc'] = item.desc
+            caseDetail['id'] = item.id
+            caseDetail['time'] = item.create.strftime('%Y-%m-%d %H:%M:%S')
+            caseList.append(caseDetail)
+
+    res = {}
+    res['data'] = caseList
+    res['code'] = 0
+    return jsonUtils.result(res, isJson)
+
+@csrf_exempt
+def search_db_case(request):
+    '''
+    查询测试用例列表
+    :param request:
+    :return:
+    '''
+    isJson = False
+    if request.method == 'GET':
+        if 'isJson' in request.GET:
+            isJson = request.GET['isJson']
+        platform = request.GET['platform']
+        page = int(request.GET['page'])
+        size = int(request.GET['size'])
+
+    elif request.method == 'POST':
+        if 'isJson' in request.POST:
+            isJson = request.POST['isJson']
+        platform = request.POST['platform']
+        page = int(request.POST['page'])
+        size = int(request.POST['size'])
+    else:
+        return jsonUtils.result(json_unsupport_method, isJson)
+    items = db_case.objects.filter(platform=platform)[size*(page-1):size*(page-1)+size]
+    caseList = []
+    if items:
+        for item in items:
+            caseDetail = {}
+            caseDetail['name'] = item.name
+            caseDetail['platform'] = item.platform
+            caseDetail['desc'] = item.desc
+            caseDetail['className'] = item.className
+            caseDetail['api'] = item.api
+            caseDetail['id'] = item.id
+            caseDetail['time'] = item.create.strftime('%Y-%m-%d %H:%M:%S')
+            caseList.append(caseDetail)
+
+    res = {}
+    res['data'] = caseList
+    res['code'] = 0
+    return jsonUtils.result(res, isJson)
+
+@csrf_exempt
+def insert_db_job(request):
+    '''
+    定时任务插入
+    :param request:
+    :return:
+    '''
+    LogSys.logInfo(request)
+    isJson = False
+    if request.method == 'GET':
+        if 'isJson' in request.GET:
+            isJson = request.GET['isJson']
+        platform = request.GET['platform']
+        ids = request.GET['ids']
+        model = request.GET['model']
+    elif request.method == 'POST':
+        if 'isJson' in request.POST:
+            isJson = request.POST['isJson']
+        platform = request.POST['platform']
+        ids = request.POST['ids']
+        model = request.POST['model']
+    else:
+        return jsonUtils.result(json_unsupport_method, isJson)
+
+    db_cron_job(platform=platform, ids=ids, create=now(), update=now(), execute=now(), result='0', status=0, model=model).save()
+    return jsonUtils.result(json_success, isJson)
+
+@csrf_exempt
+def search_db_job(request):
+    '''
+    查询定时任务列表
+    :param request:
+    :return:
+    '''
+    isJson = False
+    if request.method == 'GET':
+        if 'isJson' in request.GET:
+            isJson = request.GET['isJson']
+        # platform = request.GET['platform']
+        page = int(request.GET['page'])
+        size = int(request.GET['size'])
+
+    elif request.method == 'POST':
+        if 'isJson' in request.POST:
+            isJson = request.POST['isJson']
+        # platform = request.POST['platform']
+        page = int(request.POST['page'])
+        size = int(request.POST['size'])
+    else:
+        return jsonUtils.result(json_unsupport_method, isJson)
+    items = db_cron_job.objects.all().order_by("-id")[size*(page-1):size*(page-1)+size]
+    caseList = []
+    if items:
+        for item in items:
+            caseDetail = {}
+            caseDetail['create'] = item.create.strftime('%Y-%m-%d %H:%M:%S')
+            caseDetail['platform'] = item.platform
+            if item.status == 0:
+                caseDetail['status'] = '待执行'
+            elif item.status == 1:
+                caseDetail['status'] = '执行中...'
+            else:
+                caseDetail['status'] = '执行完成'
+            caseDetail['model'] = item.model
+            caseDetail['update'] = item.update.strftime('%Y-%m-%d %H:%M:%S')
+            caseDetail['id'] = item.id
+            caseList.append(caseDetail)
+
+    res = {}
+    res['data'] = caseList
+    res['code'] = 0
+    return jsonUtils.result(res, isJson)
 

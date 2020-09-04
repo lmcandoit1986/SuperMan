@@ -47,7 +47,6 @@
                             <ul class="nav nav-third-level">
                                 <li id="ui_pt_iOS">
                                     <a href="#">iOS 平台</a>
-{#                                    /web/performance/v2/detail?platform=all#}
                                 </li>
                                 <li id="ui_pt_Android">
                                     <a href="#">Android 平台</a>
@@ -85,6 +84,26 @@
                 <li id="ci">
                     <a href="/api/web/ci/control"><i class="fa fa-music"></i> <span class="nav-label">CI控制</span><span
                             class="fa arrow"></span> </a>
+                </li>
+
+                <li id="case">
+                    <a href="index.html"><i class="fa fa-th-large"></i> <span class="nav-label">用例管理</span> <span
+                            class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li id="case_server">
+                            <a href="/web/case/android?platform=Server&page=1&isJson=False&size=100">Server <span class="fa"></span></a>
+                        </li>
+                        <li id="case_android" >
+                            <a href="/web/case/android?platform=Android&page=1&isJson=False&size=100">Android <span class="fa"></span></a>
+                        </li>
+                        <li id="case_ios">
+                            <a href="/web/case/android?platform=iOS&page=1&isJson=False&size=100">iOS <span class="fa"></span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li id="job">
+                    <a href="/web/jobs?page=1&size=10&isJson=False"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">定时任务</span> <span
+                            class="fa"></span></a>
                 </li>
 
             </ul>

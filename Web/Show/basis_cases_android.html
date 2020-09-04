@@ -1,0 +1,199 @@
+{% extends 'basis.html' %}
+{% block cs %}
+    <script>
+        $(function () {
+            $("li.active").removeClass();
+            $("#case_android").addClass("active");
+            $("#case").addClass("active");
+        });
+        $(document).ready(function () {
+            $("#select_all").click(function () {
+                $("input[type='checkbox'][class='i-checks']").prop("checked", true);
+            });
+            $("#un_select_all").click(function () {
+                $("input[type='checkbox'][class='i-checks']").prop("checked", false);
+            });
+            $("#case_select_all").click(function () {
+                $("input[type='checkbox'][class='j-checks']").prop("checked", true);
+            });
+            $("#case_un_select_all").click(function () {
+                $("input[type='checkbox'][class='j-checks']").prop("checked", false);
+            });
+            $("#run_class").click(function () {
+                console.log('class');
+                var list_id = new Array();
+                $("input[type=checkbox][class='i-checks']").each(
+                    function () {
+                        if ($(this).is(':checked')) {
+                            console.log($(this).val());
+                            list_id.push($(this).val());
+                        }
+
+                    })
+                console.log(list_id);
+                $.post("/api/insert/job",
+                    {
+                        platform: "Android",
+                        ids: list_id.toString(),
+                        model: "class",
+                        isJson: true
+                    },
+                    function (data, status) {
+                        if (data.code == 0) {
+                            swal({
+                                title: "成功！",
+                                text: "任务插入成功！",
+                                type: "success"
+                            }, function () {
+                                {#window.location.reload();#}
+                            });
+                        }
+
+                    });
+
+            });
+            $("#run_case").click(function () {
+                console.log('case');
+                var list_id = new Array();
+                $("input[type=checkbox][class='j-checks']").each(
+                    function () {
+                        if ($(this).is(':checked')) {
+                            console.log($(this).val());
+                            list_id.push($(this).val());
+                        }
+
+                    })
+                console.log(list_id);
+                $.post("/api/insert/job",
+                    {
+                        platform: "Android",
+                        ids: list_id.toString(),
+                        model: "case",
+                        isJson: true
+                    },
+                    function (data, status) {
+                        if (data.code == 0) {
+                            swal({
+                                title: "成功！",
+                                text: "任务插入成功！",
+                                type: "success"
+                            }, function () {
+                                {#window.location.reload();#}
+                            });
+                        }
+                    });
+            });
+        })
+    </script>
+{% endblock %}
+{% block nav %}
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h1>
+                        {% if not case.data and not class.data %}
+                            快去录入用例吧！
+                        {% endif %}
+                    </h1>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="#" class="dropdown-item">Config option 1</a>
+                            </li>
+                            <li><a href="#" class="dropdown-item">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-9 m-b-xs">
+                        </div>
+                        <div id="case">
+                            <button class="btn btn-primary" type="button" id="select_all">全选</button>
+                            <button class="btn btn-primary" type="button" id="un_select_all">取消</button>
+                            <button class="btn btn-primary" type="button" id="run_class">执行</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>class name</th>
+                                <th>cases num</th>
+                                <th>desc</th>
+                            </tr>
+                            </thead>
+
+                            <tbody id="context">
+                            {% for item in class.data %}
+                                <tr>
+                                    <td><input type="checkbox" class="i-checks" name="input[]"
+                                               value={{ item.id }}></td>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.desc }}</td>
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-9 m-b-xs">
+                        </div>
+                        <div id="case">
+                            <button class="btn btn-primary" type="button" id="case_select_all">全选</button>
+                            <button class="btn btn-primary" type="button" id="case_un_select_all">取消</button>
+                            <button class="btn btn-primary" type="button" id="run_case">执行</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>case name</th>
+                                <th>class name</th>
+                                <th>desc</th>
+                            </tr>
+                            </thead>
+
+                            <tbody id="context">
+                            {% for item in case.data %}
+                                <tr>
+                                    <td><input type="checkbox" class="j-checks" name="input[]"
+                                               value={{ item.id }}></td>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.className }}</td>
+                                    <td>{{ item.desc }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    </div>
+
+
+{% endblock %}

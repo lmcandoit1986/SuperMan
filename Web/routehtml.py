@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import get_template
 
-from Server import Server, API, LogSys
+from Server import Server, API, LogSys, ServerUI
 
 
 def result_uiauto_details(request):
@@ -87,7 +87,7 @@ def v2_ui_list(request):
     :return:
     '''
     LogSys.logInfo('Request:{0}'.format(request))
-    listRun = API.api_auto_list(request)
+    listRun = ServerUI.api_auto_list(request)
     listRun_dict = simplejson.loads(listRun)
     if listRun_dict['code'] != 0:
         context = {'person': None}
@@ -182,3 +182,14 @@ def v2_api_ci_control_list(request):
         context = {'person': listRun_dict}
     LogSys.logInfo('Result:{0}'.format(context))
     return render(request, 'basis_ci_control.html', context)
+
+def case_android_list(request):
+    res_class = Server.search_db_class(request)
+    res_case = Server.search_db_case(request)
+    data ={'class':eval(res_class), 'case':eval(res_case)}
+    return render(request, 'basis_cases_android.html', data)
+
+
+def job_list(request):
+    jobs = Server.search_db_job(request)
+    return render(request, 'basis_job.html', eval(jobs))

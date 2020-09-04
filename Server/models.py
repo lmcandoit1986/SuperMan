@@ -128,3 +128,44 @@ class CIcontrol(models.Model):
     status = models.IntegerField()
     class Meta:
         db_table = 'CIcontrol'
+
+class db_class(models.Model):
+    '''
+    class 信息集合
+    '''
+    name = models.CharField(max_length=100)
+    create = models.DateTimeField()
+    update = models.DateTimeField()
+    platform = models.CharField(max_length=20)
+    desc = models.CharField(max_length=100)
+    class Meta:
+        db_table = 'db_class'
+
+class db_case(models.Model):
+    '''
+    用例 信息集合
+    '''
+    name = models.CharField(max_length=100)
+    create = models.DateTimeField()
+    update = models.DateTimeField()
+    className = models.CharField(max_length=100)
+    platform = models.CharField(max_length=20)
+    api = models.CharField(max_length=100)
+    desc = models.CharField(max_length=100)
+    class Meta:
+        db_table = 'db_case'
+
+class db_cron_job(models.Model):
+    '''
+    定时任务列表
+    '''
+    platform = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+    create = models.DateTimeField()
+    update = models.DateTimeField()
+    execute = models.DateTimeField()
+    ids = models.CharField(max_length=100)
+    status = models.IntegerField()
+    result = models.CharField(max_length=100)
+    class Meta:
+        db_table = 'db_cron_job'

@@ -1,0 +1,84 @@
+{% extends 'basis.html' %}
+{% block cs %}
+    <script>
+    $(function () {
+            $("li.active").removeClass();
+            $("#job").addClass("active");
+        });
+    </script>
+{% endblock %}
+{% block nav %}
+    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h1>
+                        {% if not data %}
+                            还没有定时任务！
+                        {% endif %}
+                    </h1>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="#" class="dropdown-item">Config option 1</a>
+                            </li>
+                            <li><a href="#" class="dropdown-item">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>创建时间</th>
+                                <th>平台</th>
+                                <th>类型</th>
+                                <th>状态</th>
+                                <th>action</th>
+                            </tr>
+                            </thead>
+
+                            <tbody id="context">
+                            {% for item in data %}
+                                <tr>
+                                    <td>{{ item.create }}</td>
+                                    <td>{{ item.platform }}</td>
+                                    <td>{{ item.model }}</td>
+                                    <td>{{ item.status }}</td>
+                                    <td class="text-right">
+                                        <div class="btn-group">
+                                            <button class="btn-white btn btn-xs" onclick="delItem(this)"
+                                                    name="{{ item.id }}">删除
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    </div>
+
+
+{% endblock %}
